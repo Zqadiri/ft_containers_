@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/11/09 10:35:52 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/11/09 12:53:34 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,19 @@
 #include <string>
 #include <iterator>
 #include <algorithm>
+#include "../utils/iterator_traits.hpp"
+#include "../utils/random_access_iterator.hpp"
+#include "../utils/reverse_iterator.hpp"
 
 /*
 	Namespace refers to various blocks that can be created in a 
 	program to group all similar objects, and you can 
 	refer to all variables, functions, or classes within a block.
 */
-
 /*
 	start with iterators +resize +insert +assign >> htagrourt
 */
+
 namespace   ft
 {
 	template <class T, class Allocator = std::allocator<T> >
@@ -52,23 +55,21 @@ namespace   ft
 			typedef typename allocator_type::const_pointer const_pointer;
 			/*Type that provides a random access iterator capable
 			of reading an constelement in a vector.*/
-			typedef ft::random_access_iterator<value_type>	iterator;
+			typedef typename ft::random_access_iterator<value_type>	iterator;
 			/*Type that provides a random access iterator capable of reading
 			 an constelement in a vector.*/
-			typedef ft::random_access_iterator<const value_type>	const_iterator;
+			typedef typename ft::random_access_iterator<const value_type>	const_iterator;
 			/*Type that provides a random access iterator that can read or modify 
 			an element of an inverted vector.*/
-			typedef	ft::reverse_iterator<iterator>;
+			typedef	typename ft::reverse_iterator<iterator> reverse_iterator;
 			/*Type that provides a random access iterator capable of reading an 
 			constelement of the vector.*/
-			typedef	ft::reverse_iterator<const iterator>;
+			typedef	typename ft::reverse_iterator<const iterator> const_reverse_iterator;
 			/*Type that provides the difference between the addresses of two elements in a vector.*/
-			typedef ft::iterator_traits<iterator>::difference_type difference_type;
+			typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
 			/*Type that counts the number of elements in a vector.*/
 			typedef typename allocator_type::size_type          size_type;
 
-			
-			
 	};
 }
 
