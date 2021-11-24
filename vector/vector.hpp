@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/11/23 19:13:44 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/11/24 15:36:28 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@
 # include <iostream>
 # include <algorithm>
 # include <memory>
-# include "../utils/iterator_traits.hpp"
-# include "../utils/random_access_iterator.hpp"
-# include "../utils/reverse_iterator.hpp"
+# include "../utils/iterator.hpp"
 
 /*
 	Namespace refers to various blocks that can be created in a 
@@ -74,7 +72,7 @@ namespace ft
 			constelement of the vector.*/
 			typedef	typename std::reverse_iterator<const iterator>					const_reverse_iterator;
 			/*Type that provides the difference between the addresses of two elements in a vector.*/
-			// typedef typename std::iterator_traits<iterator>::difference_type	difference_type;
+			// typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 			/*Type that counts the number of elements in a vector.*/
 			typedef typename allocator_type::size_type								size_type;
 
@@ -90,25 +88,31 @@ namespace ft
 				const allocator_type& alloc = allocator_type())
 			:_size(n), _capacity(n), _alloc(alloc) 
 			{
+				std::cout << "fill constructor" <<std::endl;
 				if (n)
 				{
 					this->_array = this->_alloc.allocate(n);
-					for(int i = 0; i < n; i++)
-						this->_alloc.construct(this->_array[i], val);
+					for(size_t i = 0; i < n; i++)
+						this->_alloc.construct(&(this->_array[i]), val);
 				}
 			}
-			//*Constructs a container with as many elements as the range [first,last), 
+			//* Constructs a container with as many elements as the range [first,last), 
 			//* with each element constructed from its corresponding element in that range, in the same order.
 			template <class InputIterator>
-			Vector ( first, InputIterator last,
+			Vector (InputIterator first, InputIterator last,
 				 const allocator_type& alloc = allocator_type()) :_alloc(alloc)
 			{
+				std::cout << "range constructor" <<std::endl;
 				//?[first, last)
 				(void)first;
 				(void)last;
 			}
 			//* Constructs a container with a copy of each of the elements in x, in the same order.
-			Vector (const Vector& x);
+			Vector (const Vector& x)
+			{
+				std::cout << "copy constructor" <<std::endl;
+				(void)x;
+			}
 
 			//! ------------------------- Destructor ------------------------ !//
 			~Vector(){

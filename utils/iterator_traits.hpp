@@ -6,19 +6,17 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 19:09:13 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/11/21 14:54:05 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/11/24 15:33:05 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_TRAITS_HPP
 #define ITERATOR_TRAITS_HPP
 
-#include "./random_access_iterator.hpp"
-
 namespace ft
 {
 	/*Iter-the iterator type to retrieve properties for*/
-	template< class Iter >
+	template <class Iter>
 	struct iterator_traits
 	{
 		typedef typename Iter::difference_type difference_type;
@@ -36,7 +34,7 @@ namespace ft
 		typedef T value_type;
 		typedef T* pointer;
 		typedef T& reference;
-		typedef ft::random_access_iterator_tag iterator_category;
+		typedef	std::random_access_iterator_tag iterator_category;
 	};
 
 	template< class T >
@@ -47,7 +45,7 @@ namespace ft
 		typedef T value_type;
 		typedef T* pointer;
 		typedef T& reference;
-		typedef ft::random_access_iterator_tag iterator_category;
+		typedef std::random_access_iterator_tag iterator_category;
 	};
 }
 
