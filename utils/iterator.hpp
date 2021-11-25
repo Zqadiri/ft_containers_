@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 19:10:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/11/24 16:57:12 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/11/24 19:27:57 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ namespace ft
 	struct random_access_iterator_tag {};
 	
 	/*
-		This is a base class template that can be used to derive iterator classes from it. 
+		This is a base class template that can be used 
+		to derive iterator classes from it. 
 		It is not an iterator class and does not provide any
 		of the functionality an iterator is expected to have.
 	*/
@@ -68,26 +69,63 @@ namespace ft
 			typedef typename iterator_traits<Iterator>::reference			reference;
 		
 			/*------------- Constructors --------------*/
-		
+
+		/*
+		** Construct a reverse iterator object from
+        ** an original iteretor.
+        ** The behavior of the constructed object
+        ** replicate the orignal, but he iterates
+        ** in the reverse order.
+		*/
+
 		//* Constructs a reverse iterator that points to no object.
-		reverse_iterator() : _it(){
+		reverse_iterator() 	: _it(){
 		}
+
 		//* Constructs a reverse iterator from some original iterator it. 
 		explicit reverse_iterator (iterator_type it) : _it(it){
 		}
+		
 		//* copy / type-cast constructor
 		template <class Iter>
-  			reverse_iterator (const reverse_iterator<Iter>& rev_it){
+  			reverse_iterator (const reverse_iterator<Iter>& rev_it)
+			: _it(rev_it.base())  {
 		}
 		
 			/*----------- Public Member Function --------*/
+
+		/*
+		TODO:Returns a copy of the base iterator
+		*/
 
 		iterator_type base() const{
 			return(_it);
 		}
 
+		/*
+		TODO:Returns a reference to the element pointed to by the iterator.
+		** Internally, the function decreases a
+		** copy of its base iterator and returns 
+		** the result of dereferencing it.
+		*/
 
-	
+		reference operator*() const{
+			iterator_type _ret;
+			--_ret;
+			return (*_ret);
+		}
+
+		/*
+		TODO:Returns a reverse iterator pointing to the element located n positions away.
+		Adds an offset to an iterator and returns 
+		the new reverse_iterator addressing the inserted element
+		at the new offset position.
+		*/
+		
+		reverse_iterator operator+ (difference_type n) const{
+			return ();
+		}
+		
 		private:
 			Iterator		_it;
 	};
