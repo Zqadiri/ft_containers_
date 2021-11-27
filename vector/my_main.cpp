@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/11/24 15:35:46 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/11/27 14:09:19 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int main() 
 {
-
+    
     // constructors used in the same order as described above:
     std::vector<int> first;                                // empty vector of ints
     std::vector<int> second (4,100);                       // four ints with value 100
-    // std::vector<int> third (second.begin(),second.end());  // iterating through second
-    // std::vector<int> fourth (third);                       // a copy of third
+    std::vector<int> third (second.begin(),second.end());  // iterating through second
+    std::vector<int> fourth (third);                       // a copy of third
     
     std::cout << '\n';
 
