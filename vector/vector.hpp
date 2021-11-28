@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/11/24 15:36:28 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/11/28 18:53:52 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <algorithm>
 # include <memory>
 # include "../utils/iterator.hpp"
+# include "../utils/iterator_traits.hpp"
+# include "../utils/random_access_iterator.hpp"
 
 /*
 	Namespace refers to various blocks that can be created in a 
@@ -28,21 +30,11 @@
 	refer to all variables, functions, or classes within a block.
 */
 
-/*
-	start with iterators +resize +insert +assign >> htagrourt
-*/
-
 namespace ft
 {
 	template <class T, class Allocator = std::allocator<T> >
 	class Vector
-	{
-		private:
-			T*			_array;
-			size_t		_size;
-			size_t		_capacity;
-			Allocator	_alloc;
-			
+	{		
 		public:
 			//!-------------------- Member types ------------------------!//
 			/*The first template parameter
@@ -61,65 +53,179 @@ namespace ft
 			typedef typename allocator_type::const_pointer 							const_pointer;
 			/*Type that provides a random access iterator capable
 			of reading an constelement in a vector.*/
-			typedef typename std::__is_random_access_iterator<value_type>			iterator;
+			typedef typename ft::random_access_iterator<T>							iterator;
 			/*Type that provides a random access iterator capable of reading
 			 an constelement in a vector.*/
-			typedef typename std::__is_random_access_iterator<const value_type>		const_iterator;
+			typedef typename ft::random_access_iterator<const T>					const_iterator;
 			/*Type that provides a random access iterator that can read or modify 
 			an element of an inverted vector.*/
-			typedef	typename std::reverse_iterator<iterator> 						reverse_iterator;
+			typedef	typename ft::reverse_iterator<iterator> 						reverse_iterator;
 			/*Type that provides a random access iterator capable of reading an 
 			constelement of the vector.*/
-			typedef	typename std::reverse_iterator<const iterator>					const_reverse_iterator;
+			typedef	typename ft::reverse_iterator<const iterator>					const_reverse_iterator;
 			/*Type that provides the difference between the addresses of two elements in a vector.*/
-			// typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
+			typedef typename ft::iterator_traits<iterator>::difference_type			difference_type;
 			/*Type that counts the number of elements in a vector.*/
 			typedef typename allocator_type::size_type								size_type;
 
 			//! ------------------------- Constructors ------------------------ !//
 
 			//* Constructs an empty container, with no elements.
+			
 			explicit Vector (const allocator_type& alloc = allocator_type())
-			: _array(NULL),_size(0),_capacity(0), _alloc(alloc){
+			:  _alloc(alloc), _start(NULL), _end(NULL), _capacity(0){
 				    std::cout << "Empty container" <<std::endl;
 			}
+			
 			//* Constructs a container with n elements. Each element is a copy of val.
+			
 			explicit Vector (size_type n, const value_type& val = value_type(),
 				const allocator_type& alloc = allocator_type())
-			:_size(n), _capacity(n), _alloc(alloc) 
+			:_alloc(alloc), _capacity(n)
 			{
 				std::cout << "fill constructor" <<std::endl;
 				if (n)
 				{
-					this->_array = this->_alloc.allocate(n);
+					_start = _alloc.allocate(n);
+					_end = _start;
 					for(size_t i = 0; i < n; i++)
-						this->_alloc.construct(&(this->_array[i]), val);
+					{
+						_alloc.construct(_end, val);
+						_end++;
+					}
 				}
 			}
+			
 			//* Constructs a container with as many elements as the range [first,last), 
 			//* with each element constructed from its corresponding element in that range, in the same order.
+			
 			template <class InputIterator>
 			Vector (InputIterator first, InputIterator last,
 				 const allocator_type& alloc = allocator_type()) :_alloc(alloc)
 			{
 				std::cout << "range constructor" <<std::endl;
-				//?[first, last)
-				(void)first;
-				(void)last;
+				difference_type diff;
+				diff = last - first;
+				_start = _alloc.allocate(diff);
+				_end = _start;
+				while (diff)
+				{
+					_alloc.construct(_end, *first);
+					diff--;
+					_end++;
+				}
 			}
+			
 			//* Constructs a container with a copy of each of the elements in x, in the same order.
-			Vector (const Vector& x)
-			{
+			Vector (const Vector& x):_alloc(NULL), _start(NULL), _end(NULL), _capacity(0){
 				std::cout << "copy constructor" <<std::endl;
-				(void)x;
+				*this = x;
 			}
 
 			//! ------------------------- Destructor ------------------------ !//
+			
 			~Vector(){
 			}
-			//! ------------------------- Assign.Operator ------------------------!//
-			Vector& operator= (const Vector& x);
+			
+			//!------------------------- Member functions -----------------------!//
+			
+			/*
+			** Return iterator to beginning
+			*/
+		
+			iterator begin(){
+				return(this->_start);
+			}
+
+			const_iterator begin() const{
+				return(this->_start);
+			}
+			
+			/*
+			** Returns the number of elements in the vector.
+			*/
+
+			size_type size() const{
+				return (_end - _start);
+			}
+			
+			/*
+			** Returns whether the vector is empty
+			*/
+
+			bool empty() const{
+				if (this->size() == 0)
+					return(1);
+				return (0);
+			}
+
+			/*
+			** Returns the maximum number of elements that the vector can hold.
+			*/
+	
+			size_type max_size() const{
 				
+			}
+
+			/*
+			** Returns an iterator referring to the past-the-end element in the vector container.
+			** If the container is empty, this function returns the same as vector::begin
+			*/
+
+			iterator end(){
+				if (this->size())
+					return (_start);
+				return(_end);
+			}
+			
+			const_iterator end() const{
+				if (this->size())
+					return (_start);
+				return (this->_end);
+			}
+			
+			/*
+			** built-in function which inserts new elements before 
+			** the element at the specified position, effectively increasing 
+			** the container size by the number of elements inserted.
+			*/
+
+			iterator insert (iterator position, const value_type& val)
+			{
+				(void)position;
+				(void)val;
+			}
+
+			//! ------------------------- Assign.Operator ------------------------!//
+			
+			Vector& operator= (const Vector& x);
+
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			/*
+			** _ALLOC:	Default allocator
+			** _START: A pointer to the initial element in the block of storage(allocate return value).
+			** _END: A pointer to the last element
+			*/
+
+			private:
+				allocator_type	_alloc;	
+				pointer			_start;
+				pointer			_end;
+				size_t			_capacity;
 	};
 }
 
