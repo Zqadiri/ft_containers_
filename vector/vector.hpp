@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/11/28 18:53:52 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/11/29 16:18:11 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ namespace ft
 				}
 			}
 			
-			//* Constructs a container with as many elements as the range [first,last), 
-			//* with each element constructed from its corresponding element in that range, in the same order.
+			// //* Constructs a container with as many elements as the range [first,last), 
+			// //* with each element constructed from its corresponding element in that range, in the same order.
 			
 			template <class InputIterator>
 			Vector (InputIterator first, InputIterator last,
@@ -110,7 +110,7 @@ namespace ft
 				_end = _start;
 				while (diff)
 				{
-					_alloc.construct(_end, *first);
+					// _alloc.construct(_end, *first++);
 					diff--;
 					_end++;
 				}
@@ -161,10 +161,13 @@ namespace ft
 
 			/*
 			** Returns the maximum number of elements that the vector can hold.
+			** USING: allocator::max_size Returns the maximum number of elements,
+			** that could potentially be allocated by a call to member allocate.
 			*/
 	
 			size_type max_size() const{
-				
+				allocator_type alloc;
+				return(alloc.max_size());
 			}
 
 			/*
@@ -182,6 +185,19 @@ namespace ft
 				if (this->size())
 					return (_start);
 				return (this->_end);
+			}
+
+			/*
+			** Access first element
+			** Returns a reference to the first element in the vector.
+			*/
+
+      		reference front(){
+				return(*_start);
+			}
+			
+			const_reference front() const{
+				return(*_start);
 			}
 			
 			/*

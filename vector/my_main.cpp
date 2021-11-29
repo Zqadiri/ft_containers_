@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/11/28 18:14:34 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/11/29 16:18:25 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@ int main()
     std::vector<int> fourth(third);                       // a copy of third
     
     std::cout << '\n';
-    int a[] = {1,2,3,4,5};
-    ft::Vector<int> v2(a+1, a+3);
+    // int a[] = {1,2,3,4,5};
     ft::Vector<int> default_vec;
-    // ft::Vector<int> vec (4,100);                       
+    ft::Vector<int> v2(second.begin(),second.end());
+    ft::Vector<int> vec (4,100);                       
+    std::cout << second.front() << std::endl;
+    std::cout << vec.front() << std::endl;
+    
     // ft::Vector<int> vect(second);
     return(0);
 }
