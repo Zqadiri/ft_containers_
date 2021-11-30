@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/11/29 16:18:11 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/11/30 22:04:30 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <algorithm>
 # include <memory>
 # include "../utils/iterator.hpp"
+# include "../utils/utility.hpp"
 # include "../utils/iterator_traits.hpp"
 # include "../utils/random_access_iterator.hpp"
 
@@ -101,7 +102,9 @@ namespace ft
 			
 			template <class InputIterator>
 			Vector (InputIterator first, InputIterator last,
-				 const allocator_type& alloc = allocator_type()) :_alloc(alloc)
+				const allocator_type& alloc = allocator_type()
+				// typename ft::enable_if 
+				) :_alloc(alloc)
 			{
 				std::cout << "range constructor" <<std::endl;
 				difference_type diff;
