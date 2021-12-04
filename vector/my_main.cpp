@@ -6,11 +6,16 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/11/30 22:03:17 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/04 16:13:44 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../vector/Vector.hpp"
+#include <type_traits>
+
+class A {};
+ 
+enum E : int {};
 
 void foo(unsigned i) {
   std::cout << "unsigned " << i << "\n";
@@ -23,21 +28,37 @@ void foo(const T& t) {
 
 int main() 
 {
-    
-    // constructors used in the same order as described above:
-    std::vector<int> first;                                // empty vector of ints
-    std::vector<int> second(4,100);                       // four ints with value 100
-    std::vector<int> third(second.begin(),second.end());  // iterating through second
-    std::vector<int> fourth(third);                       // a copy of third
-    
-    std::cout << '\n';
-    // int a[] = {1,2,3,4,5};
-    ft::Vector<int> default_vec;
-    ft::Vector<int> v2(second.begin(),second.end());
-    ft::Vector<int> vec (4,100);                       
-    std::cout << second.front() << std::endl;
-    std::cout << vec.front() << std::endl;
-    foo(48);
-    // ft::Vector<int> vect(second);
-    return(0);
+	{
+		std::cout << "********STD********" << std::endl;
+		std::vector<int> first;                              
+		std::vector<int> second(4,100);                      
+		std::vector<int> third(second.begin(),second.end()); 
+		std::vector<int> fourth(third);                      
+		
+		std::cout << '\n';
+		std::cout << "********FT********" << std::endl;
+		// int a[] = {1,2,3,4,5};
+		ft::Vector<int> default_vec;
+		ft::Vector<int> v2(second.begin(),second.end());
+		ft::Vector<int> vec (4,100);                       
+		std::cout << second.front() << std::endl;
+		std::cout << vec.front() << std::endl;
+		foo(48);
+	}
+	{
+		std::cout << "********Type traits********" << std::endl;
+		std::cout << ft::is_integral<A>::value << '\n';
+		std::cout << ft::is_integral<E>::value << '\n';
+		std::cout << ft::is_integral<float>::value << '\n';
+		std::cout << ft::is_integral<int>::value << '\n';
+		std::cout << ft::is_integral<const int>::value << '\n';
+		std::cout << ft::is_integral<bool>::value << '\n';
+		std::cout << "********Type traits********" << std::endl;
+		std::cout << std::is_integral<A>::value << '\n';
+		std::cout << std::is_integral<E>::value << '\n';
+		std::cout << std::is_integral<float>::value << '\n';
+		std::cout << std::is_integral<int>::value << '\n';
+		std::cout << std::is_integral<const int>::value << '\n';
+		std::cout << std::is_integral<bool>::value << '\n';
+	}
 }
