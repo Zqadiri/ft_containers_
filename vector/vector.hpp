@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/01 21:03:55 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/06 21:44:15 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,17 @@ namespace ft
 			//* Constructs an empty container, with no elements.
 			
 			explicit Vector (const allocator_type& alloc = allocator_type())
-			:  _alloc(alloc), _start(NULL), _end(NULL), _capacity(0){
-				    std::cout << "Empty container" <<std::endl;
+			:  _alloc(alloc), _start(NULL), _end(NULL), _capacity(NULL){
+					std::cout << "Empty container" <<std::endl;
 			}
 			
 			//* Constructs a container with n elements. Each element is a copy of val.
 			
 			explicit Vector (size_type n, const value_type& val = value_type(),
 				const allocator_type& alloc = allocator_type())
-			:_alloc(alloc), _capacity(n)
+			:_alloc(alloc)
 			{
-				std::cout << "fill constructor" <<std::endl;
+				std::cout << "fill constructor " << n <<std::endl;
 				if (n)
 				{
 					_start = _alloc.allocate(n);
@@ -94,6 +94,7 @@ namespace ft
 						_alloc.construct(_end, val);
 						_end++;
 					}
+					_capacity = _end;
 				}
 			}
 			
@@ -101,11 +102,11 @@ namespace ft
 			// //* with each element constructed from its corresponding element in that range, in the same order.
 			
 			template <class InputIterator>
-			Vector (InputIterator first, InputIterator last,
-				const allocator_type& alloc = allocator_type()
-				// typename ft::enable_if 
-				) :_alloc(alloc)
+			explicit Vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
+				 typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
+				:_alloc(alloc)
 			{
+				
 				std::cout << "range constructor" <<std::endl;
 				difference_type diff;
 				diff = last - first;
@@ -113,10 +114,11 @@ namespace ft
 				_end = _start;
 				while (diff)
 				{
-					// _alloc.construct(_end, *first++);
+					_alloc.construct(_end, *(first++));
 					diff--;
 					_end++;
 				}
+				_capacity = _end;
 			}
 			
 			//* Constructs a container with a copy of each of the elements in x, in the same order.
@@ -139,7 +141,6 @@ namespace ft
 			iterator begin(){
 				return(this->_start);
 			}
-
 			const_iterator begin() const{
 				return(this->_start);
 			}
@@ -183,7 +184,6 @@ namespace ft
 					return (_start);
 				return(_end);
 			}
-			
 			const_iterator end() const{
 				if (this->size())
 					return (_start);
@@ -195,31 +195,72 @@ namespace ft
 			** Returns a reference to the first element in the vector.
 			*/
 
-      		reference front(){
+	  		reference front(){
 				return(*_start);
 			}
-			
 			const_reference front() const{
 				return(*_start);
 			}
+
+			/*
+			** Returns a const reference to the last element in the container.
+			** If the container is empty, occur undefined behavior.
+			*/
+		
+			reference back () { 
+				return (*(_end - 1));
+			}
+			const_reference back () const {
+				return (*(_end - 1));
+			}
 			
 			/*
-			** built-in function which inserts new elements before 
-			** the element at the specified position, effectively increasing 
-			** the container size by the number of elements inserted.
+			** built-in function which inserts new elements before
+			** the element at the specified position, effectively increasing
+			** the container size by the number of elements inserted
 			*/
 
-			iterator insert (iterator position, const value_type& val)
-			{
-				(void)position;
-				(void)val;
+			reference operator[] (size_type n) {
+				return (*(_start + n));
 			}
+			
+			reference at (size_type n){
+				return ((*this)[n]);
+			}
+			
+			iterator insert (iterator position, const value_type& val) //single elem
+			{
+				(void)val;
+				difference_type pos_index;
+				pos_index = &(*position) - _start;
+				std::cout << "---"<< this->size() << "\n";
+				std::cout << "---"<< (pos_index) << "\n";
+				if ((size_t)pos_index <= this->size())
+				{
+					std::cout << "here\n";
+					for (size_type i = 0; i < (size_t)pos_index; i++)
+					{
+						_alloc.construct(_end - i, *( _end - i - 1));
+					}
+					_end++;
+					_alloc.construct(_end, 95);
+				}
+				return _start;
+			}
+
+			void insert (iterator position, size_type n, const value_type& val); //fill
+
+			template <class InputIterator>
+		    void insert (iterator position, InputIterator first, InputIterator last); //range
 
 			//! ------------------------- Assign.Operator ------------------------!//
 			
-			Vector& operator= (const Vector& x);
-
-			
+			Vector& operator= (const Vector& x){
+				if (x == *this)
+					return (*this);
+				// insert x element in this 
+				return (*this);
+			}
 
 
 
@@ -241,10 +282,10 @@ namespace ft
 			*/
 
 			private:
-				allocator_type	_alloc;	
+				allocator_type	_alloc;
 				pointer			_start;
 				pointer			_end;
-				size_t			_capacity;
+				pointer			_capacity;
 	};
 }
 
