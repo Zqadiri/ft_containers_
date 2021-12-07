@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.hpp                                         :+:      :+:    :+:   */
+/*   Vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/06 21:44:15 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/07 21:43:44 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ namespace ft
 	class Vector
 	{		
 		public:
+
 			//!-------------------- Member types ------------------------!//
 			/*The first template parameter
 			Type representing the type of data stored in a vector.*/
@@ -226,28 +227,53 @@ namespace ft
 			
 			reference at (size_type n){
 				return ((*this)[n]);
+			} 
+
+			iterator insert (iterator position, const value_type& val)
+			{
+				
+				size_type pos_len = &(*position) - _start;
+				//* if the size of the vector is enough
+				if (size_type(_capacity - _end) >= this->size() + 1)
+				{
+					for (size_type i = 0; i < pos_len; i++)
+						_alloc.construct(_end - i, *(_end - i - 1));
+					_end++;
+					_alloc.construct(&(*position), val);
+				}
+				else
+				{
+					//* allocate new one
+					pointer start;
+					pointer end;
+					pointer capacity;
+
+					int new_capacity ;
+					if (this->size() != 0)
+						new_capacity = (this->size() * 2);
+					else
+						new_capacity = 1; 
+					////std::cout << new_capacity << std::endl;
+					start = _alloc.allocate(new_capacity);
+					end = start + this->size() + 1;
+					capacity = start + new_capacity;
+
+					for (size_type i = 0; i < pos_len; i++)
+						_alloc.construct(start + i, *(_start + i));
+					_alloc.construct(start + pos_len, val);
+					// for (size_type i = 0; i < this->size() - pos_len; i++)
+					// 	_alloc.construct(end - i - 1, *(_end - i - 1));
+
+					for (size_type i = 0; i < this->size(); i++)
+						_alloc.destroy(_start + i);
+					
+					_start = start;
+					_end = end;
+					_capacity = capacity;
+				}
+				return (iterator(_start));
 			}
 			
-			iterator insert (iterator position, const value_type& val) //single elem
-			{
-				(void)val;
-				difference_type pos_index;
-				pos_index = &(*position) - _start;
-				std::cout << "---"<< this->size() << "\n";
-				std::cout << "---"<< (pos_index) << "\n";
-				if ((size_t)pos_index <= this->size())
-				{
-					std::cout << "here\n";
-					for (size_type i = 0; i < (size_t)pos_index; i++)
-					{
-						_alloc.construct(_end - i, *( _end - i - 1));
-					}
-					_end++;
-					_alloc.construct(_end, 95);
-				}
-				return _start;
-			}
-
 			void insert (iterator position, size_type n, const value_type& val); //fill
 
 			template <class InputIterator>

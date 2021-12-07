@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 19:10:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/04 20:15:54 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/06 21:43:42 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ namespace ft
 	{
 			//?------------Member types--------------?//	
 		public :
+
 			/*Iterator's type*/
 			typedef Iterator												iterator_type;
 			/*Preserves Iterator's category*/

@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/06 21:40:58 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/07 19:46:06 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,21 +94,27 @@ int main()
 	// }
 	{
 		int myints[] = {16,2,77,29};
-  		ft::Vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
-		std::vector<int> second ; 
+  		std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
 		std::vector<int>::iterator i1;
-		i1 = second.begin();
-		second.insert(i1, 15);
+		std::cout << "size :" << fifth.size() << std::endl;
+		i1 = fifth.begin();
+		fifth.insert(i1, 15);
+		std::cout << "size :" << fifth.size() << std::endl;
 		for (std::vector<int>::size_type i = 0; i < fifth.size(); i++) {
     		std::cout << i << ":";
     		std::cout << fifth.at(i) << ' ';
 		}
 		std::cout << std::endl;
 		std::cout << "********ft********" << std::endl;
-		ft::Vector<int> first(4,100);                              
+		ft::Vector<int> defaultf;
+		ft::Vector<int> first(myints, myints + sizeof(myints) / sizeof(int) );                              
 		ft::Vector<int>::iterator i2;
-		i2 = first.begin() + 2;
+		i2 = first.begin();
+		// i2 = defaultf.begin();
+
 		first.insert(i2, 15);
+		// defaultf.insert(i2, 15);
+
 		for (ft::Vector<int>::size_type i = 0; i < first.size(); i++) {
     		std::cout << i << ":";
     		std::cout << first.at(i) << ' ';
