@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/08 20:05:38 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/08 22:17:52 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,14 @@ namespace ft
 			} 
 
 			/*
+			** Return size of allocated storage capacity
+			*/
+		
+			size_type capacity() const{
+				return (_capacity - _start);
+			}
+
+			/*
 			** The function returns an iterator which points to the newly inserted element.
 			*/
 
@@ -297,23 +305,39 @@ namespace ft
 					int new_capacity = size_t(_capacity - _end);
 					if (size_type(_capacity - _start) < this->size() + n)
 					{
-						puts("herre");
 						new_capacity = this->size() * 2;
+						if ((size_type)new_capacity < this->size() + n)
+							new_capacity = this->size() + n;
 					}
-					else if (this->size() == 0)
-						new_capacity = n;
-					
-					// pointer start = _alloc.allocate(new_capacity);
-					// pointer end = start + this->size() + n;
-					// pointer capacity = start + new_capacity;
+					pointer start = _alloc.allocate(new_capacity);
+					pointer end = start + this->size() + n;
+					pointer capacity = start + new_capacity;
 
-					// for (size_type i = 0; i < ; i++)
-					// {
-					// 	/* code */
-					// }
-					
+					std::cout << pos_index << "cap \n";
+					std::cout << new_capacity << "cap \n";
+
+					for (size_type i = 0; i < pos_index; i++)
+					{
+						// std::cout <<  "{"<< *(_start + i) <<"}";
+						_alloc.construct(start + i, *(_start + i));
+					}
+					for (size_type i = 0; i < n ; i++)
+					{
+						// std::cout <<  "{"<< val <<"}";
+						_alloc.construct((start + pos_index + i), val);
+					}
+					for (size_type i = 0; i < (this->size() - pos_index); i++)
+					{
+						// std::cout <<  "{"<<  *(_end - i - 1) <<"}";
+						_alloc.construct(end - i - 1, *(_end - i - 1));
+					}
+					for (size_type i = 0; i < this->size(); i++)
+						_alloc.destroy(_start + i);
+
+					_start = start;
+					_end = end;
+					_capacity = capacity;
 				}
-				// return (iterator(_start));
 			} //fill
 
 			// template <class InputIterator>

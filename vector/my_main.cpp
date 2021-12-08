@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/08 20:01:14 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/08 22:15:28 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,34 +125,36 @@ int main()
 		{
 			std::cout << "********fill********" << std::endl;
     		std::vector<int> vec(4 ,100);
-    		std::vector<int>::iterator it = vec.begin();
+    		std::vector<int>::iterator it = vec.begin() + 2;
 		
     		// inserts 4 two times at front
-    		vec.insert(it, 2, 5);
+    		vec.insert(it, 10, 10);
     		std::cout << "The vector elements are: ";
+			int i = 0;
     		for (it = vec.begin(); it != vec.end(); ++it)
 			{
-				std::cout << ":";
+				std::cout <<  i++ <<":";
     		    std::cout << *it << " ";
 			}
 			std::cout << std::endl;	
+			std::cout << vec.capacity() << "cap \n";
 		}
 
 		{
 			std::cout << "********ft********" << std::endl;
     		ft::Vector<int> vec(4 ,100);
-    		ft::Vector<int>::iterator it  = vec.begin();
-    		vec.insert(it, 2, 5);
+    		ft::Vector<int>::iterator it  = vec.begin() + 2;
+    		vec.insert(it, 10, 10);
     		std::cout << "The vector elements are: ";
-    		for (it = vec.begin(); it != vec.end(); ++it){
-				std::cout <<  ":";
-    		    std::cout << *it << " ";
-			}		
-			// for (std::vector<int>::size_type i = 0; i < vec.size(); i++)
-			// {
-			// 	std::cout << i << ":";
-			// 	std::cout << vec.at(i) << ' ';
-			// }
+    		// for (it = vec.begin(); it != vec.end(); ++it){
+			// 	std::cout <<  ":";
+    		//     std::cout << *it << " ";
+			// }		
+			for (ft::Vector<int>::size_type i = 0; i < vec.size(); i++)
+			{
+				std::cout << i << ":";
+				std::cout << vec.at(i) << ' ';
+			}
 			std::cout << std::endl;
 		}
 		
