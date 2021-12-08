@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:05:49 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/05 16:36:32 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/08 16:34:28 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ namespace ft
 		pointer base() const{
 			return(this->_it);}
 			
-		reference operator*(void) const { 
+		reference operator*(void) const {
+			// puts("operator*");
 			return (*_it);}
 
 		pointer operator->(void) { 
@@ -79,6 +80,7 @@ namespace ft
 
 		// pre-increment version
 		random_access_iterator& operator++(){
+			puts("operator++\n");
 			_it++;
 			return (*this);}
 
@@ -86,16 +88,19 @@ namespace ft
 		random_access_iterator operator++(int) {
   			random_access_iterator temp = *this;
   			operator++();
-  			return temp;}
+  			return temp;
+		}
 
 		random_access_iterator& operator+=(difference_type n) {
 			_it += n;
-			return (*this);}
+			return (*this);
+		}
 
 		// pre-decrement version
 		random_access_iterator& operator--(){
 			_it--;
-			return (*this);}
+			return (*this);
+		}
 
 		// post-decrement version
 		random_access_iterator operator--(int) {

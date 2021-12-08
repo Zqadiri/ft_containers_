@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/07 21:43:44 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/08 20:05:38 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,14 +229,18 @@ namespace ft
 				return ((*this)[n]);
 			} 
 
+			/*
+			** The function returns an iterator which points to the newly inserted element.
+			*/
+
 			iterator insert (iterator position, const value_type& val)
 			{
 				
-				size_type pos_len = &(*position) - _start;
+				size_type pos_index = &(*position) - _start;
 				//* if the size of the vector is enough
 				if (size_type(_capacity - _end) >= this->size() + 1)
 				{
-					for (size_type i = 0; i < pos_len; i++)
+					for (size_type i = 0; i < pos_index; i++)
 						_alloc.construct(_end - i, *(_end - i - 1));
 					_end++;
 					_alloc.construct(&(*position), val);
@@ -258,12 +262,11 @@ namespace ft
 					end = start + this->size() + 1;
 					capacity = start + new_capacity;
 
-					for (size_type i = 0; i < pos_len; i++)
+					for (size_type i = 0; i < pos_index; i++)
 						_alloc.construct(start + i, *(_start + i));
-					_alloc.construct(start + pos_len, val);
-					// for (size_type i = 0; i < this->size() - pos_len; i++)
-					// 	_alloc.construct(end - i - 1, *(_end - i - 1));
-
+					_alloc.construct(start + pos_index, val);
+					for (size_type i = 0; i < this->size() - pos_index; i++)
+						_alloc.construct(end - i - 1, *(_end - i - 1));
 					for (size_type i = 0; i < this->size(); i++)
 						_alloc.destroy(_start + i);
 					
@@ -271,13 +274,50 @@ namespace ft
 					_end = end;
 					_capacity = capacity;
 				}
-				return (iterator(_start));
+				return (iterator(_start + pos_index));
 			}
 			
-			void insert (iterator position, size_type n, const value_type& val); //fill
+			void insert (iterator position, size_type n, const value_type& val)
+			{
+				size_type pos_index = &(*position) - _start;
+				std::cout << (_capacity - _end) << "  current space left\n";
+				if (size_type(_capacity - _end) >= this->size() + n + 1)
+				{
+					for (size_type i = 0; i < pos_index; i++)
+						_alloc.construct(_end - i, *(_end - i - 1));
+					_end++;
+					for (size_type i = 0; i < n; i++)
+					{
+						_alloc.construct(&(*position), val);
+						position++;
+					}	
+				}
+				else
+				{
+					int new_capacity = size_t(_capacity - _end);
+					if (size_type(_capacity - _start) < this->size() + n)
+					{
+						puts("herre");
+						new_capacity = this->size() * 2;
+					}
+					else if (this->size() == 0)
+						new_capacity = n;
+					
+					// pointer start = _alloc.allocate(new_capacity);
+					// pointer end = start + this->size() + n;
+					// pointer capacity = start + new_capacity;
 
-			template <class InputIterator>
-		    void insert (iterator position, InputIterator first, InputIterator last); //range
+					// for (size_type i = 0; i < ; i++)
+					// {
+					// 	/* code */
+					// }
+					
+				}
+				// return (iterator(_start));
+			} //fill
+
+			// template <class InputIterator>
+		    // void insert (iterator position, InputIterator first, InputIterator last); //range
 
 			//! ------------------------- Assign.Operator ------------------------!//
 			
