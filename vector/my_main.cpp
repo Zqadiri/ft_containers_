@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/08 22:15:28 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/08 23:25:41 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,49 @@ int main()
 		// 	std::cout << std::endl;
 		// 	std::cout << std::endl;
 		// }
+		{
+			std::vector<int> myvector (5);  // 5 default-constructed ints
 
+  			std::vector<int>::reverse_iterator rit = myvector.rbegin();
+			
+  			int i=0;
+  			for (rit = myvector.rbegin(); rit!= myvector.rend(); ++rit)
+  			  *rit = ++i;
+			
+  			std::cout << "myvector contains:";
+  			for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+  			  std::cout << ' ' << *it;
+  			std::cout << '\n';
+		}
+		{
+			ft::Vector<int> myvector (5);  // 5 default-constructed ints
+
+			ft::Vector<int>::reverse_iterator rit = myvector.rbegin();
+
+			int i=0;
+			for (rit = myvector.rbegin(); rit!= myvector.rend(); ++rit)
+			*rit = ++i;
+
+			std::cout << "myvector contains:";
+			for (ft::Vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+				std::cout << ' ' << *it;
+			std::cout << '\n';
+		}
+		// {
+		// 	ft::Vector<int> v;
+    	// 	v.push_back(11);
+    	// 	v.push_back(12);
+    	// 	v.push_back(13);
+    	// 	v.push_back(14);
+    	// 	v.push_back(15);
+		
+    	// 	std::cout << "The last element is: " << *v.rbegin();
+		
+    	// 	// prints all the elements
+    	// 	std::cout << "\nThe vector elements in reverse order are:\n";
+    	// 	for (ft::Vector<int>::iterator it = v.rbegin(); it != v.rend(); it++)
+      	// 	 cout << *it << " ";
+		// }
     	return 0;
 	// }
 }

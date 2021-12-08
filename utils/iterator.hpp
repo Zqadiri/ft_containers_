@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 19:10:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/08 16:23:25 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/08 23:25:12 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ namespace ft
 			//?----------- Public Member Function --------?//
 
 		/*
-		TODO:Return base iterator
+		TODO: Return base iterator
 		** Returns a copy of the base iterator
 		*/
 
@@ -140,16 +140,16 @@ namespace ft
 
 		//pre-increment version
 		reverse_iterator& operator++(){
-			reverse_iterator temp;
-			--(*temp);
-			return temp;
+			// reverse_iterator temp;
+			--(*this);
+			return (*this);
 		}
 
 		//post-increment version returns the value *this had before the call.
 		reverse_iterator operator++(int){
 			reverse_iterator temp = *this;
 			++(*this);
-			return temp;
+			return (temp);
 		}
 	
 		/*
@@ -181,9 +181,9 @@ namespace ft
 
 		// pre-decrement version
 		reverse_iterator& operator--(){
-			reverse_iterator temp;
-			++(*temp);
-			return temp;
+			// reverse_iterator temp;
+			++(*this);
+			return (*this);
 		}
 
 		// post-decrement version

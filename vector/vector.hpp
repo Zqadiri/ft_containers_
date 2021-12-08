@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/08 22:17:52 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/08 23:15:15 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,42 @@ namespace ft
 			}
 
 			/*
+			** Returns a copy of the allocator object associated with the vector.
+			*/
+		
+			// allocator_type get_allocator() const
+			// {
+			// 	allocator_type ret(_alloc);
+			// 	return (ret);
+			// }
+
+			/*
+			** Return reverse iterator to reverse beginning
+			** rbegin points to the element right before the one that would be pointed to by member end.	
+			*/
+
+			reverse_iterator rbegin() {
+				return (reverse_iterator(this->end()));
+			}
+			
+			const_reverse_iterator rbegin() const{
+				return (reverse_iterator(this->end()));		
+			}
+			
+			/*
+			** Returns a reverse iterator pointing to the theoretical element preceding the first element in the vector
+			*/
+
+			reverse_iterator rend(){
+				return (reverse_iterator(this->begin()));		
+			}
+			
+			const_reverse_iterator rend() const{
+				return (reverse_iterator(this->begin()));		
+			}
+			
+			
+			/*
 			** The function returns an iterator which points to the newly inserted element.
 			*/
 
@@ -341,7 +377,12 @@ namespace ft
 			} //fill
 
 			// template <class InputIterator>
-		    // void insert (iterator position, InputIterator first, InputIterator last); //range
+		    // void insert (iterator position, InputIterator first, InputIterator last){
+			// 	(void) position;
+			// 	(void)first;
+			// 	(void)last;
+				
+			// } //range
 
 			//! ------------------------- Assign.Operator ------------------------!//
 			
