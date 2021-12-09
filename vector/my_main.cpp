@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/08 23:25:41 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/09 17:06:05 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,116 +122,110 @@ int main()
 	// 		std::cout << std::endl;
 
 
-		{
-			std::cout << "********fill********" << std::endl;
-    		std::vector<int> vec(4 ,100);
-    		std::vector<int>::iterator it = vec.begin() + 2;
+		// {
+		// 	std::cout << "********fill********" << std::endl;
+    	// 	std::vector<int> vec(4 ,100);
+    	// 	std::vector<int>::iterator it = vec.begin() + 2;
 		
-    		// inserts 4 two times at front
-    		vec.insert(it, 10, 10);
-    		std::cout << "The vector elements are: ";
-			int i = 0;
-    		for (it = vec.begin(); it != vec.end(); ++it)
-			{
-				std::cout <<  i++ <<":";
-    		    std::cout << *it << " ";
-			}
-			std::cout << std::endl;	
-			std::cout << vec.capacity() << "cap \n";
-		}
+    	// 	// inserts 4 two times at front
+    	// 	vec.insert(it, 10, 10);
+    	// 	std::cout << "The vector elements are: ";
+		// 	int i = 0;
+    	// 	for (it = vec.begin(); it != vec.end(); ++it)
+		// 	{
+		// 		std::cout <<  i++ <<":";
+    	// 	    std::cout << *it << " ";
+		// 	}
+		// 	std::cout << std::endl;	
+		// 	std::cout << vec.capacity() << "cap \n";
+		// }
 
+		// {
+		// 	std::cout << "********ft********" << std::endl;
+    	// 	ft::Vector<int> vec(4 ,100);
+    	// 	ft::Vector<int>::iterator it  = vec.begin() + 2;
+    	// 	vec.insert(it, 10, 10);
+    	// 	std::cout << "The vector elements are: ";
+    	// 	// for (it = vec.begin(); it != vec.end(); ++it){
+		// 	// 	std::cout <<  ":";
+    	// 	//     std::cout << *it << " ";
+		// 	// }		
+		// 	for (ft::Vector<int>::size_type i = 0; i < vec.size(); i++)
+		// 	{
+		// 		std::cout << i << ":";
+		// 		std::cout << vec.at(i) << ' ';
+		// 	}
+		// 	std::cout << std::endl;
+		// }
+		
 		{
-			std::cout << "********ft********" << std::endl;
-    		ft::Vector<int> vec(4 ,100);
-    		ft::Vector<int>::iterator it  = vec.begin() + 2;
-    		vec.insert(it, 10, 10);
-    		std::cout << "The vector elements are: ";
-    		// for (it = vec.begin(); it != vec.end(); ++it){
-			// 	std::cout <<  ":";
-    		//     std::cout << *it << " ";
-			// }		
-			for (ft::Vector<int>::size_type i = 0; i < vec.size(); i++)
+		
+			std::vector<int> vec1(4, 100);
+			std::vector<int> v(5, 200);
+		
+			// inserts at the beginning of v
+			v.insert(v.begin() + 2, vec1.begin(), vec1.end());
+			std::cout << "*" <<v.capacity()<< std::endl;
+			for (std::vector<int>::size_type i = 0; i < v.size(); i++)
 			{
 				std::cout << i << ":";
-				std::cout << vec.at(i) << ' ';
+				std::cout << v.at(i) << ' ';
+			}
+			std::cout << std::endl;
+			std::cout << std::endl;
+		}
+		{
+			std::cout << "********ft********" << std::endl;
+		
+			ft::Vector<int> vec1(4, 100);
+			ft::Vector<int> v(5,200);
+		
+			v.insert(v.begin() + 2, vec1.begin(), vec1.end());
+		
+			for (ft::Vector<int>::size_type i = 0; i < v.size(); i++)
+			{
+				std::cout << i << ":";
+				std::cout << v.at(i) << ' ';
 			}
 			std::cout << std::endl;
 		}
 		
 		// {
-		
-		// 	std::vector<int> vec1(4, 100);
-		// 	std::vector<int> v;
-		
-		// 	// inserts at the beginning of v
-		// 	v.insert(v.begin(), vec1.begin(), vec1.end());
-		
-		// 	for (std::vector<int>::size_type i = 0; i < v.size(); i++)
-		// 	{
-		// 		std::cout << i << ":";
-		// 		std::cout << v.at(i) << ' ';
-		// 	}
-		// 	std::cout << std::endl;
-		// 	std::cout << std::endl;
-		// }
-		// {
-		// 	std::cout << "********ft********" << std::endl;
-		
-		// 	ft::Vector<int> vec1(4, 100);
-		// 	ft::Vector<int> v;
-		
-		// 	v.insert(v.begin(), vec1.begin(), vec1.end());
-		
-		// 	for (ft::Vector<int>::size_type i = 0; i < v.size(); i++)
-		// 	{
-		// 		std::cout << i << ":";
-		// 		std::cout << v.at(i) << ' ';
-		// 	}
-		// 	std::cout << std::endl;
-		// 	std::cout << std::endl;
-		// }
-		{
-			std::vector<int> myvector (5);  // 5 default-constructed ints
+		// 	std::vector<int> myvector (5);
 
-  			std::vector<int>::reverse_iterator rit = myvector.rbegin();
+  		// 	std::vector<int>::reverse_iterator rit = myvector.rbegin();
+
+  		// 	int i=0;
+  		// 	for (rit = myvector.rbegin(); rit!= myvector.rend(); ++rit)
+  		// 	  *rit = ++i;
 			
-  			int i=0;
-  			for (rit = myvector.rbegin(); rit!= myvector.rend(); ++rit)
-  			  *rit = ++i;
-			
-  			std::cout << "myvector contains:";
-  			for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
-  			  std::cout << ' ' << *it;
-  			std::cout << '\n';
-		}
-		{
-			ft::Vector<int> myvector (5);  // 5 default-constructed ints
-
-			ft::Vector<int>::reverse_iterator rit = myvector.rbegin();
-
-			int i=0;
-			for (rit = myvector.rbegin(); rit!= myvector.rend(); ++rit)
-			*rit = ++i;
-
-			std::cout << "myvector contains:";
-			for (ft::Vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
-				std::cout << ' ' << *it;
-			std::cout << '\n';
-		}
+		// 	// std::cout << "rb: " << *(myvector.rbegin()) << std::endl;
+		// 	// std::cout << "b: "  << *(myvector.begin()) << std::endl;
+		// 	// std::cout << "re: " << *(myvector.rend()) << std::endl;
+		// 	// std::cout << "e: " << *(myvector.end()) << std::endl;
+  		// 	std::cout << "myvector contains:";
+  		// 	for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+  		// 	  std::cout << ' ' << *it;
+  		// 	std::cout << '\n';
+		// }
+		
 		// {
-		// 	ft::Vector<int> v;
-    	// 	v.push_back(11);
-    	// 	v.push_back(12);
-    	// 	v.push_back(13);
-    	// 	v.push_back(14);
-    	// 	v.push_back(15);
-		
-    	// 	std::cout << "The last element is: " << *v.rbegin();
-		
-    	// 	// prints all the elements
-    	// 	std::cout << "\nThe vector elements in reverse order are:\n";
-    	// 	for (ft::Vector<int>::iterator it = v.rbegin(); it != v.rend(); it++)
-      	// 	 cout << *it << " ";
+		// 	ft::Vector<int> myvector (5);
+
+		// 	ft::Vector<int>::reverse_iterator rit;
+
+		// 	int i=0;
+		// 	for (rit = myvector.rbegin(); rit!= myvector.rend(); ++rit)
+		// 		*rit = ++i;
+		// 	// std::cout << "rb: " << *(myvector.rbegin()) << std::endl;
+		// 	// std::cout << "b: "  << *(myvector.begin()) << std::endl;
+		// 	// std::cout << "re: " << *(myvector.rend()) << std::endl;
+		// 	// std::cout << "e: " << *(myvector.end()) << std::endl;
+		// 	myvector.insert(myvector.begin(), 1, 6);
+		// 	std::cout << "myvector contains:";
+		// 	for (ft::Vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		// 		std::cout << "*  " << *it;
+		// 	std::cout << '\n';
 		// }
     	return 0;
 	// }

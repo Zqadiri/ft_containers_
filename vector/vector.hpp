@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/08 23:15:15 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/09 17:23:45 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ namespace ft
 				const allocator_type& alloc = allocator_type())
 			:_alloc(alloc)
 			{
-				std::cout << "fill constructor " << n <<std::endl;
 				if (n)
 				{
 					_start = _alloc.allocate(n);
 					_end = _start;
 					for(size_t i = 0; i < n; i++)
 					{
+						// std::cout << "fill constructor " << val <<std::endl;
 						_alloc.construct(_end, val);
 						_end++;
 					}
@@ -181,12 +181,12 @@ namespace ft
 			*/
 
 			iterator end(){
-				if (this->size())
+				if (this->size() == 0)
 					return (_start);
 				return(_end);
 			}
 			const_iterator end() const{
-				if (this->size())
+				if (this->size() == 0)
 					return (_start);
 				return (this->_end);
 			}
@@ -241,11 +241,11 @@ namespace ft
 			** Returns a copy of the allocator object associated with the vector.
 			*/
 		
-			// allocator_type get_allocator() const
-			// {
-			// 	allocator_type ret(_alloc);
-			// 	return (ret);
-			// }
+			allocator_type get_allocator() const
+			{
+				allocator_type ret(_alloc);
+				return (ret);
+			}
 
 			/*
 			** Return reverse iterator to reverse beginning
@@ -277,11 +277,16 @@ namespace ft
 			** The function returns an iterator which points to the newly inserted element.
 			*/
 
+			/*destroy() - "destroys" data on a memory location which makes the object 
+			not usable,but the memory is still there for use(the object can be constructed again)*/
+
+			/*deallocate() - "deallocates" the memory location where the object was, so that the 
+			storage is not usable for constructing the object on this location again. enter code here*/
+			
 			iterator insert (iterator position, const value_type& val)
 			{
 				
 				size_type pos_index = &(*position) - _start;
-				//* if the size of the vector is enough
 				if (size_type(_capacity - _end) >= this->size() + 1)
 				{
 					for (size_type i = 0; i < pos_index; i++)
@@ -291,7 +296,6 @@ namespace ft
 				}
 				else
 				{
-					//* allocate new one
 					pointer start;
 					pointer end;
 					pointer capacity;
@@ -301,7 +305,6 @@ namespace ft
 						new_capacity = (this->size() * 2);
 					else
 						new_capacity = 1; 
-					////std::cout << new_capacity << std::endl;
 					start = _alloc.allocate(new_capacity);
 					end = start + this->size() + 1;
 					capacity = start + new_capacity;
@@ -313,7 +316,7 @@ namespace ft
 						_alloc.construct(end - i - 1, *(_end - i - 1));
 					for (size_type i = 0; i < this->size(); i++)
 						_alloc.destroy(_start + i);
-					
+					_alloc.deallocate(_start, this->capacity());
 					_start = start;
 					_end = end;
 					_capacity = capacity;
@@ -369,20 +372,70 @@ namespace ft
 					}
 					for (size_type i = 0; i < this->size(); i++)
 						_alloc.destroy(_start + i);
-
+					_alloc.deallocate(_start, this->capacity());
 					_start = start;
 					_end = end;
 					_capacity = capacity;
 				}
 			} //fill
 
-			// template <class InputIterator>
-		    // void insert (iterator position, InputIterator first, InputIterator last){
-			// 	(void) position;
-			// 	(void)first;
-			// 	(void)last;
-				
-			// } //range
+			template <class InputIterator>
+			void insert (iterator position, InputIterator first, InputIterator last
+			,typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
+			{
+				puts("range \n");
+				size_type n = &(*last) - &(*first);
+				size_type pos_index = &(*position) - _start;
+				// std::cout <<  "n : " << n << std::endl;
+				// std::cout <<  "pos_index : " << pos_index << std::endl;
+				if (size_type(_capacity - _end) >= this->size() + n + 1)
+				{
+					
+				}
+				else
+				{
+					int new_capacity = 0;
+					if (this->size() == 0)
+						new_capacity = n;
+					else if (size_type(_capacity - _start) < this->size() + n)
+					{
+						new_capacity = this->size() * 2;
+						if ((size_type)new_capacity < this->size() + n)
+							new_capacity = this->size() + n;
+					}
+
+					pointer start = _alloc.allocate(new_capacity);
+					pointer end = start + this->size() + n;
+					pointer capacity = start + new_capacity;
+					
+					// std::cout <<  "cap : " << new_capacity << std::endl;
+					for (size_type i = 0; i < pos_index; i++)
+					{
+						// std::cout <<  "{"<< *(_start + i) <<"}";
+						_alloc.construct(start + i, *(_start + i));
+					}
+					
+					for (size_type i = 0; i < n; i++)
+					{
+						// std::cout <<  "{"<< *first <<"}";
+						_alloc.construct((start + pos_index + i), *(first++));
+					}
+					
+					for (size_type i = 0; i < (this->size() - pos_index); i++)
+					{
+						// std::cout <<  "{"<<  *(_end - i - 1) <<"}";
+						_alloc.construct(end - i - 1, *(_end - i - 1));
+					}
+					for (size_type i = 0; i < this->size(); i++)
+						_alloc.destroy(_start + i);
+					_alloc.deallocate(_start, this->capacity());
+					_start = start;
+					_end = end;
+					_capacity = capacity;
+					
+				}
+
+			} //range
 
 			//! ------------------------- Assign.Operator ------------------------!//
 			

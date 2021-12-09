@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 19:10:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/08 23:25:12 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/09 15:12:08 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ namespace ft
 		public :
 
 			/*Iterator's type*/
-			typedef Iterator												iterator_type;
+			typedef Iterator													iterator_type;
 			/*Preserves Iterator's category*/
 			typedef	typename ft::iterator_traits<Iterator>::iterator_category	iterator_category;
 			/*Preserves Iterator's value type*/
@@ -141,7 +141,7 @@ namespace ft
 		//pre-increment version
 		reverse_iterator& operator++(){
 			// reverse_iterator temp;
-			--(*this);
+			--(_it);
 			return (*this);
 		}
 
@@ -181,8 +181,7 @@ namespace ft
 
 		// pre-decrement version
 		reverse_iterator& operator--(){
-			// reverse_iterator temp;
-			++(*this);
+			++(_it);
 			return (*this);
 		}
 

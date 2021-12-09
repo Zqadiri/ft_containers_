@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:05:49 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/08 16:34:28 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/09 15:08:11 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,19 @@ namespace ft
 		//?------------Member types--------------?//
 
 		/* Category of the iterator. */
-		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::iterator_category     iterator_category;
+		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::iterator_category		iterator_category;
 		
 		/* Type of elements pointed. */
-		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::value_type            value_type;
+		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::value_type			value_type;
 		
 		/* Type to represent the difference between two iterators. */
-		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::difference_type       difference_type;
+		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::difference_type		difference_type;
 		
 		/* Type to represent a pointer to an element pointed */
-		typedef T*               pointer;
+		typedef T*																				pointer;
 		
 		/* Type to represent a reference to an element pointed */
-		typedef T&             reference;
+		typedef T&																				reference;
 	
 		//?------------- Constructors --------------?//
 
@@ -80,7 +80,6 @@ namespace ft
 
 		// pre-increment version
 		random_access_iterator& operator++(){
-			puts("operator++\n");
 			_it++;
 			return (*this);}
 
