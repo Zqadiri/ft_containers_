@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/09 17:06:05 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/09 20:17:41 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,22 @@ int main()
 				std::cout << i << ":";
 				std::cout << v.at(i) << ' ';
 			}
+			// try {
+  			//   v.at(100)=100;      // vector::at throws an out-of-range
+  			// }
+  			// catch (const std::out_of_range& oor) {
+  			//   std::cerr << "Out of Range error: " << oor.what() << '\n';
+  			// }
+			// v.clear();
 			std::cout << std::endl;
+			
+			v.erase(v.begin() + 2);
+			for (std::vector<int>::size_type i = 0; i < v.size(); i++)
+			{
+				std::cout << i << ":";
+				std::cout << v.at(i) << ' ';
+			}
+			std::cout << "size: " << v.capacity();
 			std::cout << std::endl;
 		}
 		{
@@ -187,6 +202,23 @@ int main()
 				std::cout << i << ":";
 				std::cout << v.at(i) << ' ';
 			}
+			// try {
+  			//   v.at(100)=100;      // vector::at throws an out-of-range
+  			// }
+  			// catch (const std::out_of_range& oor) {
+  			//   std::cerr << "Out of Range error: " << oor.what() << '\n';
+  			// }
+			// v.clear();
+			std::cout << std::endl;
+
+			v.erase(v.begin() + 2);
+			for (std::vector<int>::size_type i = 0; i < v.size(); i++)
+			{
+				std::cout << i << ":";
+				std::cout << v.at(i) << ' ';
+			}
+			std::cout << "size: " << v.capacity();
+
 			std::cout << std::endl;
 		}
 		

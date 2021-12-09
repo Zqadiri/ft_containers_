@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/09 17:23:45 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/09 20:21:36 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,15 @@ namespace ft
 
 			//! ------------------------- Destructor ------------------------ !//
 			
+			/*
+			TODO: Destructor
+			** Destroy the container object.
+			** Destroy all elements in the container and deallocate
+			** the container capacity.
+			*/ 
 			~Vector(){
+				this->clear();
+				_alloc.deallocate(_start, this->capacity());
 			}
 			
 			//!------------------------- Member functions -----------------------!//
@@ -224,10 +232,6 @@ namespace ft
 			reference operator[] (size_type n) {
 				return (*(_start + n));
 			}
-			
-			reference at (size_type n){
-				return ((*this)[n]);
-			} 
 
 			/*
 			** Return size of allocated storage capacity
@@ -437,6 +441,75 @@ namespace ft
 
 			} //range
 
+			/*
+			TODO: Access element
+			**Returns a reference to the element at position n in the vector.
+			*/
+
+			reference at (size_type n){
+				if (n >= this->size())
+					throw (std::out_of_range("vector"));
+				return ((*this)[n]);
+			} 
+			
+			const_reference at (size_type n) const{
+				if (n >= this->size())
+					throw (std::out_of_range("vector"));
+				return ((*this)[n]);
+			}
+
+			/*
+			** std::vector<t>::clear often doesn't actually reduce the storage used by a 
+			** vector, it merely destroys all the objects contained there.
+			*/
+
+			void clear(){
+				if (this->size() == 0)
+					return;
+				size_type tmp = this->size();
+				for (size_type i = 0; i < tmp; i++)
+				{
+					_alloc.destroy(_end);
+					_end--;
+				}
+				// std::cout << "size: " <<this->size();
+			}
+			
+			iterator erase (iterator position){
+				size_type diff = &(*position) - _start;
+				pointer start = _alloc.allocate(this->capacity());
+				pointer end = start + this->size() - 1;
+				if (diff <= this->size())
+				{
+					puts("out");
+					int index = 0;
+					for (size_type i = 0; i < diff; i++)
+					{
+							std::cout << i << "*   ";
+							index = i;
+							_alloc.construct((start + i), *(_start + i));
+					}
+					diff++;	
+					index++;
+					std::cout << index << "index ";
+					for (size_type i = index; i < this->size() - 1 ; i++)
+					{
+						std::cout << i << "*   ";
+						_alloc.construct((start + index), *(_start + diff));
+						index++;
+						diff++;
+					}
+				} 
+				_start = start;
+				_end = end;
+				return (iterator(_start));
+			}
+			
+			// iterator erase (iterator first, iterator last){
+				
+			// }
+
+			
 			//! ------------------------- Assign.Operator ------------------------!//
 			
 			Vector& operator= (const Vector& x){
