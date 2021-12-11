@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/09 20:21:36 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/10 22:15:26 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -391,9 +391,11 @@ namespace ft
 				size_type n = &(*last) - &(*first);
 				size_type pos_index = &(*position) - _start;
 				// std::cout <<  "n : " << n << std::endl;
-				// std::cout <<  "pos_index : " << pos_index << std::endl;
 				if (size_type(_capacity - _end) >= this->size() + n + 1)
 				{
+					
+
+
 					
 				}
 				else
@@ -408,6 +410,7 @@ namespace ft
 							new_capacity = this->size() + n;
 					}
 
+					std::cout <<  "new_capacity : " << new_capacity << std::endl;
 					pointer start = _alloc.allocate(new_capacity);
 					pointer end = start + this->size() + n;
 					pointer capacity = start + new_capacity;
@@ -436,7 +439,6 @@ namespace ft
 					_start = start;
 					_end = end;
 					_capacity = capacity;
-					
 				}
 
 			} //range
@@ -474,41 +476,55 @@ namespace ft
 				}
 				// std::cout << "size: " <<this->size();
 			}
-			
-			iterator erase (iterator position){
-				size_type diff = &(*position) - _start;
-				pointer start = _alloc.allocate(this->capacity());
-				pointer end = start + this->size() - 1;
-				if (diff <= this->size())
+
+			/*
+			** Remove element from the vector at "position".
+			** Reduce the size of 1;
+			** Return value : an iterator point to the element position + 1
+			*/
+
+			iterator erase (iterator position)
+			{
+				pointer pos = &(*position);
+				_alloc.destroy(&(*position));
+				for (int i = 0; i < _end - &(*position) - 1; i++)
 				{
-					puts("out");
-					int index = 0;
-					for (size_type i = 0; i < diff; i++)
-					{
-							std::cout << i << "*   ";
-							index = i;
-							_alloc.construct((start + i), *(_start + i));
-					}
-					diff++;	
-					index++;
-					std::cout << index << "index ";
-					for (size_type i = index; i < this->size() - 1 ; i++)
-					{
-						std::cout << i << "*   ";
-						_alloc.construct((start + index), *(_start + diff));
-						index++;
-						diff++;
-					}
-				} 
-				_start = start;
-				_end = end;
-				return (iterator(_start));
+					_alloc.construct(&(*position) + i, *(&(*position) + i + 1));
+					_alloc.destroy(&(*position) + i + 1);
+				}
+				_end -= 1;
+				return (iterator(pos));
 			}
 			
-			// iterator erase (iterator first, iterator last){
-				
-			// }
+			iterator erase (iterator first, iterator last)
+			{
+				size_t start_pos = _end - &(*last);
+				pointer last_pointer = &(*last) ;
+				pointer first_pointer = &(*first);
+				for (size_t i = 0; i < start_pos; i++)
+				{
+					_alloc.construct((first_pointer + i), *(last_pointer + i));
+					_alloc.destroy((last_pointer + i));
+				}
+				_end -= (&(*last) - first_pointer);
+				return (iterator(first_pointer));	
+			}
+			
+			/*
+			** Removes the last element in the vector, effectively reducing the container size by one.
+			*/
+		
+			void pop_back(){
+				if (!this->empty())
+					this->erase(_end);
+			}
 
+			/*
+			** Adds a new element at the end of the vector, after its current last element.
+			*/
+			void push_back (const value_type& val){
+				this->insert(_end, val);
+			}
 			
 			//! ------------------------- Assign.Operator ------------------------!//
 			

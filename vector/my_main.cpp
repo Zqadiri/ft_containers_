@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/09 20:17:41 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/10 22:15:52 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,13 +180,16 @@ int main()
 			// v.clear();
 			std::cout << std::endl;
 			
-			v.erase(v.begin() + 2);
+			v.erase(v.begin());
+			v.pop_back();
+			v.push_back(99);
+
 			for (std::vector<int>::size_type i = 0; i < v.size(); i++)
 			{
 				std::cout << i << ":";
 				std::cout << v.at(i) << ' ';
 			}
-			std::cout << "size: " << v.capacity();
+			std::cout << "size: " << v.size();
 			std::cout << std::endl;
 		}
 		{
@@ -210,18 +213,52 @@ int main()
   			// }
 			// v.clear();
 			std::cout << std::endl;
+			v.erase(v.begin());
+			v.pop_back();
+			v.push_back(99);
 
-			v.erase(v.begin() + 2);
 			for (std::vector<int>::size_type i = 0; i < v.size(); i++)
 			{
 				std::cout << i << ":";
 				std::cout << v.at(i) << ' ';
 			}
-			std::cout << "size: " << v.capacity();
 
+			std::cout << "size: " << v.size();
 			std::cout << std::endl;
 		}
+	
+		// iterator erase (iterator position)
+		// {
+		// 	pointer p_pos = &(*position);
+		// 	_alloc.destroy(&(*position));
+		// 	if (&(*position) + 1 == _end)
+		// 		_alloc.destroy(&(*position));
+		// 	else
+		// 	{
+		// 		for (int i = 0; i < _end - &(*position) - 1; i++)
+		// 		{
+		// 			_alloc.construct(&(*position) + i, *(&(*position) + i + 1));
+		// 			_alloc.destroy(&(*position) + i + 1);
+		// 		}
+		// 	}
+		// 	_end -= 1;
+		// 	return (iterator(p_pos));
+		// }
 		
+		// iterator erase (iterator first, iterator last)
+		// {
+		// 	pointer p_first = &(*first);
+		// 	for (; &(*first) != &(*last); first++)
+		// 		_alloc.destroy(&(*first));
+		// 	for (int i = 0; i < _end - &(*last); i++)
+		// 	{
+		// 		_alloc.construct(p_first + i, *(&(*last) + i));
+		// 		_alloc.destroy(&(*last) + i);
+		// 	}
+		// 	_end -= (&(*last) - p_first);
+		// 	return (iterator(p_first));
+		// }
+	
 		// {
 		// 	std::vector<int> myvector (5);
 
