@@ -64,6 +64,12 @@
         "tuple": "cpp",
         "type_traits": "cpp",
         "typeinfo": "cpp",
-        "__memory": "cpp"
-    }
+        "__memory": "cpp",
+        "iomanip": "cpp",
+        "numeric": "cpp",
+        "random": "cpp",
+        "set": "cpp",
+        "memory_resource": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }

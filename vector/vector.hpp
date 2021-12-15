@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/15 14:15:20 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/15 23:54:54 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,6 @@ namespace ft
 				*this = x;
 			}
 
-
-
 			//! ------------------------- Destructor ------------------------ !//
 			
 			/*
@@ -231,7 +229,7 @@ namespace ft
 			** the container size by the number of elements inserted
 			*/
 
-			reference operator[] (size_type n) {
+			reference operator[] (size_type n) const {
 				return (*(_start + n));
 			}
 
@@ -291,13 +289,10 @@ namespace ft
 			
 			iterator insert (iterator position, const value_type& val)
 			{
-				// for (size_t i=0;i<this->size();i++)
-					// std::cout << ' ' << this->at(i);
 				size_type save = _end - &(*position);
 				size_type pos_index = _end - &(*position);
 				if (this->capacity() >= this->size() + 1)
 				{
-					// std::cout << "["<< val << "]" ;
 					for (size_type i = 0; i < pos_index; i++)
 						_alloc.construct(_end - i, *(_end - i - 1));
 					_end++;
@@ -305,7 +300,6 @@ namespace ft
 				}
 				else
 				{
-					// std::cout << "{"<< val << "}" ;
 					pointer start;
 					pointer end;
 					pointer capacity;
@@ -336,24 +330,20 @@ namespace ft
 			
 			void insert (iterator position, size_type n, const value_type& val)
 			{
-
 				size_type pos_index = &(*position) - _start;
-				if (this->capacity() >= this->size() + n + 1)
+				if (this->capacity() >= this->size() + n)
 				{
 					for (size_type i = 0; i < pos_index; i++)
 						_alloc.construct(_end - i, *(_end - i - 1));
 					_end++;
 					for (size_type i = 0; i < n; i++)
-					{
-						_alloc.construct(&(*position), val);
-						position++;
-					}	
+						this->insert(position, val);
 				}
 				else
 				{
 					int new_capacity = size_t(_capacity - _end);
 					if (this->size() == 0)
-						new_capacity = 1; 
+						new_capacity = n; 
 					else if (size_type(_capacity - _start) < this->size() + n)
 					{
 						new_capacity = this->size() * 2;
@@ -379,8 +369,8 @@ namespace ft
 			} //fill
 
 			template <class InputIterator>
-			void insert (iterator position, InputIterator first, InputIterator last
-			,typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
+			void insert (iterator position, InputIterator first, InputIterator last,
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
 			{
 				// puts("in");
 				
@@ -570,18 +560,14 @@ namespace ft
 				this->_end = end_tmp;
 				this->_capacity = tmp_capacity;
 				this->_alloc = tmp_alloc;
-				
-				// tmp = this->insert(tmp.begin(), x.begin(), x.end());
 			}
 
 			/*
 			**
 			*/
 		
-			void        resize (size_type n, value_type val = value_type())
+			void	resize (size_type n, value_type val = value_type())
 			{
-				std::cout << (n - this->size()) << std::endl;
-				std::cout << this->size() << std::endl;
 				if (n > this->max_size())
 					throw (std::length_error("vector::resize"));
 				else if (n < this->size())
@@ -589,9 +575,25 @@ namespace ft
 					while (this->size() > n)
 						this->erase(_end);
 				}
-				else
-						this->insert(this->end(), n - this->size(),val);
+				else if (this->capacity() >= n)
+				{
+					while (this->size() < n)
+						this->insert(_end, val);
+				}
+				else{
+					this->insert(_end, n - this->size(),val);
+				}
 			}
+
+			// template <class InputIterator>
+  			// void assign (InputIterator first, InputIterator last)
+			// {
+
+			// }
+			// void assign (size_type n, const value_type& val)
+			// {
+				
+			// }
 
 			//! ------------------------- Assign.Operator ------------------------!//
 
@@ -618,6 +620,38 @@ namespace ft
 				pointer			_end;
 				pointer			_capacity;
 	};
+
+	template <class T, class Alloc>
+	bool operator== (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs){
+		if (lhs.size() != rhs.size())
+			return false;
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+	}
+
+	template <class T, class Alloc>
+	bool operator!= (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs){
+		return (!(lhs == rhs));
+	}
+	
+	template <class T, class Alloc>
+	bool operator<  (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs){
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
+
+	template <class T, class Alloc>
+	bool operator<= (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs){
+		return (!(rhs < lhs));
+	}
+	
+	template <class T, class Alloc>
+	bool operator>  (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs){
+		return (rhs < lhs);
+	}
+
+	template <class T, class Alloc>
+	bool operator>= (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs){
+		return (!(lhs < rhs));	
+	}
 }
 
 #endif

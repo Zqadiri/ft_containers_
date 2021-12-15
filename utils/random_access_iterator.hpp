@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:05:49 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/15 13:30:48 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/15 19:07:43 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@
 namespace ft
 {
 	template <typename T>
-	class random_access_iterator : public ft::iterator<ft::random_access_iterator_tag, T>
+	class random_access_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 	{
 		public:
 
 		//?------------Member types--------------?//
 
 		/* Category of the iterator. */
-		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::iterator_category		iterator_category;
+		typedef typename ft::iterator<std::random_access_iterator_tag, T>::iterator_category		iterator_category;
 		
 		/* Type of elements pointed. */
-		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::value_type			value_type;
+		typedef typename ft::iterator<std::random_access_iterator_tag, T>::value_type			value_type;
 		
 		/* Type to represent the difference between two iterators. */
-		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::difference_type		difference_type;
+		typedef typename ft::iterator<std::random_access_iterator_tag, T>::difference_type		difference_type;
 		
 		/* Type to represent a pointer to an element pointed */
 		typedef T*																				pointer;
