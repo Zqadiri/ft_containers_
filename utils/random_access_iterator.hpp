@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:05:49 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/10 16:01:48 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/15 13:30:48 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,32 @@ namespace ft
 		
 		/* Type to represent a reference to an element pointed */
 		typedef T&																				reference;
-	
 		//?------------- Constructors --------------?//
 
-		random_access_iterator(void)
-		:_it(NULL){}
+		random_access_iterator()
+		:_it(NULL){
+			
+		}
 		
-		random_access_iterator(const random_access_iterator &it)
-		:_it(it._it){}
+		random_access_iterator(const random_access_iterator &it){
+			this->_it = it._it;
+		}
 
-		random_access_iterator(pointer p): _it(p){}
+		random_access_iterator(pointer p){
+			this->_it = p;
+		}
 
-		random_access_iterator &operator=(const random_access_iterator& op){
+		//////////////////////
+		operator random_access_iterator<const T>() const {
+			return random_access_iterator<const T>(this->_it);
+		}
+		/////////////////////////////
+
+		random_access_iterator &operator=(const random_access_iterator& op) {
+			// std::cout << "check done " << std::endl;
 			if (this == &op)
 				return (*this);
-			this->_it = op._it;
+			_it = op._it;
 			return (*this);
 		}
 		
@@ -66,7 +77,6 @@ namespace ft
 			return(this->_it);}
 			
 		reference operator*(void) const {
-			// puts("operator*");
 			return (*_it);}
 
 		pointer operator->(void) { 
@@ -128,13 +138,11 @@ namespace ft
 	** the same elements in a container. If two iterators 
 	** point to different elements in a container, then they are not equal.
 	*/
-
+	
 	template <typename T>
 	typename ft::random_access_iterator<T>::difference_type
-	// bool
 	operator==(const ft::random_access_iterator<T> lhs,
 			const ft::random_access_iterator<T> rhs){
-		// std::cout <<"in \n";
 		return (lhs.base() == rhs.base());
 	}
 
@@ -173,8 +181,19 @@ namespace ft
 		return (lhs.base() >= rhs.base());
 	}
 	
-
+	template <class Iterator>
+	random_access_iterator<Iterator> operator+ (
+	typename random_access_iterator<Iterator>::difference_type n,
+		const random_access_iterator<Iterator>& it) { 
+		return (it + n);
+	}
 	
+	template <typename T>
+	typename ft::random_access_iterator<T>::difference_type
+	operator-(const ft::random_access_iterator<T> lhs,
+			const ft::random_access_iterator<T> rhs){
+		return (lhs.base() - rhs.base());
+	}		
 }
 
 #endif

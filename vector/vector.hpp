@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/10 22:15:26 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/15 14:15:20 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ namespace ft
 			
 			explicit Vector (const allocator_type& alloc = allocator_type())
 			:  _alloc(alloc), _start(NULL), _end(NULL), _capacity(NULL){
-					std::cout << "Empty container" <<std::endl;
+					// std::cout << "Empty container" <<std::endl;
 			}
 			
 			//* Constructs a container with n elements. Each element is a copy of val.
@@ -108,7 +108,7 @@ namespace ft
 				:_alloc(alloc)
 			{
 				
-				std::cout << "range constructor" <<std::endl;
+				// std::cout << "range constructor" <<std::endl;
 				difference_type diff;
 				diff = last - first;
 				_start = _alloc.allocate(diff);
@@ -123,10 +123,12 @@ namespace ft
 			}
 			
 			//* Constructs a container with a copy of each of the elements in x, in the same order.
-			Vector (const Vector& x):_alloc(NULL), _start(NULL), _end(NULL), _capacity(0){
-				std::cout << "copy constructor" <<std::endl;
+			Vector (const Vector& x):_start(NULL), _end(NULL), _capacity(0){
+				// std::cout << "copy constructor" <<std::endl;
 				*this = x;
 			}
+
+
 
 			//! ------------------------- Destructor ------------------------ !//
 			
@@ -289,10 +291,13 @@ namespace ft
 			
 			iterator insert (iterator position, const value_type& val)
 			{
-				
-				size_type pos_index = &(*position) - _start;
-				if (size_type(_capacity - _end) >= this->size() + 1)
+				// for (size_t i=0;i<this->size();i++)
+					// std::cout << ' ' << this->at(i);
+				size_type save = _end - &(*position);
+				size_type pos_index = _end - &(*position);
+				if (this->capacity() >= this->size() + 1)
 				{
+					// std::cout << "["<< val << "]" ;
 					for (size_type i = 0; i < pos_index; i++)
 						_alloc.construct(_end - i, *(_end - i - 1));
 					_end++;
@@ -300,15 +305,16 @@ namespace ft
 				}
 				else
 				{
+					// std::cout << "{"<< val << "}" ;
 					pointer start;
 					pointer end;
 					pointer capacity;
 
 					int new_capacity ;
-					if (this->size() != 0)
-						new_capacity = (this->size() * 2);
-					else
+					if (this->size() == 0)
 						new_capacity = 1; 
+					else
+						new_capacity = (this->capacity() * 2);
 					start = _alloc.allocate(new_capacity);
 					end = start + this->size() + 1;
 					capacity = start + new_capacity;
@@ -325,14 +331,14 @@ namespace ft
 					_end = end;
 					_capacity = capacity;
 				}
-				return (iterator(_start + pos_index));
+				return (iterator(_start + save));
 			}
 			
 			void insert (iterator position, size_type n, const value_type& val)
 			{
+
 				size_type pos_index = &(*position) - _start;
-				std::cout << (_capacity - _end) << "  current space left\n";
-				if (size_type(_capacity - _end) >= this->size() + n + 1)
+				if (this->capacity() >= this->size() + n + 1)
 				{
 					for (size_type i = 0; i < pos_index; i++)
 						_alloc.construct(_end - i, *(_end - i - 1));
@@ -346,7 +352,9 @@ namespace ft
 				else
 				{
 					int new_capacity = size_t(_capacity - _end);
-					if (size_type(_capacity - _start) < this->size() + n)
+					if (this->size() == 0)
+						new_capacity = 1; 
+					else if (size_type(_capacity - _start) < this->size() + n)
 					{
 						new_capacity = this->size() * 2;
 						if ((size_type)new_capacity < this->size() + n)
@@ -355,25 +363,12 @@ namespace ft
 					pointer start = _alloc.allocate(new_capacity);
 					pointer end = start + this->size() + n;
 					pointer capacity = start + new_capacity;
-
-					std::cout << pos_index << "cap \n";
-					std::cout << new_capacity << "cap \n";
-
 					for (size_type i = 0; i < pos_index; i++)
-					{
-						// std::cout <<  "{"<< *(_start + i) <<"}";
 						_alloc.construct(start + i, *(_start + i));
-					}
 					for (size_type i = 0; i < n ; i++)
-					{
-						// std::cout <<  "{"<< val <<"}";
 						_alloc.construct((start + pos_index + i), val);
-					}
 					for (size_type i = 0; i < (this->size() - pos_index); i++)
-					{
-						// std::cout <<  "{"<<  *(_end - i - 1) <<"}";
 						_alloc.construct(end - i - 1, *(_end - i - 1));
-					}
 					for (size_type i = 0; i < this->size(); i++)
 						_alloc.destroy(_start + i);
 					_alloc.deallocate(_start, this->capacity());
@@ -387,15 +382,18 @@ namespace ft
 			void insert (iterator position, InputIterator first, InputIterator last
 			,typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
 			{
-				puts("range \n");
+				// puts("in");
+				
 				size_type n = &(*last) - &(*first);
 				size_type pos_index = &(*position) - _start;
-				// std::cout <<  "n : " << n << std::endl;
-				if (size_type(_capacity - _end) >= this->size() + n + 1)
+				if (this->capacity() >= this->size() + n + 1)
 				{
 					
-
-
+					for(size_type i = 0; i < this->size() - (&(*position) - _start); i++)
+						_alloc.construct(_end - i + (n - 1), *(_end - i - 1));
+					_end += n;
+					for (; &(*first) != &(*last); first++, position++)
+						_alloc.construct(&(*position), *first);
 					
 				}
 				else
@@ -409,30 +407,16 @@ namespace ft
 						if ((size_type)new_capacity < this->size() + n)
 							new_capacity = this->size() + n;
 					}
-
-					std::cout <<  "new_capacity : " << new_capacity << std::endl;
 					pointer start = _alloc.allocate(new_capacity);
 					pointer end = start + this->size() + n;
 					pointer capacity = start + new_capacity;
 					
-					// std::cout <<  "cap : " << new_capacity << std::endl;
 					for (size_type i = 0; i < pos_index; i++)
-					{
-						// std::cout <<  "{"<< *(_start + i) <<"}";
 						_alloc.construct(start + i, *(_start + i));
-					}
-					
 					for (size_type i = 0; i < n; i++)
-					{
-						// std::cout <<  "{"<< *first <<"}";
 						_alloc.construct((start + pos_index + i), *(first++));
-					}
-					
 					for (size_type i = 0; i < (this->size() - pos_index); i++)
-					{
-						// std::cout <<  "{"<<  *(_end - i - 1) <<"}";
 						_alloc.construct(end - i - 1, *(_end - i - 1));
-					}
 					for (size_type i = 0; i < this->size(); i++)
 						_alloc.destroy(_start + i);
 					_alloc.deallocate(_start, this->capacity());
@@ -440,7 +424,6 @@ namespace ft
 					_end = end;
 					_capacity = capacity;
 				}
-
 			} //range
 
 			/*
@@ -522,31 +505,106 @@ namespace ft
 			/*
 			** Adds a new element at the end of the vector, after its current last element.
 			*/
-			void push_back (const value_type& val){
-				this->insert(_end, val);
+			
+			void push_back (const value_type& val)
+			{ 
+				if (_end == _capacity)
+				{
+					int next_capacity = (this->size() > 0) ? (int)(this->size() * 2) : 1;
+					this->reserve(next_capacity);
+				}
+				_alloc.construct(_end, val);
+				_end++;
 			}
 			
+			/*
+			** Requests that the vector capacity be at least enough to contain n elements.
+			*/
+
+			void reserve (size_type n){
+				
+				if (this->size() + n < this->capacity())
+					return;
+				else if (n >= this->max_size())
+				{
+					throw std::length_error("vector");
+				}
+				else
+				{
+					pointer start = _alloc.allocate(this->size() + n);
+					pointer end = start;
+					pointer capacity = start + n;
+					size_type len = _end - _start;
+					for (size_type i = 0; i < len; i++)
+					{
+						_alloc.construct(end, *(_start + i));
+						end++;
+					}
+					_alloc.deallocate(_start, this->size());
+					_start = start;
+					_end = end;
+					_capacity = capacity;
+				}
+			}
+
+			/*
+			TODO:Swap content
+			** Exchanges the content of the container by the content of x, which is another 
+			** vector object of the same type. Sizes may differ.
+			*/
+		
+			void swap (Vector& x){
+				// if (x == *this)
+				// 	return;
+				pointer start_tmp = x._start;
+				pointer end_tmp  = x._end;
+				pointer tmp_capacity = x._capacity;
+				allocator_type	tmp_alloc = x._alloc;
+				
+				x._start = _start;
+				x._end = this->_end;
+				x._capacity = this->_capacity;
+				x._alloc = this->_alloc;
+				
+				this->_start = start_tmp;
+				this->_end = end_tmp;
+				this->_capacity = tmp_capacity;
+				this->_alloc = tmp_alloc;
+				
+				// tmp = this->insert(tmp.begin(), x.begin(), x.end());
+			}
+
+			/*
+			**
+			*/
+		
+			void        resize (size_type n, value_type val = value_type())
+			{
+				std::cout << (n - this->size()) << std::endl;
+				std::cout << this->size() << std::endl;
+				if (n > this->max_size())
+					throw (std::length_error("vector::resize"));
+				else if (n < this->size())
+				{
+					while (this->size() > n)
+						this->erase(_end);
+				}
+				else
+						this->insert(this->end(), n - this->size(),val);
+			}
+
 			//! ------------------------- Assign.Operator ------------------------!//
-			
-			Vector& operator= (const Vector& x){
-				if (x == *this)
-					return (*this);
-				// insert x element in this 
+
+			Vector &operator=(const Vector& x)
+			{
+				// if (x == *this)
+				// 	return (*this);
+				this->clear();
+				this->insert(this->end(), x.begin(), x.end());
 				return (*this);
 			}
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
+			
 
 			/*
 			** _ALLOC:	Default allocator
