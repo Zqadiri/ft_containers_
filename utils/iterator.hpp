@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 19:10:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/16 12:23:07 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/16 20:32:20 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ namespace ft
 
 		public:
 		//* Constructs a reverse iterator that points to no object.
-		reverse_iterator() 	: _it(Iterator()){
+		inline reverse_iterator() 	: _it(Iterator()){
 		}
 
 		//* Constructs a reverse iterator from some original iterator it. 

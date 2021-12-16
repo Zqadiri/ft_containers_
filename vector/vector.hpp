@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/16 16:50:37 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/16 20:23:54 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,7 +289,6 @@ namespace ft
 			
 			iterator insert (iterator position, const value_type& val)
 			{
-				// std::cout << (this->size()+ 1) <<  "      " << this->capacity() << std::endl ;
 				size_type save = _end - &(*position);
 				size_type pos_index = _end - &(*position);					
 				if (this->capacity() >= this->size() + 1)
@@ -334,11 +333,14 @@ namespace ft
 				size_type pos_index = &(*position) - _start;
 				if (this->capacity() >= this->size() + n)
 				{
-					for (size_type i = 0; i <= pos_index; i++)
-						_alloc.construct(_end - i, *(_end - i - 1));
-					_end++;
-					for (size_type i = 0; i < n; i++)
-						this->insert(position, val); //!change it
+					for (size_type i = 0; i < this->size() - pos_index; i++)
+						_alloc.construct(_end - i + (n - 1), *(_end - i - 1));
+					_end += n;
+					while (n)
+					{
+						_alloc.construct(&(*position) + (n - 1), val);
+						n--;
+					}
 				}
 				else
 				{
@@ -555,7 +557,7 @@ namespace ft
 			}
 
 			/*
-			**
+			** 
 			*/
 		
 			void	resize (size_type n, value_type val = value_type())
@@ -667,6 +669,7 @@ namespace ft
 	TODO:Exchange contents of vectors
 	** It behaves as if x.swap(y) was called.
 	*/
+
 	template <class T, class Alloc>
 	void swap (Vector<T,Alloc>& x, Vector<T,Alloc>& y){
 		x.swap(y);

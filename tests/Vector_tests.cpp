@@ -211,14 +211,14 @@ void    reverse_iterator_tests(void)
 		ft::reverse_iterator<std::vector<int>::iterator> ob(my_rit);
 		EQUAL(&(*my_rit) == &(*ob));
 	}
-	// std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " riterator to const_riterator " << "] --------------------]\t\t\033[0m";
-	// {
-	// 	ft::Vector<int> v(4,5);
-	// 	ft::Vector<int>::reverse_iterator 		my_rit2(v.end());
-	//     ft::Vector<int>::const_reverse_iterator c_it, c_ob(v.end());
-	//     c_it = my_rit2;
-	// //     // EQUAL(&(*my_rit2) == &(*c_it) && (&(*my_rit2) == &(*c_ob)));
-	// }
+	std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " riterator to const_riterator " << "] --------------------]\t\t\033[0m";
+	{
+		ft::Vector<int> v(4,5);
+		ft::Vector<int>::reverse_iterator 		my_rit2(v.end());
+	    ft::Vector<int>::const_reverse_iterator c_it, c_ob(v.end());
+	    c_it = my_rit2;
+	    // EQUAL(&(*my_rit2) == &(*c_it) && (&(*my_rit2) == &(*c_ob)));
+	}
 	std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " base function " << "] --------------------]\t\t\033[0m";
 	EQUAL((&(*rit) == &(*rit_1.base())) && (&(*my_rit) == &(*my_rit1.base())));
 	std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " == operator " << "] --------------------]\t\t\033[0m";

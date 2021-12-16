@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/16 15:39:17 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/16 17:01:39 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ int main()
 			std::cout << " *" << ft_v1.at(i);
 		std::cout << "    " << ft_v1.size() << "    " << ft_v1.capacity();
 		std::cout << std::endl;
-
-
 	}
 	// ft::Vector<int> my_vector(3);
 	// ft::Vector<int>::reverse_iterator it(my_vector.rbegin());
