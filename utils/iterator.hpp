@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 19:10:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/16 11:33:32 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/16 12:23:07 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ namespace ft
 		//* copy / type-cast constructor
 		template <typename Iter>
   			reverse_iterator (const reverse_iterator<Iter>& rev_it){
-				_it = rev_it.base();
+				this->_it = rev_it.base();
 		}
 		
 		//////////////////////

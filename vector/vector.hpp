@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/16 11:28:53 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/16 16:50:37 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,8 +289,9 @@ namespace ft
 			
 			iterator insert (iterator position, const value_type& val)
 			{
+				// std::cout << (this->size()+ 1) <<  "      " << this->capacity() << std::endl ;
 				size_type save = _end - &(*position);
-				size_type pos_index = _end - &(*position);
+				size_type pos_index = _end - &(*position);					
 				if (this->capacity() >= this->size() + 1)
 				{
 					for (size_type i = 0; i < pos_index; i++)
@@ -333,11 +334,11 @@ namespace ft
 				size_type pos_index = &(*position) - _start;
 				if (this->capacity() >= this->size() + n)
 				{
-					for (size_type i = 0; i < pos_index; i++)
+					for (size_type i = 0; i <= pos_index; i++)
 						_alloc.construct(_end - i, *(_end - i - 1));
 					_end++;
 					for (size_type i = 0; i < n; i++)
-						this->insert(position, val);
+						this->insert(position, val); //!change it
 				}
 				else
 				{
@@ -372,19 +373,15 @@ namespace ft
 			void insert (iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
 			{
-				// puts("in");
-				
 				size_type n = &(*last) - &(*first);
 				size_type pos_index = &(*position) - _start;
 				if (this->capacity() >= this->size() + n + 1)
 				{
-					
 					for(size_type i = 0; i < this->size() - (&(*position) - _start); i++)
 						_alloc.construct(_end - i + (n - 1), *(_end - i - 1));
 					_end += n;
 					for (; &(*first) != &(*last); first++, position++)
 						_alloc.construct(&(*position), *first);
-					
 				}
 				else
 				{
@@ -442,12 +439,8 @@ namespace ft
 				if (this->size() == 0)
 					return;
 				size_type tmp = this->size();
-				for (size_type i = 0; i < tmp; i++)
-				{
+				for (size_type i = 0; i < tmp; i++, _end--)
 					_alloc.destroy(_end);
-					_end--;
-				}
-				// std::cout << "size: " <<this->size();
 			}
 
 			/*
@@ -513,12 +506,10 @@ namespace ft
 
 			void reserve (size_type n){
 				
+				if (n >= this->max_size() || n < 0)
+					throw std::length_error("vector");
 				if (this->size() + n < this->capacity())
 					return;
-				else if (n >= this->max_size())
-				{
-					throw std::length_error("vector");
-				}
 				else
 				{
 					pointer start = _alloc.allocate(this->size() + n);
@@ -541,11 +532,12 @@ namespace ft
 			TODO:Swap content
 			** Exchanges the content of the container by the content of x, which is another 
 			** vector object of the same type. Sizes may differ.
+			** Done by exchanging references to their data, without actually performing any element copy or movement
 			*/
 		
 			void swap (Vector& x){
-				// if (x == *this)
-				// 	return;
+				if (x == *this)
+					return;
 				pointer start_tmp = x._start;
 				pointer end_tmp  = x._end;
 				pointer tmp_capacity = x._capacity;
@@ -585,22 +577,40 @@ namespace ft
 				}
 			}
 
-			// template <class InputIterator>
-  			// void assign (InputIterator first, InputIterator last)
-			// {
+			/*
+			TODO:Assign vector content
+			** Assigns new contents to the vector, replacing its 
+			** current contents, and modifying its size accordingly.
+			*/
 
-			// }
-			// void assign (size_type n, const value_type& val)
-			// {
-				
-			// }
+			template <class InputIterator>
+  			void assign (InputIterator first, InputIterator last)
+			{
+				this->clear();
+				this->insert(this->_start, first, last);
+			} // range
+			
+			void assign (size_type n, const value_type& val)
+			{
+				this->clear();
+				if (this->capacity() >= n)
+				{
+					for (size_type i = 0; i < n; i++)
+					{
+						_alloc.construct(_end, val);
+						_end++;
+					}
+				}
+				else
+					this->insert(this->_end, n, val);
+			} // fill
 
 			//! ------------------------- Assign.Operator ------------------------!//
 
 			Vector &operator=(const Vector& x)
 			{
-				// if (x == *this)
-				// 	return (*this);
+				if (x == *this)
+					return (*this);
 				this->clear();
 				this->insert(this->end(), x.begin(), x.end());
 				return (*this);
@@ -651,6 +661,15 @@ namespace ft
 	template <class T, class Alloc>
 	bool operator>= (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs){
 		return (!(lhs < rhs));	
+	}
+
+	/*
+	TODO:Exchange contents of vectors
+	** It behaves as if x.swap(y) was called.
+	*/
+	template <class T, class Alloc>
+	void swap (Vector<T,Alloc>& x, Vector<T,Alloc>& y){
+		x.swap(y);
 	}
 }
 

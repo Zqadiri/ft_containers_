@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/16 11:40:32 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/16 15:39:17 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,27 @@ int main()
 		ft::Vector<int>::iterator it(my_vector.begin());
 		ft::Vector<int>::const_iterator c_it(it);
 	}
-	
+	{
+		/*------------------ std::vectors ---------------------*/
+        std::vector<std::string>    v1(10, "string2");
+        std::vector<char>            v2;
+        /*------------------ ft:vectors ---------------------*/
+        ft::Vector<std::string>     ft_v1(10, "string2");
+        ft::Vector<char>             ft_v2;
+
+      	v1.assign(10, "less");
+        ft_v1.assign(10, "less");
+		for (ft::Vector<std::string>::size_type i = 0; i < v1.size(); i++)
+			std::cout << " *" << v1.at(i);
+		std::cout << "    " << v1.size() << "    " << v1.capacity();
+		std::cout << std::endl;
+		for (ft::Vector<std::string>::size_type i = 0; i < ft_v1.size(); i++)
+			std::cout << " *" << ft_v1.at(i);
+		std::cout << "    " << ft_v1.size() << "    " << ft_v1.capacity();
+		std::cout << std::endl;
+
+
+	}
 	// ft::Vector<int> my_vector(3);
 	// ft::Vector<int>::reverse_iterator it(my_vector.rbegin());
 	// ft::Vector<int>::const_reverse_iterator c_it;
@@ -96,26 +116,26 @@ int main()
 	// 	std::cout << ft_v1.capacity()  << std::endl;
 	// 	std::cout << ft_v1.size() <<std::endl;
 	// }
-	{
-		    std::vector<std::string> v(20, "string");
-            ft::Vector<std::string> ft_v(20, "string");
-            ft::Vector<std::string>::iterator valid_it;
+	// {
+	// 	    std::vector<std::string> v(20, "string");
+    //         ft::Vector<std::string> ft_v(20, "string");
+    //         ft::Vector<std::string>::iterator valid_it;
 
-            v.reserve(100);
-            ft_v.reserve(100);
+    //         v.reserve(100);
+    //         ft_v.reserve(100);
 			
-			// std::cout << "\ncap std " <<v.size();
-            // std::cout << "\ncap ft  " <<ft_v.size();
+	// 		// std::cout << "\ncap std " <<v.size();
+    //         // std::cout << "\ncap ft  " <<ft_v.size();
 
-            valid_it = ft_v.begin();
-            v.insert(v.begin() + 15, 70, "hello");
-			for (ft::Vector<std::string>::size_type i = 0; i < v.size(); i++)
-				std::cout << " *" << v.at(i);
-			std::cout << "\n =====================\n";
-            ft_v.insert(ft_v.begin() + 15, 70, "hello");
-			for (ft::Vector<std::string>::size_type i = 0; i < ft_v.size(); i++)
-				std::cout << " *" << ft_v.at(i);
-	}
+    //         valid_it = ft_v.begin();
+    //         v.insert(v.begin() + 15, 70, "hello");
+	// 		for (ft::Vector<std::string>::size_type i = 0; i < v.size(); i++)
+	// 			std::cout << " *" << v.at(i);
+	// 		std::cout << "\n =====================\n";
+    //         ft_v.insert(ft_v.begin() + 15, 70, "hello");
+	// 		for (ft::Vector<std::string>::size_type i = 0; i < ft_v.size(); i++)
+	// 			std::cout << " *" << ft_v.at(i);
+	// }
 	
 	// {
 	// 	std::cout << "********STD********" << std::endl;

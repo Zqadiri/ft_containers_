@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:05:49 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/16 11:48:52 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/16 12:13:50 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ namespace ft
 		}
 
 		//////////////////////
-		operator random_access_iterator<std::random_access_iterator_tag, const T>() const {
+		 operator random_access_iterator<std::random_access_iterator_tag, const T>() const {
 			return random_access_iterator<std::random_access_iterator_tag, const  T>(this->_it);
 		}
 		/////////////////////////////
