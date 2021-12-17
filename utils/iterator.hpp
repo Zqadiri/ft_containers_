@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 19:10:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/16 20:32:20 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/17 13:22:59 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ namespace ft
 		** in the reverse order.
 		*/
 
-		public:
 		//* Constructs a reverse iterator that points to no object.
 		inline reverse_iterator() 	: _it(Iterator()){
 		}
@@ -94,13 +93,15 @@ namespace ft
 		//* copy / type-cast constructor
 		template <typename Iter>
   			reverse_iterator (const reverse_iterator<Iter>& rev_it){
-				this->_it = rev_it.base();
+				this->_it = rev_it._it;
 		}
 		
 		//////////////////////
+		
 		operator reverse_iterator<const Iterator> () const {
 			return reverse_iterator<const Iterator>(this->_it);
 		}
+		
 		/////////////////////////////
 
 		
@@ -128,7 +129,9 @@ namespace ft
 		*/
 
 		reverse_iterator & operator= (const reverse_iterator &rev_it) {
-			this->_it = rev_it.base();
+			if (*this == rev_it)
+				return (*this);
+			this->_it = rev_it._it;
 			return (*this);	  
 		}
 		

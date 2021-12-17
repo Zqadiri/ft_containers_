@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:05:49 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/16 20:47:44 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/17 13:26:11 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,59 +172,6 @@ namespace ft
 		private:
 			pointer _it;
 	};
-
-	
-
-	
-	// template <typename T>
-	// bool operator==(const random_access_iterator<std::random_access_iterator_tag, T> lhs,
-	// 		const random_access_iterator<std::random_access_iterator_tag, T> rhs){
-	// 	return (lhs.base() == rhs.base());
-	// }
-
-	// template <typename T>
-	// bool operator!=(const random_access_iterator<std::random_access_iterator_tag, T> lhs,
-	// 		const random_access_iterator<std::random_access_iterator_tag, T> rhs){
-	// 	return (!(lhs.base() == rhs.base()));
-	// }
-	
-	// template <typename T>
-	// bool operator<(const ft::random_access_iterator<std::random_access_iterator_tag, T> lhs,
-	// 		const ft::random_access_iterator<std::random_access_iterator_tag, T> rhs){
-	// 	return (lhs.base() < rhs.base());
-	// }
-
-	// template <typename T>
-	// bool operator<=(const ft::random_access_iterator<std::random_access_iterator_tag, T> lhs,
-	// 		const ft::random_access_iterator<std::random_access_iterator_tag, T> rhs){
-	// 	return (lhs.base() <= rhs.base());
-	// }
-
-	// template <typename T>
-	// bool operator>(const ft::random_access_iterator<std::random_access_iterator_tag, T> lhs,
-	// 		const ft::random_access_iterator<std::random_access_iterator_tag, T> rhs){
-	// 	return (lhs.base() > rhs.base());
-	// }
-
-	// template <typename T>
-	// bool operator>=(const random_access_iterator<std::random_access_iterator_tag, T> lhs,
-	// 		const random_access_iterator<std::random_access_iterator_tag, T> rhs){
-	// 	return (lhs.base() >= rhs.base());
-	// }
-	
-	// template <typename T>
-	// random_access_iterator<std::random_access_iterator_tag, T> operator+ (
-	// typename random_access_iterator<std::random_access_iterator_tag, T>::difference_type n,
-	// 	const random_access_iterator<std::random_access_iterator_tag, T>& it) { 
-	// 	return (it + n);
-	// }
-	
-	// template <typename T>
-	// typename random_access_iterator<std::random_access_iterator_tag, T>::difference_type 
-	// operator-(const typename ft::random_access_iterator<std::random_access_iterator_tag, T> lhs,
-	// 		const random_access_iterator<std::random_access_iterator_tag, T> rhs){
-	// 	return (lhs.base() - rhs.base());
-	// }
 }
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/16 20:23:54 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/17 13:54:46 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ namespace ft
 			//! ------------------------- Constructors ------------------------ !//
 
 			//* Constructs an empty container, with no elements.
-			
 			explicit Vector (const allocator_type& alloc = allocator_type())
 			:  _alloc(alloc), _start(NULL), _end(NULL), _capacity(NULL){
 					// std::cout << "Empty container" <<std::endl;
