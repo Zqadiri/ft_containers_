@@ -216,7 +216,7 @@ void    reverse_iterator_tests(void)
 		ft::Vector<int> v(4,5);
 		ft::Vector<int>::reverse_iterator 		my_rit2(v.end());
 	    ft::Vector<int>::const_reverse_iterator c_it, c_ob(v.end());
-	    c_it = my_rit2;
+	    // c_it = my_rit2;
 	    // EQUAL(&(*my_rit2) == &(*c_it) && (&(*my_rit2) == &(*c_ob)));
 	}
 	std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " base function " << "] --------------------]\t\t\033[0m";

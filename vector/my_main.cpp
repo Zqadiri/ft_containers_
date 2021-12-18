@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/16 17:01:39 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/18 21:32:17 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,26 +114,29 @@ int main()
 	// 	std::cout << ft_v1.capacity()  << std::endl;
 	// 	std::cout << ft_v1.size() <<std::endl;
 	// }
-	// {
-	// 	    std::vector<std::string> v(20, "string");
-    //         ft::Vector<std::string> ft_v(20, "string");
-    //         ft::Vector<std::string>::iterator valid_it;
+	{
+		    std::vector<std::string> v(20, "string");
+            ft::Vector<std::string> ft_v(20, "string");
+            ft::Vector<std::string>::iterator valid_it;
 
-    //         v.reserve(100);
-    //         ft_v.reserve(100);
+            // v.reserve(100);
+            // ft_v.reserve(100);
 			
-	// 		// std::cout << "\ncap std " <<v.size();
-    //         // std::cout << "\ncap ft  " <<ft_v.size();
+			std::cout << "\ncap std " <<v.capacity()<< "\n";
+            std::cout << "\ncap ft  " <<ft_v.capacity()<< "\n";
 
-    //         valid_it = ft_v.begin();
-    //         v.insert(v.begin() + 15, 70, "hello");
-	// 		for (ft::Vector<std::string>::size_type i = 0; i < v.size(); i++)
-	// 			std::cout << " *" << v.at(i);
-	// 		std::cout << "\n =====================\n";
-    //         ft_v.insert(ft_v.begin() + 15, 70, "hello");
-	// 		for (ft::Vector<std::string>::size_type i = 0; i < ft_v.size(); i++)
-	// 			std::cout << " *" << ft_v.at(i);
-	// }
+			std::cout << "\ncap std " <<v.size()<< "\n";
+            std::cout << "\ncap ft  " <<ft_v.size() << "\n";
+			
+            valid_it = ft_v.begin();
+            v.insert(v.begin(), "hello");
+			for (ft::Vector<std::string>::size_type i = 0; i < v.size(); i++)
+				std::cout << " *" << v.at(i);
+			std::cout << "\n =====================\n";
+            ft_v.insert(ft_v.begin() + 15, "hello");
+			for (ft::Vector<std::string>::size_type i = 0; i < ft_v.size(); i++)
+				std::cout << " *" << ft_v.at(i);
+	}
 	
 	// {
 	// 	std::cout << "********STD********" << std::endl;
