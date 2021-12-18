@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/17 13:54:46 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/17 19:39:36 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ namespace ft
 			//* Constructs an empty container, with no elements.
 			explicit Vector (const allocator_type& alloc = allocator_type())
 			:  _alloc(alloc), _start(NULL), _end(NULL), _capacity(NULL){
-					// std::cout << "Empty container" <<std::endl;
 			}
 			
 			//* Constructs a container with n elements. Each element is a copy of val.
@@ -90,7 +89,6 @@ namespace ft
 					_end = _start;
 					for(size_t i = 0; i < n; i++)
 					{
-						// std::cout << "fill constructor " << val <<std::endl;
 						_alloc.construct(_end, val);
 						_end++;
 					}
@@ -106,8 +104,6 @@ namespace ft
 				 typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
 				:_alloc(alloc)
 			{
-				
-				// std::cout << "range constructor" <<std::endl;
 				difference_type diff;
 				diff = last - first;
 				_start = _alloc.allocate(diff);
@@ -123,7 +119,6 @@ namespace ft
 			
 			//* Constructs a container with a copy of each of the elements in x, in the same order.
 			Vector (const Vector& x):_start(NULL), _end(NULL), _capacity(0){
-				// std::cout << "copy constructor" <<std::endl;
 				*this = x;
 			}
 
@@ -135,6 +130,7 @@ namespace ft
 			** Destroy all elements in the container and deallocate
 			** the container capacity.
 			*/ 
+		
 			~Vector(){
 				this->clear();
 				_alloc.deallocate(_start, this->capacity());
@@ -522,7 +518,7 @@ namespace ft
 						_alloc.construct(end, *(_start + i));
 						end++;
 					}
-					_alloc.deallocate(_start, this->size());
+					_alloc.deallocate(_start, this->capacity());
 					_start = start;
 					_end = end;
 					_capacity = capacity;
@@ -564,18 +560,13 @@ namespace ft
 				if (n > this->max_size())
 					throw (std::length_error("vector::resize"));
 				else if (n < this->size())
-				{
 					while (this->size() > n)
 						this->erase(_end);
-				}
 				else if (this->capacity() >= n)
-				{
 					while (this->size() < n)
 						this->insert(_end, val);
-				}
-				else{
+				else
 					this->insert(_end, n - this->size(),val);
-				}
 			}
 
 			/*

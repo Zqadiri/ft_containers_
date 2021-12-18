@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:05:49 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/17 13:26:11 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/18 16:06:40 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ namespace ft
 							typename Pointer = T*, typename Reference = T&>
 	class random_access_iterator
 	{
+		private:
+			typedef  typename ft::random_access_iterator<std::random_access_iterator_tag, const T>  const_iterator;
 		public:
 
 		//?------------Member types--------------?//
@@ -39,10 +41,11 @@ namespace ft
 		
 		/* Type to represent a reference to an element pointed */
 		typedef  Reference				reference;
+		
 		//?------------- Constructors --------------?//
 
 		random_access_iterator()
-		:_it(NULL){
+		:_it(){
 		}
 		
 		random_access_iterator(const random_access_iterator &it){
@@ -54,8 +57,8 @@ namespace ft
 		}
 
 		//////////////////////
-		 operator random_access_iterator<std::random_access_iterator_tag, const T>() const {
-			return (random_access_iterator<std::random_access_iterator_tag, const  T>(this->_it));
+		 operator const_iterator() const {
+			return (const_iterator(this->_it));
 		}
 		/////////////////////////////
 

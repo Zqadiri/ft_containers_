@@ -125,4 +125,4 @@ The std::stack class is a container adapter. Container objects hold data of a si
 
 [stack - C++ Reference](https://www.cplusplus.com/reference/stack/stack/)
 
-[](https://www.guru99.com/stack-in-cpp-stl.html)
+[](https://www.guru99.com/stack-in-cpp-stl.html)  

@@ -6,9 +6,12 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 13:28:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/17 15:20:37 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/17 19:18:41 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef STACK_HPP_
+#define STACK_HPP_
 
 #include "../vector/Vector.hpp"
 #include <iostream>
@@ -86,3 +89,5 @@ namespace ft
 			container_type _vec;
 	};
 }
+
+#endif
