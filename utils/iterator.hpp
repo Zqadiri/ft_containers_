@@ -6,12 +6,12 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 19:10:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/18 16:15:26 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/18 18:41:44 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITERATOR_
-#define ITERATOR_
+#ifndef ITERATOR_HPP_
+#define ITERATOR_HPP_
 
 #include <stddef.h>
 #include "iterator.hpp"
@@ -86,21 +86,19 @@ namespace ft
 		*/
 
 		//* Constructs a reverse iterator that points to no object.
-		inline reverse_iterator() 	: _it(NULL){
+		 reverse_iterator() : _it(Iterator()){
 		}
 
 		//* Constructs a reverse iterator from some original iterator it. 
-		explicit reverse_iterator (iterator_type it): _it(it){
+		 explicit reverse_iterator (const iterator_type  &it): _it(it){
 		}
 		
 		//* copy / type-cast constructor
 		template <typename Iter>
-		reverse_iterator (const reverse_iterator<Iter>& rev_it)
-		{
-			this->_it = rev_it.base();
+		 reverse_iterator (const reverse_iterator<Iter>& rev_it){
+			_it.base() = rev_it.base();
 		}
 
-		
 			//?----------- Public Member Function --------?//
 
 		/*
@@ -114,16 +112,14 @@ namespace ft
 		}
 
 		/*
-		TODO:Assign iterator
+		TODO: Assign iterator
 		** Assigns rev_it's base iterator to the object's base iterator, replacing its current value.
 		*/
 		
 		template <class Iter>
-  		reverse_iterator& operator= (const reverse_iterator<Iter>& rev_it)
+  	   	reverse_iterator& operator= (const reverse_iterator<Iter>& rev_it)
 		{
-			if (*this == rev_it)
-				return (*this);
-			this->_it = rev_it.base();
+			_it =  rev_it.base();
 			return (*this);	  
 		}
 		
@@ -247,7 +243,7 @@ namespace ft
 		}
 		
 		private:
-			iterator_type		_it;
+			Iterator		_it;
 	};
 
 		//?----------Non-member function overloads-------?//
