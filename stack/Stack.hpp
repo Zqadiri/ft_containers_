@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 13:28:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/17 19:18:41 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/21 14:51:25 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ namespace ft
 		}
 		
 		bool empty() const{
-			if (this->size() == 0)
-				return (true);
-			return (false);
+			return (this->size() == 0); 
 		}
 
 		void push (const value_type& val){

@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 19:10:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/18 18:41:44 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/21 18:58:34 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ namespace ft
 {
 	//!----------------Category tags--------------!//
 	
-	struct input_iterator_tag {};
-	struct output_iterator_tag {};
-	struct forward_iterator_tag {};
-	struct bidirectional_iterator_tag {};
-	struct random_access_iterator_tag {};
+	// struct input_iterator_tag {};
+	// struct output_iterator_tag {};
+	// struct forward_iterator_tag {};
+	// struct bidirectional_iterator_tag {};
+	// struct random_access_iterator_tag {};
 	
 	/*
 		This is a base class template that can be used 

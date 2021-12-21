@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:07:50 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/20 11:35:13 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/21 22:40:35 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,6 +373,7 @@ namespace ft
 					_capacity = capacity;
 				}
 			} //fill
+
 
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last,
