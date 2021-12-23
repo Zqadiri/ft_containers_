@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 19:10:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/21 18:58:34 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/23 21:38:00 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ namespace ft
 	template <class Iterator> 
 	class reverse_iterator
 	{
-		private :
-			typedef typename ft::reverse_iterator<const Iterator>				const_reverse_iterator;
 
 			//?------------Member types--------------?//	
 		public :
@@ -74,7 +72,7 @@ namespace ft
 			typedef typename ft::iterator_traits<Iterator>::pointer				pointer;
 			/*Preserves Iterator's reference type*/
 			typedef typename ft::iterator_traits<Iterator>::reference			reference;
-		
+			
 			//?------------- Constructors --------------?//
 
 		/*
@@ -90,14 +88,14 @@ namespace ft
 		}
 
 		//* Constructs a reverse iterator from some original iterator it. 
-		 explicit reverse_iterator (const iterator_type  &it): _it(it){
+		explicit reverse_iterator (const iterator_type  &it): _it(it){
 		}
 		
 		//* copy / type-cast constructor
 		template <typename Iter>
 		 reverse_iterator (const reverse_iterator<Iter>& rev_it){
-			_it.base() = rev_it.base();
-		}
+			*this = rev_it;
+ 		}
 
 			//?----------- Public Member Function --------?//
 
@@ -119,7 +117,7 @@ namespace ft
 		template <class Iter>
   	   	reverse_iterator& operator= (const reverse_iterator<Iter>& rev_it)
 		{
-			_it =  rev_it.base();
+			_it = rev_it.base();
 			return (*this);	  
 		}
 		
@@ -157,7 +155,6 @@ namespace ft
 
 		//pre-increment version
 		reverse_iterator& operator++(){
-			// reverse_iterator temp;
 			--(_it);
 			return (*this);
 		}
@@ -229,8 +226,6 @@ namespace ft
 		pointer operator->() const {
 		  return &(operator*());
 		}
-		
-
 
 		/*
 		TODO: Dereference iterator with offset

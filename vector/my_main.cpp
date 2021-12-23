@@ -6,11 +6,11 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/21 23:54:27 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/23 23:35:46 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../vector/vector_.hpp"
+#include "../vector/Vector.hpp"
 #include <type_traits>
 #include <iterator>
 #include <vector>
@@ -119,45 +119,56 @@ int main()
             // ft::Vector<std::string>     ft_v(20, "string");
 
 
-        std::vector<std::string>    v1(20, "less");
-        std::vector<std::string>    v2;
-        std::vector<std::string>    v3(10, "string2");
-        /*------------------ std::vectors ---------------------*/
-        ft::Vector<std::string>     ft_v1(20, "less");
-        ft::Vector<std::string>     ft_v2;
-        ft::Vector<std::string>     ft_v3(10, "string2");
+        	std::vector<std::string>    v1(20, "less");
+        	std::vector<std::string>    v2;
+        	std::vector<std::string>    v3(10, "less");
+        	/*------------------ std::vectors ---------------------*/
+        	ft::Vector<std::string>     ft_v1(20, "less");
+        	ft::Vector<std::string>     ft_v2;
+        	ft::Vector<std::string>     ft_v3(10, "less");
 			
+			std::cout << "\nsize std " <<v3.size();
+			std::cout << "\ncap std " <<v3.capacity();
+            std::cout << "\nsize ft  " <<ft_v3.size();
+            std::cout << "\ncap ft  " <<ft_v3.capacity() << std::endl;
 			
-        v2.assign(v1.begin()+5, v1.end());
-        ft_v2.assign(ft_v1.begin()+5, ft_v1.end());
+			// v3.insert(v3.end() , "hi");
+			// ft_v3.insert(ft_v3.end()  , "hi");
 
-			for (ft::Vector<std::string>::size_type i = 0; i < v2.size(); i++)
-				std::cout << "" << v2.at(i);
-			std::cout << "\n =====================\n";
-			for (ft::Vector<std::string>::size_type i = 0; i < ft_v2.size(); i++)
-				std::cout << "" << ft_v2.at(i);
-			std::cout << std::endl;
-	
-			std::cout << "\nsize std " <<v1.size();
-			std::cout << "\ncap std " <<v1.capacity();
-            std::cout << "\nsize ft  " <<ft_v1.size();
-            std::cout << "\ncap ft  " <<ft_v1.capacity() << std::endl;
-        // test for n lesser than the vector capactiy
-        v1.assign(v2.begin(), v2.end());
-        ft_v1.assign(ft_v2.begin(), ft_v2.end());
+	// try{
+			std::cout << v3.max_size() << std::endl;
+			std::cout << ft_v3.max_size() << std::endl;
+			v3.resize(60, "more");
+			ft_v3.resize(60, "more");
+		
+	// }catch (std::exception &e)
+	// {
+	// 	std::cout << "error\n";
+	// }
+
+
 			
-			std::cout << "\nsize std " <<v1.size();
-			std::cout << "\ncap std " <<v1.capacity();
-            std::cout << "\nsize ft  " <<ft_v1.size();
-            std::cout << "\ncap ft  " <<ft_v1.capacity() << std::endl;
+
+			std::cout << "\nsize std " <<v3.size();
+			std::cout << "\ncap std " <<v3.capacity();
+            std::cout << "\nsize ft  " <<ft_v3.size();
+            std::cout << "\ncap ft  " <<ft_v3.capacity() << std::endl;
+			
+			for (ft::Vector<std::string>::size_type i = 0; i < v3.size(); i++)
+				std::cout << " " << v3.at(i);
+			std::cout << "\n =====================\n";
+			for (ft::Vector<std::string>::size_type i = 0; i < ft_v3.size(); i++)
+				std::cout << " " << ft_v3.at(i);
+			std::cout << std::endl;
+			
            
 		   
-			for (ft::Vector<std::string>::size_type i = 0; i < v1.size(); i++)
-				std::cout << "" << v1.at(i);
-			std::cout << "\n =====================\n";
-			for (ft::Vector<std::string>::size_type i = 0; i < ft_v1.size(); i++)
-				std::cout << "" << ft_v1.at(i);
-			std::cout << std::endl;
+			// for (ft::Vector<std::string>::size_type i = 0; i < v1.size(); i++)
+			// 	std::cout << "" << v1.at(i);
+			// std::cout << "\n =====================\n";
+			// for (ft::Vector<std::string>::size_type i = 0; i < ft_v1.size(); i++)
+			// 	std::cout << "" << ft_v1.at(i);
+			// std::cout << std::endl;
 	}
 	
 	// {

@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:05:49 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/21 15:13:18 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/23 18:02:36 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,8 @@ namespace ft
 		}
 		/////////////////////////////
 
-		random_access_iterator &operator=(const random_access_iterator& op) {
-			// std::cout << "check done " << std::endl;
-			if (this == &op)
-				return (*this);
+		random_access_iterator& operator=(const random_access_iterator& op) {
+			
 			_it = op._it;
 			return (*this);
 		}
