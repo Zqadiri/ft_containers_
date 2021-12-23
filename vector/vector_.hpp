@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:13:42 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/22 00:01:18 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/23 13:55:14 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,8 @@ namespace ft
 						_alloc.construct(end, *(_start + i));
 						end++;
 					}
+					// for (size_type i = 0; i < _size; i++)
+					// 	_alloc.destroy(end + i);
 					_alloc.deallocate(_start, _size);
 					_start = start;
 					_end = end;
@@ -368,14 +370,13 @@ namespace ft
 				return (ret);
 			}
 
-			// Vector &operator=(const Vector& x)
-			// {
-			// 	if (x == *this)
-			// 		return (*this);
-			// 	this->clear();
-			// 	this->insert(this->begin(), x.begin(), x.end());
-			// 	return (*this);
-			// }
+			Vector &operator=(const Vector& x)
+			{
+				if (x == *this)
+					return (*this);
+				this->assign(x.begin(), x.end());
+				return (*this);
+			}
 
 			void push_back (const value_type& val)
 			{ 
@@ -392,27 +393,47 @@ namespace ft
 			template <class InputIterator>
   			void assign (InputIterator first, InputIterator last,
 			  typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
-			{
-				
-				size_type n = std::distance(first, last);
-				std::cout << n << std::endl;
-				this->clear();
-				if (_capacity < n)
-					reserve(n);
-				for (size_type i = 0; i < n; i++, first++)
-					_alloc.construct(_start + i , *(&(*first)));
-				_size += n;				
+			{				
+				size_type n = last - first;
+				if (n > _capacity){
+					this->clear();
+					_start = _alloc.allocate(n);
+					_end = _start + n;
+					for (size_type i = 0; i < n; i++)
+						_alloc.construct(_start + i, *(&(*first) + i));
+					_size = _capacity = n;
+				}
+				else
+				{
+					for (size_type i = n; i < _size; i++)
+						_alloc.destroy(_start + i);
+					_size = n;
+					for (size_type i = 0; i < _size; i++)
+						_alloc.construct(_start + i, *(&(*first) + i));
+				}
 			}
 			
 			void assign (size_type n, const value_type& val)
 			{
-				this->clear();
 				if (_capacity < n)
-					reserve(n);
-				for (size_type i = 0; i < n; i++)
-					_alloc.construct(_start + i , val);
-				_size += n;				
+				{
+					this->clear();
+					_start = _alloc.allocate(n);
+					_end = _start + n;
+					for (size_type i = 0; i < n; i++)
+						_alloc.construct(_start + i, val);
+					_size = _capacity = n;
+				}
+				else
+				{
+					for (size_type i = n; i < _size; i++)
+						_alloc.destroy(_start + i);
+					_size = n;
+					for (size_type i = 0; i < _size; i++)
+						_alloc.construct(_start + i, val);
+				}
 			}
+			
 			
 		
 		private:
