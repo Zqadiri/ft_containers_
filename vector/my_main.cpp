@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/23 23:35:46 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/12/24 16:14:02 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,45 +120,46 @@ int main()
 
 
         	std::vector<std::string>    v1(20, "less");
-        	std::vector<std::string>    v2;
-        	std::vector<std::string>    v3(10, "less");
+        	std::vector<int>    v2;
+        	std::vector<int>    v3;
         	/*------------------ std::vectors ---------------------*/
         	ft::Vector<std::string>     ft_v1(20, "less");
-        	ft::Vector<std::string>     ft_v2;
-        	ft::Vector<std::string>     ft_v3(10, "less");
-			
-			std::cout << "\nsize std " <<v3.size();
-			std::cout << "\ncap std " <<v3.capacity();
-            std::cout << "\nsize ft  " <<ft_v3.size();
-            std::cout << "\ncap ft  " <<ft_v3.capacity() << std::endl;
-			
-			// v3.insert(v3.end() , "hi");
-			// ft_v3.insert(ft_v3.end()  , "hi");
+        	ft::Vector<int>     ft_v2;
+        	ft::Vector<int>     ft_v3;
 
-	// try{
-			std::cout << v3.max_size() << std::endl;
-			std::cout << ft_v3.max_size() << std::endl;
-			v3.resize(60, "more");
-			ft_v3.resize(60, "more");
-		
-	// }catch (std::exception &e)
-	// {
-	// 	std::cout << "error\n";
-	// }
-
-
-			
+    		std::vector<int> tmp;
+    		tmp.assign(26000000, 1);
 
 			std::cout << "\nsize std " <<v3.size();
 			std::cout << "\ncap std " <<v3.capacity();
             std::cout << "\nsize ft  " <<ft_v3.size();
             std::cout << "\ncap ft  " <<ft_v3.capacity() << std::endl;
 			
-			for (ft::Vector<std::string>::size_type i = 0; i < v3.size(); i++)
-				std::cout << " " << v3.at(i);
+			v2.assign(22000000, 1);
+			ft_v2.assign(22000000, 1);
+
+			try
+			{
+				v2.insert(v2.end() - 600,10,  44);
+				 ft_v2.insert(ft_v2.end() - 600,10, 44);
+			}
+			catch (std::exception &e)
+			{
+				std::cout << "error\n";
+			}
+
+			// std::cout << *(&(*it)) << std::endl;
+			
+			std::cout << "\nsize std " <<v2.size();
+			std::cout << "\ncap std " <<v2.capacity();
+            std::cout << "\nsize ft  " <<ft_v2.size();
+            std::cout << "\ncap ft  " <<ft_v2.capacity() << std::endl;
+			
+			for (ft::Vector<std::string>::size_type i = 0; i < v2.size(); i++)
+				std::cout << " " << v2.at(i);
 			std::cout << "\n =====================\n";
-			for (ft::Vector<std::string>::size_type i = 0; i < ft_v3.size(); i++)
-				std::cout << " " << ft_v3.at(i);
+			for (ft::Vector<std::string>::size_type i = 0; i < ft_v2.size(); i++)
+				std::cout << " " << ft_v2.at(i);
 			std::cout << std::endl;
 			
            
