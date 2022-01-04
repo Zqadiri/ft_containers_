@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/24 16:14:02 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/01/04 15:30:03 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,25 +126,20 @@ int main()
         	ft::Vector<std::string>     ft_v1(20, "less");
         	ft::Vector<int>     ft_v2;
         	ft::Vector<int>     ft_v3;
-
-    		std::vector<int> tmp;
-    		tmp.assign(26000000, 1);
-
-			std::cout << "\nsize std " <<v3.size();
-			std::cout << "\ncap std " <<v3.capacity();
-            std::cout << "\nsize ft  " <<ft_v3.size();
-            std::cout << "\ncap ft  " <<ft_v3.capacity() << std::endl;
+			 
+			std::cout << "\nsize std " << v3.size();
+			std::cout << "\ncap std " << v3.capacity();
+            std::cout << "\nsize ft  " << ft_v3.size();
+            std::cout << "\ncap ft  " << ft_v3.capacity() << std::endl;
 			
-			v2.assign(22000000, 1);
-			ft_v2.assign(22000000, 1);
-
+			v2.assign(26, 1);
+			ft_v2.assign(26, 1);
 			try
 			{
-				v2.insert(v2.end() - 600,10,  44);
-				 ft_v2.insert(ft_v2.end() - 600,10, 44);
-			}
-			catch (std::exception &e)
-			{
+				v2.insert(v2.end() - 8, 44);
+				ft_v2.insert(ft_v2.end() - 8, 44);
+			}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+			catch (std::exception &e){
 				std::cout << "error\n";
 			}
 

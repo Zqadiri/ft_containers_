@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:13:42 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/24 16:10:17 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/01/04 15:30:15 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,16 @@ namespace ft
 				const allocator_type& alloc = allocator_type())
 			:_start(nullptr), _size(0), _capacity(0), _end(nullptr),  _alloc(alloc)
 			{
-				if (n)
+				if (n > this->max_size())
+					throw std::length_error("vector");
+				_start = _alloc.allocate(n);
+				_end = _start;
+				for(size_t i = 0; i < n; i++)
 				{
-					_start = _alloc.allocate(n);
-					_end = _start;
-					for(size_t i = 0; i < n; i++)
-					{
-						_alloc.construct(_end, val);
-						_end++;
-					}
-					_capacity = _size = n;
+					_alloc.construct(_end, val);
+					_end++;
 				}
+				_capacity = _size = n;
 			}
 			
 			template <class InputIterator>
@@ -247,15 +246,15 @@ namespace ft
 					_size++;
 					return (iterator(_start + pos));
 				}
-				else if (_capacity < _size + 1)
+				if (_capacity < _size + 1)
 					reserve(_capacity * 2);
 				for (size_type i = 0; i < pos_index ; i++)
-					_alloc.construct(_end - i, *(_end - (i + 1)));
+					_alloc.construct(_end - i , *(_end - (i + 1)));
 				_alloc.construct(_end - pos_index, val);
 				_size++;
 				return (iterator(_start + pos));
 			}
-
+			
 			void insert (iterator position, size_type n, const value_type& val)
 			{
 				size_type pos_index = _end - &(*position);
@@ -265,9 +264,10 @@ namespace ft
 					for (size_type i = 0; i < n; i++)
 						_alloc.construct(_start + i , val);
 					_size += n;
+					_end += n;
 					return;
 				}
-				else if (_capacity < _size + n)
+				if (_capacity < _size + n)
 				{
 					if (_capacity * 2 < _size +n)
 						reserve (_size + n);
@@ -276,10 +276,10 @@ namespace ft
 				}
 				_end += n;
 				_size += n;
-				for (size_type i = 0; i <= pos_index; i++)
-					_alloc.construct(_end - i, *(_end - (n + i)));
+				for (size_type i = 0; i < pos_index; i++)
+					_alloc.construct(_end - i - 1, *(_end - ( n + i)));
 				for (size_type j = 0; j < n; j++)
-					_alloc.construct(_end - pos_index - j - 1, val);			
+					_alloc.construct(_end - pos_index - j - 1, val);	
 			}
 
 			template <class InputIterator>
@@ -296,20 +296,18 @@ namespace ft
 					_size += n;
 					return;
 				}
-				else if (_capacity < _size + n)
+				if (_capacity < _size + n)
 				{
-					
-					if (_capacity * 2 < _size +n)
+					if (_capacity * 2 < _size + n)
 						reserve (_size + n);
 					else
 						reserve (_capacity * 2);
 				}
 				_end += n;
 				_size += n;
-				iterator save = position;
-				for (size_type i = 0; i <= pos_index; i++)
-					_alloc.construct(_end - i, *(_end - (n + i)));
-				for (size_type j = 0; j < n; j++, save++, first++)
+				for (size_type i = 0; i < pos_index; i++)
+					_alloc.construct(_end - i - 1, *(_end - ( n + i)));
+				for (size_type j = 0; j < n; j++, first++)
 					_alloc.construct(_end - pos_index - j - 1, *(&(*first)));				
 			}
 
@@ -318,24 +316,13 @@ namespace ft
 			** Reduce the size of 1;
 			** Return value : an iterator point to the element position + 1
 			*/
-			
-			iterator erase (iterator position)
+
+			iterator erase( iterator position)
 			{
-				pointer pos = &(*position);
-				if (pos == _end)
-					_alloc.destroy(pos);
-				else
-				{
-					_alloc.destroy(pos);
-					for (int i = 0; i < _end - pos - 1; i++)
-					{
-						_alloc.construct(pos + i, *(pos + i + 1));
-						_alloc.destroy(pos + i + 1);
-					}
-					_end -= 1;
-					_size -= 1;
-				}
-				return (iterator(pos));
+				std::copy(&(*position) + 1, _end, &(*position));
+				_size--;
+				_end--;
+				return position;
 			}
 			
 			iterator erase (iterator first, iterator last)
@@ -353,6 +340,16 @@ namespace ft
 				_size -= n;
 				return (iterator(first_pointer));	
 			}
+			
+			//!--- optional ---!//
+
+			pointer 			data(){
+				return _start;
+			}
+
+			const_pointer			data() const{ 
+				return _start;
+			}
 
 			/*
 			TODO:Swap content
@@ -363,11 +360,11 @@ namespace ft
 
 			void swap (Vector& x)
 			{
-				std::swap(this->_size, x._size);
-				std::swap(this->_start, x._start);
-				std::swap(this->_alloc, x._alloc);
-				std::swap(this->_end, x._end);
-				std::swap(this->_capacity, x._capacity);
+				std::swap(_size, x._size);
+				std::swap(_start, x._start);
+				std::swap(_alloc, x._alloc);
+				std::swap(_end, x._end);
+				std::swap(_capacity, x._capacity);
 			}
 			
 			/*
@@ -376,8 +373,8 @@ namespace ft
 			*/
 		
 			void clear(){
-				for (size_type i = 0; i < _size; i++, _end--)
-					_alloc.destroy(_end);
+				for (size_type i = 0; i < _size; i++)
+					_alloc.destroy(_start + i);
 				_size = 0;
 			}
 
