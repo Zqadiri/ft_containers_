@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:13:42 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/04 15:30:15 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/01/04 19:53:51 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 # include <iostream>
 # include <algorithm>
 # include <memory>
-# include "../utils/iterator.hpp"
-# include "../utils/utility.hpp"
-# include "../utils/iterator_traits.hpp"
-# include "../utils/random_access_iterator.hpp"
+# include "../utilities/iterator.hpp"
+# include "../utilities/utility.hpp"
+# include "../utilities/iterator_traits.hpp"
+# include "../utilities/random_access_iterator.hpp"
 
 /*
 	Namespace refers to various blocks that can be created in a 
@@ -252,6 +252,7 @@ namespace ft
 					_alloc.construct(_end - i , *(_end - (i + 1)));
 				_alloc.construct(_end - pos_index, val);
 				_size++;
+				_end++;
 				return (iterator(_start + pos));
 			}
 			
@@ -360,11 +361,11 @@ namespace ft
 
 			void swap (Vector& x)
 			{
-				std::swap(_size, x._size);
-				std::swap(_start, x._start);
-				std::swap(_alloc, x._alloc);
-				std::swap(_end, x._end);
-				std::swap(_capacity, x._capacity);
+				std::swap(this->_size, x._size);
+				std::swap(this->_start, x._start);
+				std::swap(this->_alloc, x._alloc);
+				std::swap(this->_end, x._end);
+				std::swap(this->_capacity, x._capacity);
 			}
 			
 			/*
