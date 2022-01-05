@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:13:42 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/04 19:53:51 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/01/05 14:52:03 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ namespace ft
 			iterator insert (iterator position, const value_type& val)
 			{
 				size_type pos = &(*position) - _start;
-				size_type pos_index = _end - &(*position);					
+				size_type pos_index = _end - &(*position);	
 				if (_size == 0)
 				{
 					reserve(1);
@@ -406,7 +406,7 @@ namespace ft
 					reserve(1);
 				else if (_size == _capacity)
 					reserve(_capacity * 2);
-				_alloc.destroy(_end);
+				// _alloc.destroy(_end);
 				_alloc.construct(_end, val);
 				_size++;
 				_end++;

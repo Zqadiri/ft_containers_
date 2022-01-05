@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 12:27:44 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/11/28 12:42:16 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/01/04 20:56:37 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #define ITERATOR_TRAITS_HPP
 
 #include "iterator.hpp"
-#include "iterator_traits.hpp"
 
 namespace ft
 {
@@ -35,7 +34,7 @@ namespace ft
 	{
 		/*std::ptrdiff_t is the signed integer type of the result of subtracting two pointers.*/
 		typedef std::ptrdiff_t 						difference_type;
-		typedef T 									value_type;
+		typedef T									value_type;
 		typedef T* 									pointer;
 		typedef T& 									reference;
 		typedef	std::random_access_iterator_tag 	iterator_category;
@@ -50,6 +49,7 @@ namespace ft
 		typedef T&									reference;
 		typedef std::random_access_iterator_tag		iterator_category;
 	};
+
 }
 
 #endif
