@@ -16,7 +16,8 @@
 
 #include <type_traits>
 #include "iterator.hpp"
-
+#include <utility>
+#include <algorithm>
 namespace ft
 {
 	template<bool B, class T = void>
@@ -53,52 +54,38 @@ namespace ft
 
 	template<>
 	struct is_integral<bool> {static const bool value = true;};
-
 	template<>
 	struct is_integral<char> {static const bool value = true;};
-	
 	template<>
 	struct is_integral<char16_t> {static const bool value = true;};
-	
 	template<>
 	struct is_integral<char32_t> {static const bool value = true;};
-
 	template<>
 	struct is_integral<wchar_t> {static const bool value = true;};
-
 	template<>
 	struct is_integral<signed char> {static const bool value = true;};
-
 	template<>
 	struct is_integral<int> {static const bool value = true;};
-
 	template<>
 	struct is_integral<long int> {static const bool value = true;};
-	
 	template<>
 	struct is_integral<long long int> {static const bool value = true;};
-	
 	template<>
 	struct is_integral<unsigned char> {static const bool value = true;};
-
 	template<>
 	struct is_integral<unsigned short int> {static const bool value = true;};
-
 	template<>
 	struct is_integral<unsigned int> {static const bool value = true;};
-
 	template<>
 	struct is_integral<unsigned long int> {static const bool value = true;};
-
 	template<>
 	struct is_integral<unsigned long long int> {static const bool value = true;};
-
 
 	//!------------------- Lexicographical_compare --------------------!//
 
 	template <class InputIterator1, class InputIterator2>
   	bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1,
-                                InputIterator2 first2, InputIterator2 last2)
+								InputIterator2 first2, InputIterator2 last2)
 	{
 		while (first1!=last1)
 		{
@@ -108,6 +95,11 @@ namespace ft
 		}
 		return (first2!=last2);
 	};
+
+	template <class InputIterator1, class InputIterator2, class Compare>
+  	bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1,
+								InputIterator2 first2, InputIterator2 last2,
+								Compare comp);
 
 	//!---------------------------- Equal ------------------------------!//
 
@@ -125,7 +117,7 @@ namespace ft
 
 	template <class InputIterator1, class InputIterator2, class BinaryPredicate>
   	bool equal (InputIterator1 first1, InputIterator1 last1,
-              InputIterator2 first2, BinaryPredicate pred)
+			  InputIterator2 first2, BinaryPredicate pred)
 	{
 		while (first1!=last1) 
 		{
@@ -137,10 +129,76 @@ namespace ft
 	};
 
 
-	template <class T1, class T2> struct pair
+	template <class T1, class T2>
+	struct pair
 	{
+		typedef T1 first_type;
+		typedef T2 second_type;
+
+		//*A member variable is the variable you declare in a class definiton
 		
+		T1		_first;
+		T2		_second;
+
+			//?------- Member Functions ---------?//
+
+		pair(){};
+
+		template<class U, class V>
+		pair (const pair<U,V>& pr){
+			this->_first = pr._first;
+			this->_second = pr._second;	
+		}
+
+		pair (const first_type& first, const second_type& second){
+			this->_first = first;
+			this->_second = second;
+		}
+
+		pair& operator= (const pair& pr){
+			this->_first = pr._first;
+			this->_second = pr._second;
+			return (*this);
+		}
+
 	};
+
+	//?------- Non-member function overloads  ---------?//
+
+	template <class T1, class T2>
+	bool operator== (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){
+		return ((lhs._first == rhs._first) && (lhs._second && rhs._second));
+	}
+
+	template <class T1, class T2>
+	bool operator!= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){
+		return (!(lhs == rhs));
+	}
+
+	template <typename T1, typename T2>
+	bool operator<  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){   
+		return (lhs.first < rhs.first || (!(rhs.first<lhs.first) && (lhs.second<rhs.second)));
+	}
+
+	template <typename T1, typename T2>
+	bool operator<= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){   
+		return !(rhs<lhs);
+	}
+
+	template <typename T1, typename T2>
+	bool operator>  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){   
+		return (rhs<lhs);   
+	}
+
+	template <typename T1, typename T2>
+	bool operator>= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){   
+		return !(lhs<rhs);
+	}
+
+	template <typename T1, typename T2>
+	pair<T1,T2> make_pair (T1 x, T2 y){
+		return ( pair<T1,T2>(x,y) );		  
+	}
 }
 
 #endif

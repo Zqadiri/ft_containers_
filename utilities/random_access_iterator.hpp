@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:05:49 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/05 16:04:39 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/01/05 16:21:25 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,20 @@ namespace ft
 
 		//?------------- Constructors --------------?//
 
-		random_access_iterator()
-		:_it(NULL){
-		}
+		random_access_iterator():_it(NULL){};
 		
 		random_access_iterator(const random_access_iterator &it){
-			this->_it = it._it;
-		}
+			this->_it = it._it; }
 
 		random_access_iterator(pointer p){
-			this->_it = p;
-		}
+			this->_it = p; }
 
 		operator random_access_iterator<const T>() const {
-			return random_access_iterator<const T>(this->_it);
-		}
+			return random_access_iterator<const T>(this->_it); }
 
 		random_access_iterator& operator=(const random_access_iterator& op) {
 			_it = op._it;
-			return (*this);
-		}
+			return (*this);}
 		
 		//?------------- Destructors --------------?//
 		
@@ -71,92 +65,76 @@ namespace ft
 		//?----------- Public Member Function and operators --------?//
 
 		pointer base() const{
-			return(this->_it);}
+			return(this->_it); }
 			
 		reference operator*(void) const {
-			return (*_it);}
+			return (*_it); }
 
 		pointer operator->(void) { 
-			return &(this->operator*());}
+			return &(this->operator*()); }
 
 		random_access_iterator operator+ (difference_type n) const{
-			return (random_access_iterator(_it + n));
-		}
+			return (random_access_iterator(_it + n)); }
 			
 		random_access_iterator operator- (difference_type n) const {
-			return (random_access_iterator(_it - n));
-		}
+			return (random_access_iterator(_it - n)); }
 
 		// pre-increment version
 		random_access_iterator& operator++(){
 			_it++;
-			return (*this);}
+			return (*this); }
 
 		// post-increment version
 		random_access_iterator operator++(int) {
   			random_access_iterator temp = *this;
   			operator++();
-  			return temp;
-		}
+  			return temp; }
 
 		random_access_iterator& operator+=(difference_type n) {
 			_it += n;
-			return (*this);
-		}
+			return (*this); }
 
 		// pre-decrement version
 		random_access_iterator& operator--(){
 			_it--;
-			return (*this);
-		}
+			return (*this); }
 
 		// post-decrement version
 		random_access_iterator operator--(int) {
   			random_access_iterator temp = *this;
   			operator--();
-  			return temp;
-		}
+  			return temp; }
 		
 		random_access_iterator& operator-= (difference_type n) {
 			_it -= n;
-			return (*this);}
+			return (*this); }
 		
 		reference operator[](difference_type n) { 
 			return (*(operator+(n))); }
-		
-			//*-------relational operators-----------*//
 	
 		friend bool operator==(const random_access_iterator &lhs,const random_access_iterator &rhs){
-			return (lhs.base() == rhs.base());
-		}
+			return (lhs.base() == rhs.base()); }
 		
 		friend bool operator!=(const random_access_iterator &lhs,const random_access_iterator &rhs){
-			return (!(lhs.base() == rhs.base()));
-		}
+			return (!(lhs.base() == rhs.base())); }
 
 		friend bool operator<(const random_access_iterator &lhs,const random_access_iterator &rhs){
-			return (lhs.base() < rhs.base());
-		}
+			return (lhs.base() < rhs.base()); }
 
 		friend bool operator<=(const random_access_iterator &lhs,const random_access_iterator &rhs){
-			return (lhs.base() <= rhs.base());
-		}
+			return (lhs.base() <= rhs.base()); }
 
 		friend bool operator>(const random_access_iterator &lhs,const random_access_iterator &rhs){
-			return (lhs.base() > rhs.base());
-		}
+			return (lhs.base() > rhs.base()); }
 
 		friend bool operator>=(const random_access_iterator &lhs,const random_access_iterator &rhs){
-			return (lhs.base() >= rhs.base());
-		}
+			return (lhs.base() >= rhs.base()); }
 
 		difference_type operator- (const random_access_iterator& rit) { 
-			return (this->_it - rit._it); 
-		}
+			return (this->_it - rit._it); }
 
 		friend random_access_iterator operator+ (difference_type n,const random_access_iterator& rit) { 
-			return random_access_iterator(rit._it + n); 
-		}
+			return random_access_iterator(rit._it + n); }
 
 		private:
 			pointer _it;

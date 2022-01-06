@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 12:27:44 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/04 20:56:37 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/01/05 21:22:44 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #define ITERATOR_TRAITS_HPP
 
 #include "iterator.hpp"
-
+#include <cstddef>
+#include <iterator>
 namespace ft
 {
     //!------------------ Iterator Traits -----------------!//
