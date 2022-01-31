@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/31 14:03:01 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/01/31 19:48:33 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,16 @@ namespace ft
 			typedef	typename ft::iterator<std::bidirectional_iterator_tag, Pair>::reference			reference;
 			typedef typename ft::iterator<std::bidirectional_iterator_tag, Pair>::pointer			pointer;
 
-		map_iterator(): _alloc(){};
+		map_iterator(): _node(nullptr){};
 		
 		map_iterator(const	map_iterator &mi){
 		}
-				
+		
+			
 
 		private:
 			Alloc		_alloc;
-			
+			Pair		*_node;
 	};
 }
 
