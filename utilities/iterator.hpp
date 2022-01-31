@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 19:10:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/04 20:24:13 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/01/06 14:44:05 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ namespace ft
 
 	//!---------------- Iterator Base Class -----------------!//
 	
-	template <class Category, class T, class Distance = ptrdiff_t,
-			class Pointer = T*, class Reference = T&>
+	template <typename Category, typename T, typename Distance = ptrdiff_t,
+			typename Pointer = T*, typename Reference = T&>
 	class iterator 
 	{
 		public :

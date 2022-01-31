@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/05 21:28:06 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/01/06 11:36:26 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 namespace ft
 {
 	template < class Key,                                      		 // map::key_type
-		   class T,													// map::mapped_type
+		   class T,													 // map::mapped_type
 		   class Compare = std::less<Key>,                           // map::key_compare
 		   class Alloc = std::allocator<ft::pair<const Key,T> >      // map::allocator_type
 		   > class map
@@ -54,6 +54,9 @@ namespace ft
 			const allocator_type& alloc = allocator_type());
 
 		map (const map& x);
+
+		private:
+		
 		
 	};
 			  

@@ -1,4 +1,5 @@
 # ft_containers_:
+
 In C++ STL (Standard Template Library), 3 things are meaningful and important:
 
 1. Containers: These are used to manage a collection of objects of a certain kind. Containers can be of two types: Sequence Containers (vector, deque, list) and Associative Containers (Set, Multiset, Map, Multimap).
@@ -28,7 +29,7 @@ Someone might argue that STL concepts of Container/Algorithm/Iterator contradict
 
 [Vector in C++ STL - GeeksforGeeks](https://www.geeksforgeeks.org/vector-in-cpp-stl/)
 
-### Std::allocator:
+### Allocator:
 
 [std::allocator() in C++ with Examples - GeeksforGeeks](https://www.geeksforgeeks.org/stdallocator-in-cpp-with-examples/)
 
@@ -44,7 +45,7 @@ Someone might argue that STL concepts of Container/Algorithm/Iterator contradict
 
 [C++ Operator Overloading: Common Practice](https://arne-mertz.de/2015/01/operator-overloading-common-practice/)
 
-### std::iterator_traits :
+### Iterator_traits :
 
 [std::iterator is deprecated: Why, What It Was, and What to Use Instead - Fluent C++](https://www.fluentcpp.com/2018/05/08/std-iterator-deprecated/)
 
@@ -52,13 +53,13 @@ Someone might argue that STL concepts of Container/Algorithm/Iterator contradict
 
 [An Introduction to "Iterator Traits"](https://www.codeproject.com/Articles/36530/An-Introduction-to-Iterator-Traits)
 
-### std::reverse_iterator:
+### Reverse_iterator:
 
 [reverse_iterator - C++ Reference](https://www.cplusplus.com/reference/iterator/reverse_iterator/)
 
 [Why isn't a reverse iterator a formal iterator category according to the C++17 standard?](https://stackoverflow.com/questions/55226605/why-isnt-a-reverse-iterator-a-formal-iterator-category-according-to-the-c17-s/55226720#55226720)
 
-### std::random_access_iterator
+### Random_access_iterator
 
 [Random Access Iterators](https://docs.oracle.com/cd/E19422-01/819-3704/Ran_7821.htm)
 
@@ -121,8 +122,26 @@ A type trait is a templated struct that has member types that give you informati
 
 A stack is a data structure that operates based on LIFO (Last In First Out) technique. The std::stack allows elements to be added and removed from one end only.
 
-The std::stack class is a container adapter. Container objects hold data of a similar data type. You can create a stack from various sequence containers. If no container is provided, the Deque container will be used by default. Container adapters don’t support iterators, so it can’t be used to manipulate data.
+The std::stack class is a container adapter. Container objects hold data of a similar data type. You can create a stack from various sequence containers. If no container is provided, the Deque container will be used by default. Container adapters don’t support iterators, so they can’t be used to manipulate data.
 
 [stack - C++ Reference](https://www.cplusplus.com/reference/stack/stack/)
 
-[](https://www.guru99.com/stack-in-cpp-stl.html)  
+[](https://www.guru99.com/stack-in-cpp-stl.html)
+
+## Map in STL:
+
+### AVL tree :
+
+[AVL Trees: Rotations, Insertion, Deletion with C++ Example](https://www.guru99.com/avl-tree.html)
+
+[value_compare Class ( )](https://docs.microsoft.com/en-us/cpp/standard-library/value-compare-class-map?view=msvc-170)
+
+### AVL tree rotations :
+
+[AVL Tree - javatpoint](https://www.javatpoint.com/avl-tree)
+
+[](https://www.cise.ufl.edu/~nemo/cop3530/AVL-Tree-Rotations.pdf)
+
+### Traversing Trees with Iterators:
+
+[Traversing Trees with Iterators](https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html)
