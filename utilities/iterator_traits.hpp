@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 12:27:44 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/05 21:22:44 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/01/31 13:27:55 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ namespace ft
 	template <class Iter>
 	struct iterator_traits
 	{
+		public:
 		typedef typename Iter::difference_type		difference_type;
 		typedef typename Iter::value_type			value_type;
 		typedef typename Iter::pointer				pointer;

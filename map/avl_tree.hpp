@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/31 11:15:14 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/01/31 11:57:32 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ namespace ft
 	
 		public:
 
-			
-			avl_tree()
-			{
-				this->root = nullptr;
+			avl_tree(){
 			}
 	
 			/*
