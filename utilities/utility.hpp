@@ -200,8 +200,43 @@ namespace ft
 		return ( pair<T1,T2>(x,y) );		  
 	}
 
-	// template <typename T>
-	// struct 
+	template <typename T>
+	struct BstNode
+	{
+		T data; //? value type 
+		BstNode *right;
+		BstNode *left;
+		BstNode *rootPtr; //? store the address of the root
+
+		BstNode():data(),right(nullptr), left(nullptr), rootPtr(nullptr){};
+		
+		BstNode(const T &val, BstNode *rt, BstNode *lt, BstNode *p){
+			this->data = val;
+			this->right = nullptr;
+			this->left = nullptr;
+			this->rootPtr = nullptr;
+		}
+
+		BstNode(const BstNode &no){
+			*this = no;
+		}
+
+		BstNode &operator=(const BstNode &no){
+			if (*this == no)
+				return(*this);
+			this->data = no.data;
+			this->right = no.right;
+			this->left = no.left;
+			this->rootPtr = no.rootPtr;
+			return (*this);
+		}
+
+		bool operator==(const BstNode &no){
+			return ( (this->data == no.data) ? true : false );
+		}
+
+
+	};
 }
 
 #endif

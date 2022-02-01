@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/01 17:20:28 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/01 18:14:02 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@ namespace ft
 	template <typename Comparable, typename Alloc, typename Pair>
 	class avl_tree
 	{
-		struct BstNode
-		{
-			int data; //? pair
-			BstNode *right;
-			BstNode *left;
-			BstNode *rootPtr; //? store the address of the root
-		};
+		// struct BstNode
+		// {
+		// 	int data; //? pair
+		// 	BstNode *right;
+		// 	BstNode *left;
+		// 	BstNode *rootPtr; //? store the address of the root
+		// };
 
-		BstNode* GetNewNode(int data) {
-			BstNode* newNode = new BstNode();
-			newNode->data = data;
-			newNode->left = newNode->right = NULL;
-			return newNode;
-		}
+		// BstNode* GetNewNode(int data) {
+		// 	BstNode* newNode = new BstNode();
+		// 	newNode->data = data;
+		// 	newNode->left = newNode->right = NULL;
+		// 	return newNode;
+		// }
 		
-		BstNode* Insert(BstNode* root,int data) {
+		// BstNode* Insert(BstNode* root,int data) {
 			
-		}
+		// }
 				
 	};
 }
