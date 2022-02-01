@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/31 11:57:32 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:20:28 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,34 @@
 
 namespace ft
 {
+	template <typename Comparable, typename Alloc, typename Pair>
 	class avl_tree
 	{
-		private:
-			struct node
-			{
-				struct node *root; 
-				struct node *right;
-				struct node *left;
-				int height;
-				int data;
-			};
-	
-		public:
+		struct BstNode
+		{
+			int data; //? pair
+			BstNode *right;
+			BstNode *left;
+			BstNode *rootPtr; //? store the address of the root
+		};
 
-			avl_tree(){
-			}
-	
-			/*
-			TODO:Left Rotation
-			** This rotation is performed when a new node is 
-			** inserted at the left child of the left subtree.
-			*/
+		BstNode* GetNewNode(int data) {
+			BstNode* newNode = new BstNode();
+			newNode->data = data;
+			newNode->left = newNode->right = NULL;
+			return newNode;
+		}
+		
+		BstNode* Insert(BstNode* root,int data) {
 			
-			struct node *llRotation(struct node *node)
-			{
+		}
 				
-				return (node);
-			}
 	};
+}
+
+int main()
+{
+	
 }
 
 #endif

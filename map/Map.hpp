@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/31 13:56:17 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/01 10:49:36 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ namespace ft
 				bool operator() (const value_type& x, const value_type& y) const{
     				return comp(x.first, y.first);
   				}
-		};
+		} value_compare;
 		typedef				Alloc										allocator_type;
 		typedef	typename 	allocator_type::reference					reference;
 		typedef typename 	allocator_type::const_reference 			const_reference;
