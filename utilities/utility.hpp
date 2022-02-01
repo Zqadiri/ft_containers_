@@ -209,6 +209,8 @@ namespace ft
 		BstNode *rootPtr; //? store the address of the root
 
 		BstNode():data(),right(nullptr), left(nullptr), rootPtr(nullptr){};
+
+		~BstNode(){};
 		
 		BstNode(const T &val, BstNode *rt, BstNode *lt, BstNode *p){
 			this->data = val;
@@ -234,8 +236,6 @@ namespace ft
 		bool operator==(const BstNode &no){
 			return ( (this->data == no.data) ? true : false );
 		}
-
-
 	};
 }
 
