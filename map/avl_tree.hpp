@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/02 13:54:05 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/02 14:34:13 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ namespace ft
 
 		node_type*		newNode(value_type data)
 		{
+			// puts("new");
 			node_type *newNode = nodeAlloc.allocate(1);
 			newNode->right = newNode->left = nullptr;
 			newNode->data= data;
@@ -39,6 +40,7 @@ namespace ft
 		
 		node_type*		insert(node_type *root, value_type data)
 		{
+			// puts("insert");
 			if (root == nullptr)
 				root = newNode(data);
 			else if (data <= root->data)
@@ -54,9 +56,5 @@ namespace ft
 	};
 }
 
-int main()
-{
-	
-}
 
 #endif

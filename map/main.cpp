@@ -1,6 +1,7 @@
 // Binary Search Tree - Implemenation in C++
 // Simple program to create a BST of integers and search an element in it 
 #include<iostream>
+#include "./avl_tree.hpp"
 using namespace std;
 //Definition of Node for Binary search tree
 struct BstNode {
@@ -48,44 +49,63 @@ bool Search(BstNode* root,int data) {
 	}
 }
 
-void printBT(const std::string& prefix, const BstNode* node, bool isLeft)
+void printBT(const std::string& prefix,  BstNode* node, bool isLeft)
 {
     if( node != nullptr )
     {
         std::cout << prefix;
-
         std::cout << (isLeft ? "├──" : "└──" );
-
         // print the value of the node
         std::cout << node->data << std::endl;
-
         // enter the next tree level - left and right branch
         printBT( prefix + (isLeft ? "│   " : "    "), node->left, true);
         printBT( prefix + (isLeft ? "│   " : "    "), node->right, false);
     }
 }
 
-void printBT(const BstNode* node)
+void printBT(const std::string& prefix,  ft::BstNode<int>* node, bool isLeft)
 {
-    printBT("", node, false);    
+    if( node != nullptr )
+    {
+        std::cout << prefix;
+        std::cout << (isLeft ? "├──" : "└──" );
+        // print the value of the node
+        std::cout << node->data << std::endl;
+        // enter the next tree level - left and right branch
+        printBT( prefix + (isLeft ? "│   " : "    "), node->left, true);
+        printBT( prefix + (isLeft ? "│   " : "    "), node->right, false);
+    }
 }
 
-// pass the root node of your binary tree
-int main() {
-	// BstNode* root = NULL;  // Creating an empty tree
-	// /*Code to test the logic*/
-	// root = Insert(root,15);	
-	// root = Insert(root,10);	
-	// root = Insert(root,20);
-	// root = Insert(root,25);
-	// root = Insert(root,8);
-	// root = Insert(root,12);
-    //  printBT(root);
-	// Ask user to enter a number.  
+
+int main()
+{
+	puts("************ft*************\n");
+	ft::BstNode<int>* root = nullptr;
+	ft::avl_tree<int, ft::BstNode<int> > av;
+
+	root = av.insert(root,15);
+	root = av.insert(root,10);
+	root = av.insert(root,20);
+	root = av.insert(root,25);
+	root = av.insert(root,8);
+	root = av.insert(root,12);
+
+	printBT("", root, false);
+{
+	puts("************std*************\n");
+	BstNode* root = NULL;
+	root = Insert(root,15);	
+	root = Insert(root,10);	
+	root = Insert(root,20);
+	root = Insert(root,25);
+	root = Insert(root,8);
+	root = Insert(root,12);
+     printBT("", root, false);
 	// int number;
 	// cout<<"Enter number be searched\n";
 	// cin>>number;
-	// //If number is found, print "FOUND"
 	// if(Search(root,number) == true) cout<<"Found\n";
 	// else cout<<"Not Found\n";
+}
 }
