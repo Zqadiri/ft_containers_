@@ -203,6 +203,7 @@ namespace ft
 	template <typename T>
 	struct BstNode
 	{
+		public:
 		T data; //? value type 
 		BstNode *right;
 		BstNode *left;

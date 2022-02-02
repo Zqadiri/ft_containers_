@@ -72,15 +72,15 @@ void printBT(const BstNode* node)
 
 // pass the root node of your binary tree
 int main() {
-	BstNode* root = NULL;  // Creating an empty tree
-	/*Code to test the logic*/
-	root = Insert(root,15);	
-	root = Insert(root,10);	
-	root = Insert(root,20);
-	root = Insert(root,25);
-	root = Insert(root,8);
-	root = Insert(root,12);
-     printBT(root);
+	// BstNode* root = NULL;  // Creating an empty tree
+	// /*Code to test the logic*/
+	// root = Insert(root,15);	
+	// root = Insert(root,10);	
+	// root = Insert(root,20);
+	// root = Insert(root,25);
+	// root = Insert(root,8);
+	// root = Insert(root,12);
+    //  printBT(root);
 	// Ask user to enter a number.  
 	// int number;
 	// cout<<"Enter number be searched\n";
