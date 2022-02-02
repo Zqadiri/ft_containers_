@@ -10,6 +10,29 @@ struct BstNode {
 	BstNode* right;
 };
 
+	// IF tree is right heavy
+	// {
+	//  IF tree's right subtree is left heavy
+	//  {
+	//  Perform Double Left rotation
+	//  }
+	//  ELSE
+	//  {
+	//  Perform Single Left rotation
+	//  }
+	// }
+	// ELSE IF tree is left heavy
+	// {
+	//  IF tree's left subtree is right heavy
+	//  {
+	//  Perform Double Right rotation
+	//  }
+	//  ELSE
+	//  {
+	//  Perform Single Right rotation
+	//  }
+	// } 
+
 // Function to create a new Node in heap
 BstNode* GetNewNode(int data) {
 	BstNode* newNode = new BstNode();
@@ -92,15 +115,18 @@ int main()
 	root = av.insert(root,12);
 
 	printBT("", root, false);
+	/* std::cout << "height of the tree : " << */
+	std::cout << "Height : " << av.Height(root) << std::endl;
 {
 	puts("************std*************\n");
 	BstNode* root = NULL;
-	root = Insert(root,15);	
-	root = Insert(root,10);	
+	root = Insert(root,15);
+	root = Insert(root,10);
 	root = Insert(root,20);
 	root = Insert(root,25);
 	root = Insert(root,8);
 	root = Insert(root,12);
+
      printBT("", root, false);
 	// int number;
 	// cout<<"Enter number be searched\n";
