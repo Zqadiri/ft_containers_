@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/02 18:50:17 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/03 14:17:37 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ namespace ft
 	class avl_tree
 	{
 		public:
-			typedef		T				value_type;
+			typedef		T				value_type; //! pair
 			typedef		Node			node_type;
 			typedef		Alloc			value_alloc;
 			typedef		nodeAllocator	node_alloc;
@@ -37,32 +37,64 @@ namespace ft
 			return newNode;
 		}
 
-		//?  Perform Rotation
-
-		node_type*		insert(node_type *root, value_type data)
+		int 	Difference()
 		{
-			if (root == nullptr)
-				root = newNode(data);
-			else if (data <= root->data)
-				root->left = insert(root->left, data);
-			else
-				root->right = insert(root->right, data);
-			return root;
+			
 		}
 
 		int		Height(node_type *root)
 		{
 			int height = 0;
 
+			if (root == nullptr)
+				return -1;
 			if (root != nullptr)
 			{
 				int leftHeight = Height(root->left);
 				int rightHeight = Height(root->right);
 				int max_height = std::max(leftHeight, rightHeight);
 				height = max_height + 1;
+				printf (" | %d {%d,%d}, (%d,%d)", height, root->data, root->data,
+				leftHeight, rightHeight);
 			}
 			return height;
 		}
+
+		node_type*		balanceTree(node_type *root)
+		{
+			// BalanceFactor = height(left-sutree) − height(right-sutree)
+			int	BalanceFactor = Height(root->left) - Height(root->right);
+			std::cout << "\nBL: " << BalanceFactor << std::endl;
+			if (BalanceFactor > 1)
+			{
+				
+			}else if (BalanceFactor < -1)
+			{
+				
+			}
+			return root;
+		}
+		//?  Perform Rotation
+
+		node_type*		insert(node_type *root, value_type data)
+		{
+			if (root == nullptr)
+				root = newNode(data);
+			else if (data < root->data)
+			{
+				root->right = insert(root->right, data);
+				//* balance 
+				root = balanceTree(root);
+			}
+			else if (data > root->data)
+			{
+				root->left = insert(root->left, data);
+				// root = balanceTree(root);
+				//* balance
+			}
+			return root;
+		}
+
 	
 		private:
 			node_alloc	nodeAlloc;

@@ -110,28 +110,29 @@ int main()
 	root = av.insert(root,15);
 	root = av.insert(root,10);
 	root = av.insert(root,20);
-	root = av.insert(root,25);
+	root = av.insert(root,14);
 	root = av.insert(root,8);
 	root = av.insert(root,12);
 
 	printBT("", root, false);
 	/* std::cout << "height of the tree : " << */
-	std::cout << "Height : " << av.Height(root) << std::endl;
-{
-	puts("************std*************\n");
-	BstNode* root = NULL;
-	root = Insert(root,15);
-	root = Insert(root,10);
-	root = Insert(root,20);
-	root = Insert(root,25);
-	root = Insert(root,8);
-	root = Insert(root,12);
+	// std::cout << "Height : " << 
+	av.Height(root) ;
+// {
+	// puts("************std*************\n");
+	// BstNode* root = NULL;
+	// root = Insert(root,15);
+	// root = Insert(root,10);
+	// root = Insert(root,20);
+	// root = Insert(root,25);
+	// root = Insert(root,8);
+	// root = Insert(root,12);
 
-     printBT("", root, false);
+    //  printBT("", root, false);
 	// int number;
 	// cout<<"Enter number be searched\n";
 	// cin>>number;
 	// if(Search(root,number) == true) cout<<"Found\n";
 	// else cout<<"Not Found\n";
-}
+// }
 }
