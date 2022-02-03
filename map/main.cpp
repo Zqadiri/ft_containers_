@@ -96,7 +96,7 @@ int main()
 	printBT("", root, false);
 	av.Height(root) ;
 
-	{1T57655456469654
+	{
 
 		ft::BstNode<int>* root = nullptr;
 		ft::avl_tree<int, ft::BstNode<int> > av;
@@ -105,13 +105,14 @@ int main()
 		root = av.insert(root,10);
 		root = av.insert(root,23);
 		root = av.insert(root,24);
+		root = av.insert(root,21);
 		root = av.insert(root,22);
 		// root = av.insert(root,12);
 
 		printBT("", root, false);
 		av.Height(root) ;
 	}
-	puts("************Right Heavy************\n");
+	// puts("************Right Heavy************\n");
 
 // {
 	// puts("************std*************\n");

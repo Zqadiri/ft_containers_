@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/03 16:52:28 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/03 18:26:11 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ namespace ft
 			return newNode;
 		}
 
-		int 	Difference()
-		{
-			
-		}
-
 		int		Height(node_type *root)
 		{
 			int height = 0;
@@ -68,6 +63,27 @@ namespace ft
 			return b_factor;
 		}
 
+		node_type*		leftLeftRotation(node_type *root)
+		{
+			return root;
+		}
+
+		node_type*		leftRightRotation(node_type *root)
+		{
+			return root;
+		}
+		
+		node_type*		rightRightRotation(node_type *root)
+		{
+			return root;
+		}
+		
+		node_type*		rightLeftRotation(node_type *root)
+		{
+			return root;
+		}
+		
+
 		node_type*		balanceTree(node_type *root)
 		{
 			// BalanceFactor = height(left-sutree) − height(right-sutree)
@@ -77,13 +93,19 @@ namespace ft
 			if (BalanceFactor > 1)
 			{
 				std::cout << "LEFT heavy : ";
-				std::cout << difference(root->left) <<":"<<  difference(root->right) << std::endl << std::endl;
+				std::cout << "L " << difference(root->left) <<":"<<  difference(root->right) << std::endl << std::endl;
+				if (difference(root->left) <= 0)
+					leftLeftRotation(root); // ? ll rotation if the tree is left heavy && the ST is left heavy 
+				leftRightRotation(root); //? lr Rottion if the tree is left heavy && ST is right heavy				
 			}
 			//? ELSE IF tree is RIGHT heavy
 			else if (BalanceFactor < -1)
 			{
 				std::cout << "Right heavy : ";
-				std::cout << difference(root->left) <<":"<< difference(root->right) << std::endl<< std::endl;
+				std::cout << "L " << difference(root->left) <<":"<< difference(root->right) << std::endl<< std::endl;
+				if (difference(root->left) >= 0)
+					rightRightRotation(root); //? Right Right 
+				rightLeftRotation(root); //? Right Left
 			}
 			return root;
 		}
@@ -106,7 +128,6 @@ namespace ft
 			return root;
 		}
 
-	
 		private:
 			node_alloc	nodeAlloc;
 			value_alloc	valueAlloc;
