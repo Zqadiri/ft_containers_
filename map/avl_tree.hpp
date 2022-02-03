@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/03 18:26:11 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/03 19:45:20 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,32 +55,49 @@ namespace ft
 			return height;
 		}
 
-		int difference(node_type *t)
+		int difference(node_type *root)
 		{
-			int l_height = Height(t->left);
-			int r_height = Height(t->right);
+			// puts("in");
+			int l_height = Height(root->left);
+			int r_height = Height(root->right);
 			int b_factor = l_height - r_height;
 			return b_factor;
 		}
 
 		node_type*		leftLeftRotation(node_type *root)
 		{
-			return root;
+			std::cout << "leftLeftRotation" << std::endl;
+			node_type *new_parent;
+
+			new_parent = root->left;
+			root->left = new_parent->right;
+			new_parent->right = root;
+			return new_parent;
 		}
 
-		node_type*		leftRightRotation(node_type *root)
-		{
-			return root;
-		}
-		
 		node_type*		rightRightRotation(node_type *root)
 		{
-			return root;
+			std::cout << "rightRightRotation" << std::endl;
+			node_type *new_parent;
+
+			new_parent = root->right;
+			root->right = new_parent->left;
+			new_parent->right = root;
+			return new_parent;
 		}
+		node_type*		leftRightRotation(node_type *root)
+		{
+			std::cout << "leftRightRotation" << std::endl;
+			node_type *new_parent;
+			return new_parent;
+		}
+		
 		
 		node_type*		rightLeftRotation(node_type *root)
 		{
-			return root;
+			std::cout << "rightLeftRotation" << std::endl;
+			node_type *new_parent;
+			return new_parent;
 		}
 		
 
@@ -93,19 +110,21 @@ namespace ft
 			if (BalanceFactor > 1)
 			{
 				std::cout << "LEFT heavy : ";
-				std::cout << "L " << difference(root->left) <<":"<<  difference(root->right) << std::endl << std::endl;
-				if (difference(root->left) <= 0)
-					leftLeftRotation(root); // ? ll rotation if the tree is left heavy && the ST is left heavy 
-				leftRightRotation(root); //? lr Rottion if the tree is left heavy && ST is right heavy				
+				std::cout << "L " << difference(root->left) << std::endl << std::endl;
+				if (difference(root->left) > 0)
+					root = leftLeftRotation(root); // ? ll rotation if the tree is left heavy && the ST is left heavy 
+				else
+					root = leftRightRotation(root); //? lr Rottion if the tree is left heavy && ST is right heavy				
 			}
 			//? ELSE IF tree is RIGHT heavy
 			else if (BalanceFactor < -1)
 			{
 				std::cout << "Right heavy : ";
-				std::cout << "L " << difference(root->left) <<":"<< difference(root->right) << std::endl<< std::endl;
-				if (difference(root->left) >= 0)
-					rightRightRotation(root); //? Right Right 
-				rightLeftRotation(root); //? Right Left
+				std::cout << "L " << difference(root->right)  << std::endl<< std::endl;
+				if (difference(root->right) > 0)
+					root = rightRightRotation(root); //? Right Right
+				else 
+					root = rightLeftRotation(root); //? Right Left
 			}
 			return root;
 		}

@@ -213,6 +213,13 @@ namespace ft
 
 		~BstNode(){};
 		
+		// avl *avl_tree::lr_rotat(avl *parent) {
+   		// avl *t;
+   		// t = parent->l;
+   		// parent->l = rr_rotat(t);
+   		// cout<<"Left-Right Rotation";
+   		// return ll_rotat(parent);
+		// }
 		BstNode(const T &val, BstNode *rt, BstNode *lt, BstNode *p){
 			this->data = val;
 			this->right = nullptr;
