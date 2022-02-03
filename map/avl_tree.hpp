@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/03 14:17:37 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/03 16:52:28 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,18 @@ namespace ft
 				int rightHeight = Height(root->right);
 				int max_height = std::max(leftHeight, rightHeight);
 				height = max_height + 1;
-				printf (" | %d {%d,%d}, (%d,%d)", height, root->data, root->data,
-				leftHeight, rightHeight);
+				// printf (" | %d {%d,%d}, (%d,%d)", height, root->data, root->data,
+				// leftHeight, rightHeight);
 			}
 			return height;
+		}
+
+		int difference(node_type *t)
+		{
+			int l_height = Height(t->left);
+			int r_height = Height(t->right);
+			int b_factor = l_height - r_height;
+			return b_factor;
 		}
 
 		node_type*		balanceTree(node_type *root)
@@ -65,12 +73,17 @@ namespace ft
 			// BalanceFactor = height(left-sutree) − height(right-sutree)
 			int	BalanceFactor = Height(root->left) - Height(root->right);
 			std::cout << "\nBL: " << BalanceFactor << std::endl;
+			//? IF tree is LEFT heavy
 			if (BalanceFactor > 1)
 			{
-				
-			}else if (BalanceFactor < -1)
+				std::cout << "LEFT heavy : ";
+				std::cout << difference(root->left) <<":"<<  difference(root->right) << std::endl << std::endl;
+			}
+			//? ELSE IF tree is RIGHT heavy
+			else if (BalanceFactor < -1)
 			{
-				
+				std::cout << "Right heavy : ";
+				std::cout << difference(root->left) <<":"<< difference(root->right) << std::endl<< std::endl;
 			}
 			return root;
 		}
@@ -82,15 +95,13 @@ namespace ft
 				root = newNode(data);
 			else if (data < root->data)
 			{
-				root->right = insert(root->right, data);
-				//* balance 
+				root->left = insert(root->left, data);
 				root = balanceTree(root);
 			}
 			else if (data > root->data)
 			{
-				root->left = insert(root->left, data);
-				// root = balanceTree(root);
-				//* balance
+				root->right = insert(root->right, data);
+				root = balanceTree(root);
 			}
 			return root;
 		}

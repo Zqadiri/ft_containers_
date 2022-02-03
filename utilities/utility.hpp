@@ -200,13 +200,6 @@ namespace ft
 		return ( pair<T1,T2>(x,y) );		  
 	}
 
-	// int avl_tree::difference(avl *t) {
-	//    int l_height = height(t->l);
-	//    int r_height = height(t->r);
-	//    int b_factor = l_height - r_height;
-	//    return b_factor;
-	// }
-	
 	template <typename T>
 	struct BstNode
 	{

@@ -10,28 +10,7 @@ struct BstNode {
 	BstNode* right;
 };
 
-	// IF tree is right heavy
-	// {
-	//  IF tree's right subtree is left heavy
-	//  {
-	//  Perform Double Left rotation
-	//  }
-	//  ELSE
-	//  {
-	//  Perform Single Left rotation
-	//  }
-	// }
-	// ELSE IF tree is left heavy
-	// {
-	//  IF tree's left subtree is right heavy
-	//  {
-	//  Perform Double Right rotation
-	//  }
-	//  ELSE
-	//  {
-	//  Perform Single Right rotation
-	//  }
-	// } 
+
 
 // Function to create a new Node in heap
 BstNode* GetNewNode(int data) {
@@ -103,7 +82,7 @@ void printBT(const std::string& prefix,  ft::BstNode<int>* node, bool isLeft)
 
 int main()
 {
-	puts("************ft*************\n");
+	puts("************Left Heavy************\n");
 	ft::BstNode<int>* root = nullptr;
 	ft::avl_tree<int, ft::BstNode<int> > av;
 
@@ -115,9 +94,25 @@ int main()
 	root = av.insert(root,12);
 
 	printBT("", root, false);
-	/* std::cout << "height of the tree : " << */
-	// std::cout << "Height : " << 
 	av.Height(root) ;
+
+	{1T57655456469654
+
+		ft::BstNode<int>* root = nullptr;
+		ft::avl_tree<int, ft::BstNode<int> > av;
+
+		root = av.insert(root,20);
+		root = av.insert(root,10);
+		root = av.insert(root,23);
+		root = av.insert(root,24);
+		root = av.insert(root,22);
+		// root = av.insert(root,12);
+
+		printBT("", root, false);
+		av.Height(root) ;
+	}
+	puts("************Right Heavy************\n");
+
 // {
 	// puts("************std*************\n");
 	// BstNode* root = NULL;
