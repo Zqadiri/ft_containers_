@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/03 19:45:20 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/04 11:40:10 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,39 +67,44 @@ namespace ft
 		node_type*		leftLeftRotation(node_type *root)
 		{
 			std::cout << "leftLeftRotation" << std::endl;
-			node_type *new_parent;
+			node_type *new_parent = root->left;
+			node_type *tmp = new_parent->right;
 
-			new_parent = root->left;
-			root->left = new_parent->right;
 			new_parent->right = root;
+			root->left = tmp;
 			return new_parent;
 		}
-
+		
 		node_type*		rightRightRotation(node_type *root)
 		{
 			std::cout << "rightRightRotation" << std::endl;
-			node_type *new_parent;
+			node_type *new_parent = root->right;
+			node_type *tmp = new_parent->left;
 
-			new_parent = root->right;
-			root->right = new_parent->left;
-			new_parent->right = root;
+			new_parent->left = root;
+			root->right = tmp;
 			return new_parent;
 		}
+
 		node_type*		leftRightRotation(node_type *root)
 		{
 			std::cout << "leftRightRotation" << std::endl;
 			node_type *new_parent;
-			return new_parent;
+
+			new_parent = root->left;
+			root->left = rightRightRotation(new_parent);
+			return leftLeftRotation(root);
 		}
-		
 		
 		node_type*		rightLeftRotation(node_type *root)
 		{
 			std::cout << "rightLeftRotation" << std::endl;
 			node_type *new_parent;
-			return new_parent;
+
+			new_parent = root->right;
+			root->right = leftLeftRotation(new_parent);
+			return rightRightRotation(root);
 		}
-		
 
 		node_type*		balanceTree(node_type *root)
 		{
@@ -120,16 +125,16 @@ namespace ft
 			else if (BalanceFactor < -1)
 			{
 				std::cout << "Right heavy : ";
-				std::cout << "L " << difference(root->right)  << std::endl<< std::endl;
+				// std::cout << "L " << difference(root->right)  << std::endl<< std::endl;
 				if (difference(root->right) > 0)
-					root = rightRightRotation(root); //? Right Right
-				else 
 					root = rightLeftRotation(root); //? Right Left
+				else 
+					root = rightRightRotation(root); //? Right Right
 			}
 			return root;
 		}
+		
 		//?  Perform Rotation
-
 		node_type*		insert(node_type *root, value_type data)
 		{
 			if (root == nullptr)

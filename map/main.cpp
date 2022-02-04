@@ -86,15 +86,15 @@ int main()
 	ft::BstNode<int>* root = nullptr;
 	ft::avl_tree<int, ft::BstNode<int> > av;
 
-	// root = av.insert(root,15);
-	// root = av.insert(root,12);
-	// root = av.insert(root,10);
+	root = av.insert(root,15);
+	root = av.insert(root,12);
+	root = av.insert(root,13);
 
 	root = av.insert(root,15);
 	root = av.insert(root,52);
 	root = av.insert(root,60);
-	// root = av.insert(root,14);
-	// root = av.insert(root,8);
+	root = av.insert(root,14);
+	root = av.insert(root,8);
 	// root = av.insert(root,12);
 
 	printBT("", root, false);
