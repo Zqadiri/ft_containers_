@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/04 11:40:10 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/04 18:05:21 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ namespace ft
 
 		node_type*		balanceTree(node_type *root)
 		{
-			// BalanceFactor = height(left-sutree) − height(right-sutree)
 			int	BalanceFactor = Height(root->left) - Height(root->right);
 			std::cout << "\nBL: " << BalanceFactor << std::endl;
 			//? IF tree is LEFT heavy
@@ -125,7 +124,7 @@ namespace ft
 			else if (BalanceFactor < -1)
 			{
 				std::cout << "Right heavy : ";
-				// std::cout << "L " << difference(root->right)  << std::endl<< std::endl;
+				std::cout << "L " << difference(root->right)  << std::endl<< std::endl;
 				if (difference(root->right) > 0)
 					root = rightLeftRotation(root); //? Right Left
 				else 
@@ -152,12 +151,59 @@ namespace ft
 			return root;
 		}
 
+		node_type*		minValue(node_type *root)
+		{
+			node_type *current = root;
+			while (current->left != nullptr){
+				current = current->left;
+			}
+			return current;
+		}
+
+		node_type*		deleteNode(node_type *root, value_type data)
+		{
+			if (root == nullptr)
+				return nullptr;
+			else if (data < root->data)
+			{
+				root->left = deleteNode(root->left, data);
+				std::cout << "Left"  << std::endl;
+			}
+			else if (data > root->data)
+			{
+				root->right = deleteNode(root->right, data);
+				std::cout << "Right"  << std::endl;
+			}
+			else if (data == root->data) //! delete the root cases (root wit no child, one child, x childs)
+			{
+				if (root->left == nullptr)
+				{
+					node_type *new_parent = root->right;
+					nodeAlloc.destroy(root);
+					return new_parent;
+				}
+				else if (root->right == nullptr)
+				{
+					node_type *new_parent = root->left;
+					nodeAlloc.destroy(root);
+					return new_parent;
+				}
+				else
+				{
+					node_type *ret = minValue(root);
+					std::cout << "ret : "<< ret->data << std::endl;
+					//? x childs
+				}
+			}
+			return root;		
+		}
+		
+
 		private:
 			node_alloc	nodeAlloc;
 			value_alloc	valueAlloc;
 				
 	};
 }
-
 
 #endif

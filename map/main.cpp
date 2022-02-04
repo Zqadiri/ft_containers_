@@ -86,19 +86,25 @@ int main()
 	ft::BstNode<int>* root = nullptr;
 	ft::avl_tree<int, ft::BstNode<int> > av;
 
-	root = av.insert(root,15);
-	root = av.insert(root,12);
-	root = av.insert(root,13);
+	// root = av.insert(root,15);
+	root = av.insert(root,50);
+	root = av.insert(root,70);
 
-	root = av.insert(root,15);
-	root = av.insert(root,52);
+	root = av.insert(root,40);
+	root = av.insert(root,4);
 	root = av.insert(root,60);
-	root = av.insert(root,14);
-	root = av.insert(root,8);
+	root = av.insert(root,80);
+	// root = av.insert(root,14);
+	// root = av.insert(root,8);
 	// root = av.insert(root,12);
 
 	printBT("", root, false);
 	av.Height(root) ;
+
+	root = av.deleteNode(root, 50);
+	// root = av.deleteNode(root, 12);
+	printBT("", root, false);
+
 
 	// {
 
@@ -135,4 +141,14 @@ int main()
 	// if(Search(root,number) == true) cout<<"Found\n";
 	// else cout<<"Not Found\n";
 // }
+	{
+   		char s[]="Hello World!";
+   		int Uppercase = 0; //modified by the lambda
+   		for_each(s, s+sizeof(s), [&Uppercase] (char c)
+		{
+   			if (isupper(c))
+   			 Uppercase++;
+   		});
+ 		cout<< Uppercase<<" uppercase letters in: "<< s<<endl;
+	}
 }
