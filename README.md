@@ -140,7 +140,11 @@ The std::stack class is a container adapter. Container objects hold data of a si
 
 [AVL Tree - javatpoint](https://www.javatpoint.com/avl-tree)
 
-[](https://www.cise.ufl.edu/~nemo/cop3530/AVL-Tree-Rotations.pdf)
+[What is AVL tree Data structure ? | Rotations in AVL tree | All AVL operations with FULL CODE | DSA - Simple Snippets](https://simplesnippets.tech/what-is-avl-tree-data-structure-all-avl-operations-with-full-code/)
+
+### **Inorder Tree Traversal:**
+
+[Inorder Tree Traversal - Iterative and Recursive | Techie Delight](https://www.techiedelight.com/inorder-tree-traversal-iterative-recursive/)
 
 ### Traversing Trees with Iterators:
 
