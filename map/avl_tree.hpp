@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/04 18:05:21 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/04 20:58:14 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,8 @@ namespace ft
 		node_type*		minValue(node_type *root)
 		{
 			node_type *current = root;
-			while (current->left != nullptr){
-				current = current->left;
+			while (current->right != nullptr){
+				current = current->right;
 			}
 			return current;
 		}
@@ -190,10 +190,13 @@ namespace ft
 				}
 				else
 				{
-					node_type *ret = minValue(root);
-					std::cout << "ret : "<< ret->data << std::endl;
 					//? x childs
+					node_type *ret = minValue(root->left);
+					std::cout << "ret : "<< ret->data << std::endl;
+					root->data = ret->data;
+					root->left = deleteNode(root->left, ret->data);
 				}
+				// balanceTree(root);
 			}
 			return root;		
 		}
