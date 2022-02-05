@@ -195,9 +195,11 @@ namespace ft
 		return !(lhs<rhs);
 	}
 
+	// * make pair
+
 	template <typename T1, typename T2>
 	pair<T1,T2> make_pair (T1 x, T2 y){
-		return ( pair<T1,T2>(x,y) );		  
+		return (pair<T1,T2>(x,y));		  
 	}
 
 	template <typename Key, typename T>
@@ -209,12 +211,11 @@ namespace ft
 		BstNode *left;
 		BstNode *rootPtr; //? store the address of the root
 
+		~BstNode(){};
 		BstNode():data(),right(nullptr), left(nullptr), rootPtr(nullptr){};
 
-		~BstNode(){};
-
-		BstNode(const Key key, const T &val, BstNode *rt, BstNode *lt, BstNode *p){
-			this->data._first = key;
+		BstNode(const Key K, const T &val, BstNode *rt, BstNode *lt, BstNode *p){
+			this->data._first = K;
 			this->data._second = val;
 			this->right = nullptr;
 			this->left = nullptr;

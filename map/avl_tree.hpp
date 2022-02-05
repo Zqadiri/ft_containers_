@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/05 14:23:00 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/05 16:23:38 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,30 @@
 
 #include "../utilities/utility.hpp"
 #include <iostream>
-
+#include <sys/types.h>
 namespace ft
 {
 	
-	template <typename Key, typename T, typename Node = ft::BstNode<Key, T>, typename Alloc = std::allocator<T>,
-	 typename nodeAllocator = std::allocator<ft::pair<const Key, T> > >
+	template <typename Key, typename T, typename Node = ft::BstNode<Key, T>, typename nodeAllocator = std::allocator<Node>,
+	 typename pairAllocator = std::allocator<ft::pair<const Key, T> > >
 	class avl_tree
 	{
 		public:
-			typedef		T				value_type; //! pair
-			typedef		Node			node_type;
-			typedef		Alloc			value_alloc;
-			typedef		nodeAllocator	node_alloc;
+			typedef		Key					key_type; //? key_t defined in types.h https://www.csl.mtu.edu/cs4411.ck/www/NOTES/process/shm/key.html#:~:text=Unix%20requires%20a%20key%20of,a%20key%20is%20system%20dependent.
+			typedef		T 					mapped_type;
+			typedef		Node				node_type;
+			typedef		pairAllocator		pair_alloc;
+			typedef		nodeAllocator		node_alloc;
 
-		node_type*		newNode(value_type data)
+		node_type*		newNode(mapped_type data)
 		{
 			node_type *newNode = nodeAlloc.allocate(1);
 			newNode->right = newNode->left = nullptr;
-			newNode->data= data;
+			// newNode->data = pairAlloc.allocate(1);
+			
+			// newNode->data.construct(ft::make_pair(key_type, mapped_type));
+			// ft::make_pair(key_type, mapped_type);
+			newNode->data = pairAlloc.allocate(ft::make_pair(key, mapped));
 			return newNode;
 		}
 
@@ -134,7 +139,7 @@ namespace ft
 		}
 		
 		//?  Perform Rotation
-		node_type*		insert(node_type *root, value_type data)
+		node_type*		insert(node_type *root, mapped_type data)
 		{
 			if (root == nullptr)
 				root = newNode(data);
@@ -160,7 +165,7 @@ namespace ft
 			return current;
 		}
 
-		node_type*		deleteNode(node_type *root, value_type data)
+		node_type*		deleteNode(node_type *root, mapped_type data)
 		{
 			if (root == nullptr)
 				return nullptr;
@@ -203,7 +208,9 @@ namespace ft
 
 		private:
 			node_alloc	nodeAlloc;
-			value_alloc	valueAlloc;
+			pair_alloc	pairAlloc;
+			key_type	key;
+			mapped_type	mapped;
 				
 	};
 }
