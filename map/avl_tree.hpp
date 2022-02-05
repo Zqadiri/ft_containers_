@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/04 20:58:14 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/05 14:23:00 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 namespace ft
 {
 	
-	template <typename T, typename Node = ft::BstNode<T>, typename Alloc = std::allocator<T>,
-	 typename nodeAllocator = std::allocator<ft::BstNode<T> > >
+	template <typename Key, typename T, typename Node = ft::BstNode<Key, T>, typename Alloc = std::allocator<T>,
+	 typename nodeAllocator = std::allocator<ft::pair<const Key, T> > >
 	class avl_tree
 	{
 		public:
@@ -174,7 +174,7 @@ namespace ft
 				root->right = deleteNode(root->right, data);
 				std::cout << "Right"  << std::endl;
 			}
-			else if (data == root->data) //! delete the root cases (root wit no child, one child, x childs)
+			else if (data == root->data)	//! delete the root cases (root wit no child, one child, x childs)
 			{
 				if (root->left == nullptr)
 				{
@@ -196,7 +196,6 @@ namespace ft
 					root->data = ret->data;
 					root->left = deleteNode(root->left, ret->data);
 				}
-				// balanceTree(root);
 			}
 			return root;		
 		}

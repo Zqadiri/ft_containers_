@@ -200,11 +200,11 @@ namespace ft
 		return ( pair<T1,T2>(x,y) );		  
 	}
 
-	template <typename T>
+	template <typename Key, typename T>
 	struct BstNode
 	{
 		public:
-		T data; //? value type 
+		ft::pair<const Key, T> data; //? value type 
 		BstNode *right;
 		BstNode *left;
 		BstNode *rootPtr; //? store the address of the root
@@ -213,8 +213,9 @@ namespace ft
 
 		~BstNode(){};
 
-		BstNode(const T &val, BstNode *rt, BstNode *lt, BstNode *p){
-			this->data = val;
+		BstNode(const Key key, const T &val, BstNode *rt, BstNode *lt, BstNode *p){
+			this->data._first = key;
+			this->data._second = val;
 			this->right = nullptr;
 			this->left = nullptr;
 			this->rootPtr = nullptr;
@@ -227,7 +228,8 @@ namespace ft
 		BstNode &operator=(const BstNode &no){
 			if (*this == no)
 				return(*this);
-			this->data = no.data;
+			this->data._first = no.data._first;
+			this->data._second = no.data._second;
 			this->right = no.right;
 			this->left = no.left;
 			this->rootPtr = no.rootPtr;
