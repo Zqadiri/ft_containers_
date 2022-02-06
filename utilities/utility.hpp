@@ -142,7 +142,7 @@ namespace ft
 
 			//?------- Member Functions ---------?//
 
-		pair(){};
+		pair():_first(), _second(){};
 
 		template<class U, class V>
 		pair (const pair<U,V>& pr){
@@ -202,17 +202,23 @@ namespace ft
 		return (pair<T1,T2>(x,y));		  
 	}
 
-	template <typename Key, typename T>
+	template <typename Key, typename T, typename pairAllocator = std::allocator<ft::pair<const Key, T> > >
 	struct BstNode
 	{
+		private:
+			pairAllocator pairAlloc;
 		public:
-		ft::pair<const Key, T> data; //? value type 
-		BstNode *right;
-		BstNode *left;
-		BstNode *rootPtr; //? store the address of the root
+			ft::pair<const Key, T> data; //? value type 
+			BstNode *right;
+			BstNode *left;
+			BstNode *rootPtr; //? store the address of the root
 
+		BstNode(): data(){};
 		~BstNode(){};
-		BstNode():data(),right(nullptr), left(nullptr), rootPtr(nullptr){};
+		
+		BstNode(const pair <const Key, T> p){
+			pairAlloc.construct(&data, p);
+		}
 
 		BstNode(const Key K, const T &val, BstNode *rt, BstNode *lt, BstNode *p){
 			this->data._first = K;

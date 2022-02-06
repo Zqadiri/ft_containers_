@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/05 16:23:38 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/06 20:33:25 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 namespace ft
 {
 	
-	template <typename Key, typename T, typename Node = ft::BstNode<Key, T>, typename nodeAllocator = std::allocator<Node>,
-	 typename pairAllocator = std::allocator<ft::pair<const Key, T> > >
+	template <typename Key, typename T,class Compare = std::less<Key>, typename Node = ft::BstNode<Key, T>,
+	typename nodeAllocator = std::allocator<Node>, typename pairAllocator = std::allocator<ft::pair<const Key, T> > >
 	class avl_tree
 	{
 		public:
@@ -29,16 +29,14 @@ namespace ft
 			typedef		Node				node_type;
 			typedef		pairAllocator		pair_alloc;
 			typedef		nodeAllocator		node_alloc;
+			typedef		Compare				compare;
 
-		node_type*		newNode(mapped_type data)
+		node_type*		newNode(key_type data)
 		{
 			node_type *newNode = nodeAlloc.allocate(1);
 			newNode->right = newNode->left = nullptr;
-			// newNode->data = pairAlloc.allocate(1);
-			
-			// newNode->data.construct(ft::make_pair(key_type, mapped_type));
-			// ft::make_pair(key_type, mapped_type);
-			newNode->data = pairAlloc.allocate(ft::make_pair(key, mapped));
+			// newNode->data = pairAlloc.construct(ft::make_pair(key, mapped));
+
 			return newNode;
 		}
 
@@ -139,11 +137,11 @@ namespace ft
 		}
 		
 		//?  Perform Rotation
-		node_type*		insert(node_type *root, mapped_type data)
+		node_type*		insert(node_type *root, key_type data)
 		{
 			if (root == nullptr)
 				root = newNode(data);
-			else if (data < root->data)
+			else if (data < root->data comp(root->data._first, ))
 			{
 				root->left = insert(root->left, data);
 				root = balanceTree(root);
@@ -167,50 +165,52 @@ namespace ft
 
 		node_type*		deleteNode(node_type *root, mapped_type data)
 		{
-			if (root == nullptr)
-				return nullptr;
-			else if (data < root->data)
-			{
-				root->left = deleteNode(root->left, data);
-				std::cout << "Left"  << std::endl;
-			}
-			else if (data > root->data)
-			{
-				root->right = deleteNode(root->right, data);
-				std::cout << "Right"  << std::endl;
-			}
-			else if (data == root->data)	//! delete the root cases (root wit no child, one child, x childs)
-			{
-				if (root->left == nullptr)
-				{
-					node_type *new_parent = root->right;
-					nodeAlloc.destroy(root);
-					return new_parent;
-				}
-				else if (root->right == nullptr)
-				{
-					node_type *new_parent = root->left;
-					nodeAlloc.destroy(root);
-					return new_parent;
-				}
-				else
-				{
-					//? x childs
-					node_type *ret = minValue(root->left);
-					std::cout << "ret : "<< ret->data << std::endl;
-					root->data = ret->data;
-					root->left = deleteNode(root->left, ret->data);
-				}
-			}
+			// if (root == nullptr)
+			// 	return nullptr;
+			// else if (data < root->data._second)
+			// {
+			// 	root->left = deleteNode(root->left, data);
+			// 	std::cout << "Left"  << std::endl;
+			// }
+			// else if (data > root->data)
+			// {
+			// 	root->right = deleteNode(root->right, data);
+			// 	std::cout << "Right"  << std::endl;
+			// }
+			// else if (data == root->data)	//! delete the root cases (root wit no child, one child, x childs)
+			// {
+			// 	if (root->left == nullptr)
+			// 	{
+			// 		node_type *new_parent = root->right;
+			// 		nodeAlloc.destroy(root);
+			// 		return new_parent;
+			// 	}
+			// 	else if (root->right == nullptr)
+			// 	{
+			// 		node_type *new_parent = root->left;
+			// 		nodeAlloc.destroy(root);
+			// 		return new_parent;
+			// 	}
+			// 	else
+			// 	{
+			// 		//? x childs
+			// 		node_type *ret = minValue(root->left);
+			// 		std::cout << "ret : "<< ret->data << std::endl;
+			// 		root->data = ret->data;
+			// 		root->left = deleteNode(root->left, ret->data);
+			// 	}
+			// }
 			return root;		
 		}
 		
 
 		private:
+			// typename _A::template rebind<_Ty>::other 
 			node_alloc	nodeAlloc;
 			pair_alloc	pairAlloc;
 			key_type	key;
 			mapped_type	mapped;
+			compare		comp;
 				
 	};
 }
