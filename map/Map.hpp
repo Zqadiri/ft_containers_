@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/01 10:49:36 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/07 11:40:40 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,13 @@ namespace ft
 
 		map (const map& x);
 
+		pair<iterator,bool> insert (const value_type& val);
+	
+		iterator insert (iterator position, const value_type& val);
+	
+		template <class InputIterator>
+  		void insert (InputIterator first, InputIterator last);
+		
 		private:
 		
 		

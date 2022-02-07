@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/06 20:33:25 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/07 17:43:38 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,27 @@
 #include "../utilities/utility.hpp"
 #include <iostream>
 #include <sys/types.h>
+#include <functional>
+
 namespace ft
 {
 	
-	template <typename Key, typename T,class Compare = std::less<Key>, typename Node = ft::BstNode<Key, T>,
-	typename nodeAllocator = std::allocator<Node>, typename pairAllocator = std::allocator<ft::pair<const Key, T> > >
+	template <typename Key, typename T,typename Compare = std::less<Key>, typename Node = ft::BstNode<Key, T>,
+	 typename pairAllocator = std::allocator<ft::pair<const Key, T> > >
+	
 	class avl_tree
 	{
 		public:
-			typedef		Key					key_type; //? key_t defined in types.h https://www.csl.mtu.edu/cs4411.ck/www/NOTES/process/shm/key.html#:~:text=Unix%20requires%20a%20key%20of,a%20key%20is%20system%20dependent.
-			typedef		T 					mapped_type;
 			typedef		Node				node_type;
 			typedef		pairAllocator		pair_alloc;
-			typedef		nodeAllocator		node_alloc;
 			typedef		Compare				compare;
 
-		node_type*		newNode(key_type data)
+		node_type*		newNode(const Key key, const T value)
 		{
+			puts("here");
 			node_type *newNode = nodeAlloc.allocate(1);
 			newNode->right = newNode->left = nullptr;
-			// newNode->data = pairAlloc.construct(ft::make_pair(key, mapped));
-
+			nodeAlloc.construct(newNode, ft::make_pair(key, value));
 			return newNode;
 		}
 
@@ -60,7 +60,6 @@ namespace ft
 
 		int difference(node_type *root)
 		{
-			// puts("in");
 			int l_height = Height(root->left);
 			int r_height = Height(root->right);
 			int b_factor = l_height - r_height;
@@ -136,21 +135,37 @@ namespace ft
 			return root;
 		}
 		
-		//?  Perform Rotation
-		node_type*		insert(node_type *root, key_type data)
+		bool			searchForKey(const Key key, node_type* root)
 		{
+			if (root == nullptr) // * rearch the end of the tree
+				return false;
+			else if (root->data._first == key)
+				return true;
+			else if (key <= root->data._first)
+				return searchForKey(root->left, key);
+			else
+				return searchForKey(root->right, key);
+		}
+		
+		//?  Perform Rotation
+		node_type*		insert(node_type *root, const Key key, const T value)
+		{
+			// std::cout << root->data._first << key << std::endl;
 			if (root == nullptr)
-				root = newNode(data);
-			else if (data < root->data comp(root->data._first, ))
+				root = newNode(key, value);
+			if (!searchForKey())
 			{
-				root->left = insert(root->left, data);
-				root = balanceTree(root);
-			}
-			else if (data > root->data)
-			{
-				root->right = insert(root->right, data);
-				root = balanceTree(root);
-			}
+				if (key < root->data._first)
+				{
+					root->left = insert(root->left, key, value);
+					root = balanceTree(root);
+				}
+				else if (key > root->data._first) //! switch to compare Compare(key, root->data._first)
+				{
+					root->right = insert(root->right, key, value);
+					root = balanceTree(root);
+				}
+			} //! search if tha key exists or not
 			return root;
 		}
 
@@ -163,7 +178,7 @@ namespace ft
 			return current;
 		}
 
-		node_type*		deleteNode(node_type *root, mapped_type data)
+		node_type*		deleteNode(node_type *root,const T data)
 		{
 			// if (root == nullptr)
 			// 	return nullptr;
@@ -206,13 +221,15 @@ namespace ft
 
 		private:
 			// typename _A::template rebind<_Ty>::other 
-			node_alloc	nodeAlloc;
+			// using nodeAlloc = typename pairAllocator::template rebind<Node>::other;
+			typename pairAllocator::template rebind<Node>::other nodeAlloc;
 			pair_alloc	pairAlloc;
-			key_type	key;
-			mapped_type	mapped;
-			compare		comp;
+			// compare		comp;
 				
 	};
 }
+
+// https://stackoverflow.com/questions/57206516/how-standard-containers-allocates-memory-for-their-nodes-internal-structures
+// https://stackoverflow.com/questions/37284243/why-can-stdlist-have-an-allocator-of-type-t
 
 #endif

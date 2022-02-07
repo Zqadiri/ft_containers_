@@ -145,9 +145,7 @@ namespace ft
 		pair():_first(), _second(){};
 
 		template<class U, class V>
-		pair (const pair<U,V>& pr){
-			this->_first = pr._first;
-			this->_second = pr._second;	
+		pair (const pair<U,V>& pr): _first(pr._first), _second(pr._second){
 		}
 
 		pair (const first_type& first, const second_type& second){
@@ -217,6 +215,7 @@ namespace ft
 		~BstNode(){};
 		
 		BstNode(const pair <const Key, T> p){
+			puts("cons");
 			pairAlloc.construct(&data, p);
 		}
 

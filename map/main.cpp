@@ -125,7 +125,7 @@ void buildTree(ft::BstNode<key_t, int>* root, int scrWidth, int itemWidth)
             cout << setw((curWidth>=itemWidth) ? curWidth:(itemWidth/(1+(i==0))));
             if (pItems[i])
             {
-                cout << pItems[i]->data._second;
+                cout << pItems[i]->data._first; //<< ":" << pItems[i]->data._second;
                 list[nextCnt] = pItems[i]->left;
                 list[nextCnt + 1] = pItems[i]->right;
                 if (list[nextCnt] || list[nextCnt + 1])
@@ -155,12 +155,12 @@ int main()
 	ft::BstNode<key_t, int>* root = nullptr;
 	ft::avl_tree<key_t, int, ft::BstNode<key_t, int> > av;
 
-	root = av.insert(root,50);
-	root = av.insert(root,70);
-	root = av.insert(root,40);
-	root = av.insert(root,194);
-	root = av.insert(root,195);
-	root = av.insert(root,90);
+	root = av.insert(root,50, 100);
+	root = av.insert(root,51, 70);
+	root = av.insert(root,5 , 40);
+	root = av.insert(root,59 ,194);
+	root = av.insert(root,48 ,195);
+	root = av.insert(root,71 ,90);
 
 	buildTree(root, 80, 10);
 
