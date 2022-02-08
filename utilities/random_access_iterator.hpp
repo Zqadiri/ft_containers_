@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:05:49 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/05 16:21:25 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/08 17:24:12 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ namespace ft
 	class random_access_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 	{
 		public:
-
 		//?------------Member types--------------?//
 		
 		typedef T																				iterator_type;

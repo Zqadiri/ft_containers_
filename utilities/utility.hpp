@@ -148,9 +148,7 @@ namespace ft
 		pair (const pair<U,V>& pr): _first(pr._first), _second(pr._second){
 		}
 
-		pair (const first_type& first, const second_type& second){
-			this->_first = first;
-			this->_second = second;
+		pair (const first_type& first, const second_type& second): _first(first), _second(second){
 		}
 
 		pair& operator= (const pair& pr){

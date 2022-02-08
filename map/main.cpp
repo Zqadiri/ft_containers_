@@ -164,7 +164,7 @@ int main()
 
 	buildTree(root, 80, 10);
 
-	// root = av.deleteNode(root, 70);
+	root = av.deleteNode(root, 5);
 
 	// buildTree(root, 80, 5);
 

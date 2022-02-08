@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/07 17:43:38 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/08 17:26:27 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ namespace ft
 {
 	
 	template <typename Key, typename T,typename Compare = std::less<Key>, typename Node = ft::BstNode<Key, T>,
-	 typename pairAllocator = std::allocator<ft::pair<const Key, T> > >
+	typename pairAllocator = std::allocator<ft::pair<const Key, T> > >
 	
 	class avl_tree
 	{
@@ -33,7 +33,7 @@ namespace ft
 
 		node_type*		newNode(const Key key, const T value)
 		{
-			puts("here");
+			// puts("here");
 			node_type *newNode = nodeAlloc.allocate(1);
 			newNode->right = newNode->left = nullptr;
 			nodeAlloc.construct(newNode, ft::make_pair(key, value));
@@ -142,9 +142,9 @@ namespace ft
 			else if (root->data._first == key)
 				return true;
 			else if (key <= root->data._first)
-				return searchForKey(root->left, key);
+				return searchForKey(key, root->left);
 			else
-				return searchForKey(root->right, key);
+				return searchForKey(key, root->right);
 		}
 		
 		//?  Perform Rotation
@@ -153,7 +153,7 @@ namespace ft
 			// std::cout << root->data._first << key << std::endl;
 			if (root == nullptr)
 				root = newNode(key, value);
-			if (!searchForKey())
+			if (!searchForKey(key, root))
 			{
 				if (key < root->data._first)
 				{
@@ -178,43 +178,43 @@ namespace ft
 			return current;
 		}
 
-		node_type*		deleteNode(node_type *root,const T data)
+		node_type*		deleteNode(node_type *root,const Key key)
 		{
-			// if (root == nullptr)
-			// 	return nullptr;
-			// else if (data < root->data._second)
-			// {
-			// 	root->left = deleteNode(root->left, data);
-			// 	std::cout << "Left"  << std::endl;
-			// }
-			// else if (data > root->data)
-			// {
-			// 	root->right = deleteNode(root->right, data);
-			// 	std::cout << "Right"  << std::endl;
-			// }
-			// else if (data == root->data)	//! delete the root cases (root wit no child, one child, x childs)
-			// {
-			// 	if (root->left == nullptr)
-			// 	{
-			// 		node_type *new_parent = root->right;
-			// 		nodeAlloc.destroy(root);
-			// 		return new_parent;
-			// 	}
-			// 	else if (root->right == nullptr)
-			// 	{
-			// 		node_type *new_parent = root->left;
-			// 		nodeAlloc.destroy(root);
-			// 		return new_parent;
-			// 	}
-			// 	else
-			// 	{
-			// 		//? x childs
-			// 		node_type *ret = minValue(root->left);
-			// 		std::cout << "ret : "<< ret->data << std::endl;
-			// 		root->data = ret->data;
-			// 		root->left = deleteNode(root->left, ret->data);
-			// 	}
-			// }
+			if (root == nullptr)
+				return nullptr;
+			else if (key < root->data._first)
+			{
+				root->left = deleteNode(root->left, key);
+				std::cout << "Left"  << std::endl;
+			}
+			else if (key > root->data._first)
+			{
+				root->right = deleteNode(root->right, key);
+				std::cout << "Right"  << std::endl;
+			}
+			else if (key == root->data._first)	//! delete the root cases (root wit no child, one child, x childs)
+			{
+				if (root->left == nullptr)
+				{
+					node_type *new_parent = root->right;
+					nodeAlloc.destroy(root);
+					return new_parent;
+				}
+				else if (root->right == nullptr)
+				{
+					node_type *new_parent = root->left;
+					nodeAlloc.destroy(root);
+					return new_parent;
+				}
+				else
+				{
+					//? x childs
+					node_type *ret = minValue(root->left);
+					std::cout << "ret : "<< ret->data._first << std::endl;
+					root->data = ret->data;
+					root->left = deleteNode(root->left, ret->data._first);
+				}
+			}
 			return root;		
 		}
 		
@@ -224,8 +224,6 @@ namespace ft
 			// using nodeAlloc = typename pairAllocator::template rebind<Node>::other;
 			typename pairAllocator::template rebind<Node>::other nodeAlloc;
 			pair_alloc	pairAlloc;
-			// compare		comp;
-				
 	};
 }
 
