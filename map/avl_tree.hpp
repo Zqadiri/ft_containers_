@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/08 17:26:27 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/09 14:54:03 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ namespace ft
 
 		node_type*		newNode(const Key key, const T value)
 		{
-			// puts("here");
 			node_type *newNode = nodeAlloc.allocate(1);
 			newNode->right = newNode->left = nullptr;
 			nodeAlloc.construct(newNode, ft::make_pair(key, value));
@@ -208,9 +207,8 @@ namespace ft
 				}
 				else
 				{
-					//? x childs
 					node_type *ret = minValue(root->left);
-					std::cout << "ret : "<< ret->data._first << std::endl;
+					// std::cout << "ret : "<< ret->data._first << std::endl;
 					root->data = ret->data;
 					root->left = deleteNode(root->left, ret->data._first);
 				}

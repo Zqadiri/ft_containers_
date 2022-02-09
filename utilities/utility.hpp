@@ -204,7 +204,7 @@ namespace ft
 		private:
 			pairAllocator pairAlloc;
 		public:
-			ft::pair<const Key, T> data; //? value type 
+			ft::pair<Key, T> data; //? value type 
 			BstNode *right;
 			BstNode *left;
 			BstNode *rootPtr; //? store the address of the root

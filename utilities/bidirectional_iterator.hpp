@@ -6,37 +6,83 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/01 10:45:58 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/09 15:51:29 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BIDIRECTIONAL_ITERATOR_HPP
 #define BIDIRECTIONAL_ITERATOR_HPP
 
+#include "iterator_traits.hpp"
 #include "iterator.hpp"
+
 
 namespace ft
 {
-	template <typename Pair, typename Alloc, typename Compare>
-	class map_iterator : public ft::iterator<std::bidirectional_iterator_tag, Pair>
+	template <typename T, typename Compare>
+	class map_iterator : public ft::iterator<std::bidirectional_iterator_tag, T> // ? compare
 	{
 		public:
-			typedef	typename ft::iterator<std::bidirectional_iterator_tag, Pair>::value_type		value_type;
-			typedef	typename ft::iterator<std::bidirectional_iterator_tag, Pair>::iterator_category	iterator_category;
-			typedef typename ft::iterator<std::bidirectional_iterator_tag, Pair>::difference_type	difference_type;
-			typedef	typename ft::iterator<std::bidirectional_iterator_tag, Pair>::reference			reference;
-			typedef typename ft::iterator<std::bidirectional_iterator_tag, Pair>::pointer			pointer;
+			typedef	Compare		compare;
+			typedef	typename ft::iterator<std::bidirectional_iterator_tag, T>::value_type			value_type;
+			typedef	typename ft::iterator<std::bidirectional_iterator_tag, T>::iterator_category	iterator_category;
+			typedef typename ft::iterator<std::bidirectional_iterator_tag, T>::difference_type		difference_type;
+			typedef	typename ft::iterator<std::bidirectional_iterator_tag, T>::reference			reference;
+			typedef typename ft::iterator<std::bidirectional_iterator_tag, T>::pointer				pointer;
 
-		map_iterator(): _node(nullptr){};
+		// //! ---- Contructors ------!//
+		~map_iterator(){};
 		
-		map_iterator(const	map_iterator &mi){
+		map_iterator(const compare &com = compare()){
+			Node = lastNode = nullptr;
 		}
+		
+		map_iterator(const map_iterator &mi){
+			*this = mi;
+		}
+		
+		map_iterator &operator=(const map_iterator &mi)
+		{
+			if (*this == mi)
+				return (*this);
+			this->Node = mi.Node;
+			this->lastNode = mi.lastNode;
+			this->comp = mi.comp;
+		}
+		
+		/* 
+		 TODO:equality/inequality operators :
+		 when both iterator 
+		 values iterate over the same underlying sequence
+		*/
+	
+		bool operator== (const map_iterator& rhs) const{
+			return (this->Node == rhs.Node);
+		}
+	
+    	bool operator!= (const map_iterator& rhs) const{
+			return (!(this == rhs));
+		}
+	
+    	// dereference operator. return a reference to
+    	// the value pointed to by nodePtr
+    	const compare& operator* () const;
+	
+    	// * increment. move forward to next larger value
+    	map_iterator& operator++ ();
+    	map_iterator operator++ (int);
+	
+    	// * decrement. move backward to largest value < current value
+    	map_iterator  operator-- ();
+	
+    	map_iterator  operator-- (int);
 		
 		
 
 		private:
-			Alloc		_alloc;
-			Pair		*_node;
+			T		*Node;
+			T		*lastNode;
+			compare	comp;
 	};
 }
 

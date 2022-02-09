@@ -163,10 +163,11 @@ int main()
 	root = av.insert(root,71 ,90);
 
 	buildTree(root, 80, 10);
+std::cout << std::endl;
 
-	root = av.deleteNode(root, 5);
-
-	// buildTree(root, 80, 5);
+	root = av.deleteNode(root, 50);
+std::cout << std::endl;
+	buildTree(root, 80, 10);
 
 	// root = av.deleteNode(root, 194);
 	// buildTree(root, 80, 5);
