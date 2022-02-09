@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/09 15:51:29 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/09 16:04:43 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ namespace ft
 		
 		map_iterator(const compare &com = compare()){
 			Node = lastNode = nullptr;
+			comp = com;
 		}
 		
-		map_iterator(const map_iterator &mi){
+		map_iterator(const map_iterator &mi): Node(nullptr), lastNode(nullptr), comp(){
 			*this = mi;
 		}
 		
@@ -48,10 +49,11 @@ namespace ft
 			this->Node = mi.Node;
 			this->lastNode = mi.lastNode;
 			this->comp = mi.comp;
+			return (*this);
 		}
 		
 		/* 
-		 TODO:equality/inequality operators :
+		 TODO: equality/inequality operators
 		 when both iterator 
 		 values iterate over the same underlying sequence
 		*/
@@ -60,22 +62,31 @@ namespace ft
 			return (this->Node == rhs.Node);
 		}
 	
-    	bool operator!= (const map_iterator& rhs) const{
+		bool operator!= (const map_iterator& rhs) const{
 			return (!(this == rhs));
 		}
 	
-    	// dereference operator. return a reference to
-    	// the value pointed to by nodePtr
-    	const compare& operator* () const;
+		/*
+		 TODO: dereference operator.
+		 return a reference to the value pointed to by nodePtr
+		*/
+
+		reference operator*() const{ 
+			return (this->_node->value); 
+		}
+
+		pointer operator->() const{
+			return (&this->_node->value);
+		}
+
+		// * increment. move forward to next larger value
+		map_iterator& operator++ ();
+		map_iterator operator++ (int);
 	
-    	// * increment. move forward to next larger value
-    	map_iterator& operator++ ();
-    	map_iterator operator++ (int);
+		// * decrement. move backward to largest value < current value
+		map_iterator  operator-- ();
 	
-    	// * decrement. move backward to largest value < current value
-    	map_iterator  operator-- ();
-	
-    	map_iterator  operator-- (int);
+		map_iterator  operator-- (int);
 		
 		
 
