@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/09 16:04:43 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/09 20:39:49 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 
 #include "iterator_traits.hpp"
 #include "iterator.hpp"
+#include <functional>
+
 
 
 namespace ft
 {
-	template <typename T, typename Compare>
+	template <typename T, typename Tree, typename Compare = std::less<T> >
 	class map_iterator : public ft::iterator<std::bidirectional_iterator_tag, T> // ? compare
 	{
 		public:
@@ -46,11 +48,12 @@ namespace ft
 		{
 			if (*this == mi)
 				return (*this);
-			this->Node = mi.Node;
-			this->lastNode = mi.lastNode;
-			this->comp = mi.comp;
+			// std::swap (*this, mi);
 			return (*this);
 		}
+
+		// operator map_iterator<const T, compare>() const {
+		// 	return map_iterator<const T, compare>(this->Node); }
 		
 		/* 
 		 TODO: equality/inequality operators
@@ -67,7 +70,7 @@ namespace ft
 		}
 	
 		/*
-		 TODO: dereference operator.
+		 TODO: dereference operator
 		 return a reference to the value pointed to by nodePtr
 		*/
 
@@ -79,8 +82,18 @@ namespace ft
 			return (&this->_node->value);
 		}
 
-		// * increment. move forward to next larger value
-		map_iterator& operator++ ();
+		/*
+		 TODO: increment operator 
+		 move forward to next larger value
+		*/
+
+		map_iterator& operator++ (){
+			if (Node == nullptr)
+			{
+				Node = tree->root;
+			}
+		}
+		
 		map_iterator operator++ (int);
 	
 		// * decrement. move backward to largest value < current value
@@ -93,6 +106,7 @@ namespace ft
 		private:
 			T		*Node;
 			T		*lastNode;
+			Tree	*tree;
 			compare	comp;
 	};
 }

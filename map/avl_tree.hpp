@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/09 14:54:03 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/09 20:42:29 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ namespace ft
 			typedef		pairAllocator		pair_alloc;
 			typedef		Compare				compare;
 
+		node_type 	*_parent;
 		node_type*		newNode(const Key key, const T value)
 		{
 			node_type *newNode = nodeAlloc.allocate(1);
@@ -151,7 +152,10 @@ namespace ft
 		{
 			// std::cout << root->data._first << key << std::endl;
 			if (root == nullptr)
+			{
 				root = newNode(key, value);
+				// _parent = root;
+			}
 			if (!searchForKey(key, root))
 			{
 				if (key < root->data._first)
@@ -174,6 +178,7 @@ namespace ft
 			while (current->right != nullptr){
 				current = current->right;
 			}
+			std::cout << "[" << current->data._first  << "]" << std::endl;
 			return current;
 		}
 
@@ -222,6 +227,7 @@ namespace ft
 			// using nodeAlloc = typename pairAllocator::template rebind<Node>::other;
 			typename pairAllocator::template rebind<Node>::other nodeAlloc;
 			pair_alloc	pairAlloc;
+			// node_type			*_parent;
 	};
 }
 

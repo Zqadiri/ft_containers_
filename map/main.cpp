@@ -2,8 +2,12 @@
 // Simple program to create a BST of integers and search an element in it 
 #include<iostream>
 #include "./avl_tree.hpp"
+#include "../utilities/bidirectional_iterator.hpp"
 #include <string.h>
 #include <iomanip>
+#include <map>
+#include "Map.hpp"
+
 using namespace std;
 //Definition of Node for Binary search tree
 struct BstNode {
@@ -155,6 +159,11 @@ int main()
 	ft::BstNode<key_t, int>* root = nullptr;
 	ft::avl_tree<key_t, int, ft::BstNode<key_t, int> > av;
 
+	// ft::map_iterator<ft::BstNode<key_t, int>, ft::avl_tree<key_t, int, ft::BstNode<key_t, int> > > it;
+	ft::map<key_t, int> it;
+
+	std::map<key_t, int>::iterator std_it;
+	// it = 
 	root = av.insert(root,50, 100);
 	root = av.insert(root,51, 70);
 	root = av.insert(root,5 , 40);
@@ -163,10 +172,12 @@ int main()
 	root = av.insert(root,71 ,90);
 
 	buildTree(root, 80, 10);
-std::cout << std::endl;
+	std::cout << std::endl;
 
-	root = av.deleteNode(root, 50);
-std::cout << std::endl;
+	it.begin();
+	// std::cout << it << std::endl;
+	// root = av.deleteNode(root, 50);
+	std::cout << std::endl;
 	buildTree(root, 80, 10);
 
 	// root = av.deleteNode(root, 194);
