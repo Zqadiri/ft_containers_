@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/09 20:39:49 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/10 14:20:21 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ namespace ft
 			Node = lastNode = nullptr;
 			comp = com;
 		}
+		
+		map_iterator( const Tree & rhs ) : Node{ nullptr }
+        {
+            Node = clone( rhs.Node );
+        }
 		
 		map_iterator(const map_iterator &mi): Node(nullptr), lastNode(nullptr), comp(){
 			*this = mi;

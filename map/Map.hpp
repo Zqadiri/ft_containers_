@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/09 20:41:37 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/11 12:13:26 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ namespace ft
 		   class Alloc = std::allocator<ft::pair<const Key,T> >      // map::allocator_type
 		   > class map
 	{
-
 	public:
 		typedef     		Key                                     															key_type;
 		typedef     		T                                       															mapped_type;
@@ -60,16 +59,17 @@ namespace ft
 			//! ----------- Constructors & Destructor ------------ !//
 		
 		explicit map (const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()){
+			const allocator_type& alloc = allocator_type()) :_tree(){
 			_comp = comp;
 			_alloc = alloc;
-			// _tree = nullptr;	
 		}		
 
 		template <class InputIterator>
 		map (InputIterator first, InputIterator last,
 			const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type());
+			const allocator_type& alloc = allocator_type()){
+				
+		}
 
 		map (const map& x){
 			*this = x;
@@ -83,9 +83,11 @@ namespace ft
 		}
 
 		// !------- Member functions ----------!//
+
 		iterator begin(){
-			_tree.minValue(_tree._parent);
-			return (iterator());	
+			typename ft::avl_tree<key_type, mapped_type, key_compare>::node_type	*temp;
+			temp = _tree.beginTree(_tree.rootPtr);
+			return (iterator(_tree));	
 		}
 
 		const_iterator begin() const;
@@ -98,7 +100,7 @@ namespace ft
   		void insert (InputIterator first, InputIterator last);
 
 		private:
-			avl_tree<key_type, mapped_type>	_tree;
+			typename ft::avl_tree<key_type, mapped_type>	_tree;
 			key_compare						_comp;
 			allocator_type					_alloc;
 	};

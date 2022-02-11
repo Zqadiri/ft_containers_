@@ -129,7 +129,7 @@ void buildTree(ft::BstNode<key_t, int>* root, int scrWidth, int itemWidth)
             cout << setw((curWidth>=itemWidth) ? curWidth:(itemWidth/(1+(i==0))));
             if (pItems[i])
             {
-                cout << pItems[i]->data._first; //<< ":" << pItems[i]->data._second;
+                cout << pItems[i]->data._first << ":" << pItems[i]->data._second;
                 list[nextCnt] = pItems[i]->left;
                 list[nextCnt + 1] = pItems[i]->right;
                 if (list[nextCnt] || list[nextCnt + 1])
@@ -160,77 +160,34 @@ int main()
 	ft::avl_tree<key_t, int, ft::BstNode<key_t, int> > av;
 
 	// ft::map_iterator<ft::BstNode<key_t, int>, ft::avl_tree<key_t, int, ft::BstNode<key_t, int> > > it;
-	ft::map<key_t, int> it;
-
 	std::map<key_t, int>::iterator std_it;
-	// it = 
-	root = av.insert(root,50, 100);
-	root = av.insert(root,51, 70);
-	root = av.insert(root,5 , 40);
-	root = av.insert(root,59 ,194);
-	root = av.insert(root,48 ,195);
-	root = av.insert(root,71 ,90);
+	ft::map<key_t, int> it;
+	av.rootPtr = av.insert(av.rootPtr ,50 , 100);
+	av.rootPtr = av.insert(av.rootPtr ,51 , 70 );
+	av.rootPtr = av.insert(av.rootPtr ,5  , 40 );
+	av.rootPtr = av.insert(av.rootPtr ,59 , 194);
+	av.rootPtr = av.insert(av.rootPtr ,48 , 195);
+	av.rootPtr = av.insert(av.rootPtr ,71 , 90 );
 
-	buildTree(root, 80, 10);
+	buildTree(av.rootPtr, 80, 10);
 	std::cout << std::endl;
-
-	it.begin();
-	// std::cout << it << std::endl;
-	// root = av.deleteNode(root, 50);
+	// it.begin();
 	std::cout << std::endl;
-	buildTree(root, 80, 10);
+	// av.rootPtr = av.deleteNode(av.rootPtr, 50);
+	// buildTree(av.rootPtr, 80, 10);
+	{
+		std::cout << "----- std -----" << std::endl;
+		std::map<key_t, int> map;
+		map.insert(std::pair<key_t,int>(50 ,100));
+		map.insert(std::pair<key_t,int>(51 ,70 ));
+		map.insert(std::pair<key_t,int>(5  ,40 ));
+		map.insert(std::pair<key_t,int>(59 ,194));
+		map.insert(std::pair<key_t,int>(48 ,195));
+		map.insert(std::pair<key_t,int>(71 ,90 ));
+		std::map<key_t, int>::iterator it = map.begin();
+		std::cout << "std begin ::" << it->first << std::endl;
 
-	// root = av.deleteNode(root, 194);
-	// buildTree(root, 80, 5);
-
-
-	// root = av.deleteNode(root, 12);
-	// printBT("", root, false);
-
-
-	// {
-
-	// 	ft::BstNode<key_t, int>* root = nullptr;
-	// 	ft::avl_tree<int, ft::BstNode<key_t, int> > av;
-
-	// 	root = av.insert(root,20);
-	// 	root = av.insert(root,10);
-	// 	root = av.insert(root,23);
-	// 	root = av.insert(root,24);
-	// 	root = av.insert(root,21);
-	// 	root = av.insert(root,22);
-	// 	// root = av.insert(root,12);
-
-	// 	printBT("", root, false);
-	// 	av.Height(root) ;
-	// }
-	// puts("************Right Heavy************\n");
-
-// {
-	// puts("************std*************\n");
-	// BstNode* root = NULL;
-	// root = Insert(root,15);
-	// root = Insert(root,10);
-	// root = Insert(root,20);
-	// root = Insert(root,25);
-	// root = Insert(root,8);
-	// root = Insert(root,12);
-
-    //  printBT("", root, false);
-	// int number;
-	// cout<<"Enter number be searched\n";
-	// cin>>number;
-	// if(Search(root,number) == true) cout<<"Found\n";
-	// else cout<<"Not Found\n";
-// }
-	// {
-   	// 	char s[]="Hello World!";
-   	// 	int Uppercase = 0; //modified by the lambda
-   	// 	for_each(s, s+sizeof(s), [&Uppercase] (char c)
-	// 	{
-   	// 		if (isupper(c))
-   	// 		 Uppercase++;
-   	// 	});
- 	// 	cout<< Uppercase<<" uppercase letters in: "<< s<<endl;
+		for ( ; it!=map.end(); ++it)
+    		std::cout << it->first << " => " << it->second << '\n';
 	}
-// }
+}

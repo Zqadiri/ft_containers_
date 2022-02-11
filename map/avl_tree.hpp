@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/09 20:42:29 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/10 16:36:40 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 namespace ft
 {
-	
+	// The keyword typename was introduced to specify that the identifier that follows is a type. 
 	template <typename Key, typename T,typename Compare = std::less<Key>, typename Node = ft::BstNode<Key, T>,
 	typename pairAllocator = std::allocator<ft::pair<const Key, T> > >
 	
@@ -31,12 +31,27 @@ namespace ft
 			typedef		pairAllocator		pair_alloc;
 			typedef		Compare				compare;
 
-		node_type 	*_parent;
+		avl_tree(){
+			treeSize = 0;
+			rootPtr = nullptr;
+		};
+		
+		~avl_tree(){
+			// free the allocated space
+		};
+		bool		isEmpty()
+		{
+			if (rootPtr == nullptr)
+				return true;
+			return false;
+		}
+
 		node_type*		newNode(const Key key, const T value)
 		{
 			node_type *newNode = nodeAlloc.allocate(1);
 			newNode->right = newNode->left = nullptr;
 			nodeAlloc.construct(newNode, ft::make_pair(key, value));
+			treeSize++;
 			return newNode;
 		}
 
@@ -154,7 +169,7 @@ namespace ft
 			if (root == nullptr)
 			{
 				root = newNode(key, value);
-				// _parent = root;
+				std::cout << "Value inserted successfully" << std::endl;
 			}
 			if (!searchForKey(key, root))
 			{
@@ -172,13 +187,27 @@ namespace ft
 			return root;
 		}
 
+		node_type*		beginTree(node_type *root)
+		{
+			node_type *current = root;
+			std::cout << "begin : " <<"[" << current->data._first << "]" << std::endl;
+			if (current->left != nullptr)
+			{
+				while (current->left != nullptr)
+					current = current->left;
+			}
+			return current;
+		}
+
 		node_type*		minValue(node_type *root)
 		{
 			node_type *current = root;
-			while (current->right != nullptr){
-				current = current->right;
+			if (current->right != nullptr)
+			{
+				while (current->right != nullptr)
+					current = current->right;
 			}
-			std::cout << "[" << current->data._first  << "]" << std::endl;
+			// std::cout << "minValue : " <<"[" << current->data._first << "]" << std::endl;
 			return current;
 		}
 
@@ -194,7 +223,7 @@ namespace ft
 			else if (key > root->data._first)
 			{
 				root->right = deleteNode(root->right, key);
-				std::cout << "Right"  << std::endl;
+				std::cout << "Right" << std::endl;
 			}
 			else if (key == root->data._first)	//! delete the root cases (root wit no child, one child, x childs)
 			{
@@ -221,13 +250,14 @@ namespace ft
 			return root;		
 		}
 		
-
-		private:
+		// private:
 			// typename _A::template rebind<_Ty>::other 
 			// using nodeAlloc = typename pairAllocator::template rebind<Node>::other;
+		public:
 			typename pairAllocator::template rebind<Node>::other nodeAlloc;
+			node_type	*rootPtr;
 			pair_alloc	pairAlloc;
-			// node_type			*_parent;
+			int			treeSize;
 	};
 }
 
