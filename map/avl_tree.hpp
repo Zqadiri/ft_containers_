@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/10 16:36:40 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/13 18:10:30 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 #include <iostream>
 #include <sys/types.h>
 #include <functional>
+#include <memory>
 
 namespace ft
 {
 	// The keyword typename was introduced to specify that the identifier that follows is a type. 
 	template <typename Key, typename T,typename Compare = std::less<Key>, typename Node = ft::BstNode<Key, T>,
-	typename pairAllocator = std::allocator<ft::pair<const Key, T> > >
+	typename pairAllocator = std::allocator<ft::pair<Key, T> > >
 	
 	class avl_tree
 	{
@@ -39,6 +40,7 @@ namespace ft
 		~avl_tree(){
 			// free the allocated space
 		};
+
 		bool		isEmpty()
 		{
 			if (rootPtr == nullptr)
@@ -126,12 +128,12 @@ namespace ft
 		node_type*		balanceTree(node_type *root)
 		{
 			int	BalanceFactor = Height(root->left) - Height(root->right);
-			std::cout << "\nBL: " << BalanceFactor << std::endl;
+			// std::cout << "\nBL: " << BalanceFactor << std::endl;
 			//? IF tree is LEFT heavy
 			if (BalanceFactor > 1)
 			{
-				std::cout << "LEFT heavy : ";
-				std::cout << "L " << difference(root->left) << std::endl << std::endl;
+				// std::cout << "LEFT heavy : ";
+				// std::cout << "L " << difference(root->left) << std::endl << std::endl;
 				if (difference(root->left) > 0)
 					root = leftLeftRotation(root); // ? ll rotation if the tree is left heavy && the ST is left heavy 
 				else
@@ -140,8 +142,8 @@ namespace ft
 			//? ELSE IF tree is RIGHT heavy
 			else if (BalanceFactor < -1)
 			{
-				std::cout << "Right heavy : ";
-				std::cout << "L " << difference(root->right)  << std::endl<< std::endl;
+				// std::cout << "Right heavy : ";
+				// std::cout << "L " << difference(root->right)  << std::endl<< std::endl;
 				if (difference(root->right) > 0)
 					root = rightLeftRotation(root); //? Right Left
 				else 
@@ -190,12 +192,9 @@ namespace ft
 		node_type*		beginTree(node_type *root)
 		{
 			node_type *current = root;
-			std::cout << "begin : " <<"[" << current->data._first << "]" << std::endl;
-			if (current->left != nullptr)
-			{
-				while (current->left != nullptr)
-					current = current->left;
-			}
+			// std::cout << "begin : " <<"{" << current->data._first << "}" << std::endl;
+			while (current->left != nullptr)
+				current = current->left;
 			return current;
 		}
 
@@ -218,12 +217,12 @@ namespace ft
 			else if (key < root->data._first)
 			{
 				root->left = deleteNode(root->left, key);
-				std::cout << "Left"  << std::endl;
+				// std::cout << "Left"  << std::endl;
 			}
 			else if (key > root->data._first)
 			{
 				root->right = deleteNode(root->right, key);
-				std::cout << "Right" << std::endl;
+				// std::cout << "Right" << std::endl;
 			}
 			else if (key == root->data._first)	//! delete the root cases (root wit no child, one child, x childs)
 			{
@@ -257,7 +256,7 @@ namespace ft
 			typename pairAllocator::template rebind<Node>::other nodeAlloc;
 			node_type	*rootPtr;
 			pair_alloc	pairAlloc;
-			int			treeSize;
+			size_t		treeSize;
 	};
 }
 

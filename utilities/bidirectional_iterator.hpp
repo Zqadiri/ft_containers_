@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/10 14:20:21 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/13 18:12:04 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,42 @@
 #include "iterator_traits.hpp"
 #include "iterator.hpp"
 #include <functional>
+#include <memory>
+
 
 
 
 namespace ft
 {
-	template <typename T, typename Tree, typename Compare = std::less<T> >
+	template <typename Key, typename T, typename Tree, typename Compare = std::less<T> >
 	class map_iterator : public ft::iterator<std::bidirectional_iterator_tag, T> // ? compare
 	{
 		public:
 			typedef	Compare		compare;
-			typedef	typename ft::iterator<std::bidirectional_iterator_tag, T>::value_type			value_type;
-			typedef	typename ft::iterator<std::bidirectional_iterator_tag, T>::iterator_category	iterator_category;
-			typedef typename ft::iterator<std::bidirectional_iterator_tag, T>::difference_type		difference_type;
-			typedef	typename ft::iterator<std::bidirectional_iterator_tag, T>::reference			reference;
-			typedef typename ft::iterator<std::bidirectional_iterator_tag, T>::pointer				pointer;
-
+			typedef	typename ft::iterator<std::bidirectional_iterator_tag, T>::value_type						value_type;
+			typedef	typename ft::iterator<std::bidirectional_iterator_tag, T>::iterator_category				iterator_category;
+			typedef typename ft::iterator<std::bidirectional_iterator_tag, T>::difference_type					difference_type;
+			typedef	typename ft::iterator<std::bidirectional_iterator_tag, T>::reference						reference;
+			typedef typename ft::iterator<std::bidirectional_iterator_tag, T>::pointer							pointer;
+			typedef typename ft::avl_tree<Key,T, Compare>::node_type											node;
+		
 		// //! ---- Contructors ------!//
-		~map_iterator(){};
+		map_iterator(): root(), lastNode(), tree() {};
 		
 		map_iterator(const compare &com = compare()){
-			Node = lastNode = nullptr;
+			root = lastNode = nullptr;
 			comp = com;
 		}
-		
-		map_iterator( const Tree & rhs ) : Node{ nullptr }
-        {
-            Node = clone( rhs.Node );
+
+		map_iterator( const Tree & rhs, const node &rootPtr): root(), lastNode(), tree(){
+			this->tree = rhs.tree;
+			root = rootPtr;
         }
-		
-		map_iterator(const map_iterator &mi): Node(nullptr), lastNode(nullptr), comp(){
+
+		map_iterator(const map_iterator &mi): root(), lastNode(), tree(){
 			*this = mi;
 		}
-		
+
 		map_iterator &operator=(const map_iterator &mi)
 		{
 			if (*this == mi)
@@ -59,7 +62,9 @@ namespace ft
 
 		// operator map_iterator<const T, compare>() const {
 		// 	return map_iterator<const T, compare>(this->Node); }
-		
+
+		~map_iterator(){}
+
 		/* 
 		 TODO: equality/inequality operators
 		 when both iterator 
@@ -67,7 +72,7 @@ namespace ft
 		*/
 	
 		bool operator== (const map_iterator& rhs) const{
-			return (this->Node == rhs.Node);
+			return (this->root == rhs.root);
 		}
 	
 		bool operator!= (const map_iterator& rhs) const{
@@ -80,11 +85,11 @@ namespace ft
 		*/
 
 		reference operator*() const{ 
-			return (this->_node->value); 
+			return (this->root->value); 
 		}
 
 		pointer operator->() const{
-			return (&this->_node->value);
+			return (&this->root->value);
 		}
 
 		/*
@@ -93,9 +98,9 @@ namespace ft
 		*/
 
 		map_iterator& operator++ (){
-			if (Node == nullptr)
+			if (root == nullptr)
 			{
-				Node = tree->root;
+				root = tree->root;
 			}
 		}
 		
@@ -109,10 +114,11 @@ namespace ft
 		
 
 		private:
-			T		*Node;
-			T		*lastNode;
-			Tree	*tree;
-			compare	comp;
+			node		*root;
+			node		*lastNode;
+			Tree		tree;
+			compare		comp;
+
 	};
 }
 

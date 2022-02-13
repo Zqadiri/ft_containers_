@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/11 12:13:26 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/13 18:11:18 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ namespace ft
 		typedef typename 	allocator_type::pointer         																	pointer;
 		typedef typename 	allocator_type::const_pointer   																	const_pointer;
 		typedef typename 	allocator_type::size_type       																	size_type;
-		typedef 			ft::map_iterator<pair<const key_type,mapped_type>, avl_tree<key_type, mapped_type>, Compare> 		iterator;
-		typedef 			ft::map_iterator<const pair<const key_type,mapped_type>, avl_tree<key_type, mapped_type>, Compare>	const_iterator;
+		typedef 			ft::map_iterator<key_type, mapped_type, avl_tree<key_type, mapped_type>, Compare> 				iterator;
+		// typedef 			ft::map_iterator<const pair<const key_type,mapped_type>, avl_tree<key_type, mapped_type>, Compare>	const_iterator;
 		// typedef				reverse_iterator<iterator> 					reverse_iterator;
 		// typedef				ft::reverse_iterator<const_iterator> 		const_reverse_iterator;
 		typedef	typename	std::ptrdiff_t								difference_type;
@@ -59,7 +59,7 @@ namespace ft
 			//! ----------- Constructors & Destructor ------------ !//
 		
 		explicit map (const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()) :_tree(){
+			const allocator_type& alloc = allocator_type()): _tree(){
 			_comp = comp;
 			_alloc = alloc;
 		}		
@@ -67,7 +67,7 @@ namespace ft
 		template <class InputIterator>
 		map (InputIterator first, InputIterator last,
 			const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()){
+			const allocator_type& alloc = allocator_type()): _tree(){
 				
 		}
 
@@ -78,21 +78,37 @@ namespace ft
 		map& operator=(const map& x){
 			if (*this == x)
 				return (*this);
-			// std::swap(*this, x);
+			std::swap(*this, x);
 			return (*this);
 		}
 
 		// !------- Member functions ----------!//
 
+		size_type size() const{
+			return (_tree.treeSize);			
+		}
+
 		iterator begin(){
 			typename ft::avl_tree<key_type, mapped_type, key_compare>::node_type	*temp;
 			temp = _tree.beginTree(_tree.rootPtr);
-			return (iterator(_tree));	
+			iterator it(_tree, _tree.rootPtr);
+			return (it);	
 		}
 
-		const_iterator begin() const;
+		// const_iterator begin() const;
 		
-		pair<iterator,bool> insert (const value_type& val);
+		/*
+		 TODO: Insert a single element
+		 insert a single element in the avlTree
+		 return false if the value already exists
+		 and true if its not
+		*/
+
+		pair<iterator,bool> insert (const value_type& val){
+			typename ft::avl_tree<key_type, mapped_type, key_compare>::node_type	*temp;
+			temp = 	_tree.insert(_tree.rootPtr, val._first, val._second);
+			return (ft::make_pair(iterator(), true));		
+		}
 	
 		iterator insert (iterator position, const value_type& val);
 
@@ -101,8 +117,8 @@ namespace ft
 
 		private:
 			typename ft::avl_tree<key_type, mapped_type>	_tree;
-			key_compare						_comp;
-			allocator_type					_alloc;
+			key_compare										_comp;
+			allocator_type									_alloc;
 	};
 			  
 }

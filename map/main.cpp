@@ -1,12 +1,13 @@
 // Binary Search Tree - Implemenation in C++
 // Simple program to create a BST of integers and search an element in it 
-#include<iostream>
+#include <iostream>
 #include "./avl_tree.hpp"
-#include "../utilities/bidirectional_iterator.hpp"
+#include "../utilities/utility.hpp"
 #include <string.h>
 #include <iomanip>
 #include <map>
 #include "Map.hpp"
+
 
 using namespace std;
 //Definition of Node for Binary search tree
@@ -15,8 +16,6 @@ struct BstNode {
 	BstNode* left;
 	BstNode* right;
 };
-
-
 
 // Function to create a new Node in heap
 BstNode* GetNewNode(int data) {
@@ -162,19 +161,21 @@ int main()
 	// ft::map_iterator<ft::BstNode<key_t, int>, ft::avl_tree<key_t, int, ft::BstNode<key_t, int> > > it;
 	std::map<key_t, int>::iterator std_it;
 	ft::map<key_t, int> it;
-	av.rootPtr = av.insert(av.rootPtr ,50 , 100);
-	av.rootPtr = av.insert(av.rootPtr ,51 , 70 );
-	av.rootPtr = av.insert(av.rootPtr ,5  , 40 );
-	av.rootPtr = av.insert(av.rootPtr ,59 , 194);
-	av.rootPtr = av.insert(av.rootPtr ,48 , 195);
-	av.rootPtr = av.insert(av.rootPtr ,71 , 90 );
+	// av.rootPtr = av.insert(av.rootPtr ,50 , 100);
+	// av.rootPtr = av.insert(av.rootPtr ,51 , 70 );
+	// av.rootPtr = av.insert(av.rootPtr ,5  , 40 );
+	// av.rootPtr = av.insert(av.rootPtr ,59 , 194);
+	// av.rootPtr = av.insert(av.rootPtr ,48 , 195);
+	// av.rootPtr = av.insert(av.rootPtr ,71 , 90 );
 
 	buildTree(av.rootPtr, 80, 10);
 	std::cout << std::endl;
-	// it.begin();
-	std::cout << std::endl;
-	// av.rootPtr = av.deleteNode(av.rootPtr, 50);
-	// buildTree(av.rootPtr, 80, 10);
+    it.begin();
+	// it.insert(ft::pair<key_t, int>(80, 90));
+	// ft::map<key_t, int>::iterator ft_it = it.begin();
+    // std::cout << "ft begin ::" << ft_it->_first << std::endl;
+	// std::cout << std::endl;
+
 	{
 		std::cout << "----- std -----" << std::endl;
 		std::map<key_t, int> map;
@@ -186,7 +187,6 @@ int main()
 		map.insert(std::pair<key_t,int>(71 ,90 ));
 		std::map<key_t, int>::iterator it = map.begin();
 		std::cout << "std begin ::" << it->first << std::endl;
-
 		for ( ; it!=map.end(); ++it)
     		std::cout << it->first << " => " << it->second << '\n';
 	}

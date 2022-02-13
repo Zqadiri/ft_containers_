@@ -18,6 +18,8 @@
 #include "iterator.hpp"
 #include <utility>
 #include <algorithm>
+#include <memory>
+
 namespace ft
 {
 	template<bool B, class T = void>
@@ -198,7 +200,7 @@ namespace ft
 		return (pair<T1,T2>(x,y));		  
 	}
 
-	template <typename Key, typename T, typename pairAllocator = std::allocator<ft::pair<const Key, T> > >
+	template <typename Key, typename T, typename pairAllocator = std::allocator<ft::pair<Key, T> > >
 	struct BstNode
 	{
 		private:
@@ -212,8 +214,7 @@ namespace ft
 		BstNode(): data(){};
 		~BstNode(){};
 		
-		BstNode(const pair <const Key, T> p){
-			puts("cons");
+		BstNode(const pair<const Key, T> p){
 			pairAlloc.construct(&data, p);
 		}
 
