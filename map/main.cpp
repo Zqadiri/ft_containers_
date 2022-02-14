@@ -10,7 +10,7 @@
 
 
 using namespace std;
-//Definition of Node for Binary search tree
+// //Definition of Node for Binary search tree
 struct BstNode {
 	int data; 
 	BstNode* left;
@@ -70,7 +70,7 @@ void printBT(const std::string& prefix,  BstNode* node, bool isLeft)
     }
 }
 
-void printBT(const std::string& prefix,  ft::BstNode<key_t, int>* node, bool isLeft)
+void printBT(const std::string& prefix,  ft::BstNode<ft::pair<key_t, int> >* node, bool isLeft)
 {
     if( node != nullptr )
     {
@@ -84,7 +84,7 @@ void printBT(const std::string& prefix,  ft::BstNode<key_t, int>* node, bool isL
     }
 }
 
-void buildTree(ft::BstNode<key_t, int>* root, int scrWidth, int itemWidth)
+void buildTree(ft::BstNode<ft::pair<key_t, int> >* root, int scrWidth, int itemWidth)
 // breadth-first traversal with depth limit based on screen width and output field width for one elemet
 {
     bool notFinished = false;
@@ -107,7 +107,7 @@ void buildTree(ft::BstNode<key_t, int>* root, int scrWidth, int itemWidth)
         cout << " -= erroneous output options =-" << endl;
         return;
     }
-    ft::BstNode<key_t, int>** pItems = new ft::BstNode<key_t, int>*[1];
+    ft::BstNode<ft::pair<key_t, int> >** pItems = new ft::BstNode<ft::pair<key_t, int> >*[1];
     *pItems = root; // pointer to item on the first level
     int itemCnt = 1;
     int divWidth = 1;
@@ -118,7 +118,7 @@ void buildTree(ft::BstNode<key_t, int>* root, int scrWidth, int itemWidth)
         itemCnt = (level == 1) ? 1 : (itemCnt * 2);
         divWidth *= 2;
         // make list of pointers to refer items on next level
-        ft::BstNode<key_t, int>** list = new ft::BstNode<key_t, int>*[itemCnt * 2];
+        ft::BstNode<ft::pair<key_t, int> >** list = new ft::BstNode<ft::pair<key_t, int> >*[itemCnt * 2];
         // output all utems of that level
         int nextCnt = 0;
         notFinished = false;
@@ -156,15 +156,16 @@ int main()
 {
 	puts("************Left Heavy************\n");
 
-	ft::avl_tree<key_t, int, ft::BstNode<key_t, int> > av;
-	std::map<key_t, int>::iterator it;
+	ft::avl_tree<ft::pair<key_t,int> > av;
+	ft::map<key_t, int>::iterator it;
 	ft::map<key_t, int> mp;
 
-	buildTree(av.rootPtr, 80, 10);
-	std::cout << std::endl;
-    mp.begin();
-
-	// av.rootPtr = av.insert(av.rootPtr ,50 , 100);
+	// std::cout << std::endl;
+	// av.rootPtr = av.insert(av.rootPtr , ft::pair<key_t, int>(10, 100));
+	mp.insert(ft::pair<key_t, int>(10, 100));
+    it = mp.begin();
+	// buildTree(av.rootPtr, 80, 10);
+	std::cout << "ft begin ::" << it->_first << std::endl;
 	// av.rootPtr = av.insert(av.rootPtr ,51 , 70 );
 	// av.rootPtr = av.insert(av.rootPtr ,5  , 40 );
 	// av.rootPtr = av.insert(av.rootPtr ,59 , 194);
@@ -172,7 +173,6 @@ int main()
 	// av.rootPtr = av.insert(av.rootPtr ,71 , 90 );
 	// it.insert(ft::pair<key_t, int>(80, 90));
 	// ft::map<key_t, int>::iterator ft_it = it.begin();
-    // std::cout << "ft begin ::" << ft_it->_first << std::endl;
 	// std::cout << std::endl;
 
 	{

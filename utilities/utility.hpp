@@ -200,13 +200,13 @@ namespace ft
 		return (pair<T1,T2>(x,y));		  
 	}
 
-	template <typename Key, typename T, typename pairAllocator = std::allocator<ft::pair<Key, T> > >
+	template <typename T, typename pairAllocator = std::allocator<T> > 
 	struct BstNode
 	{
 		private:
 			pairAllocator pairAlloc;
 		public:
-			ft::pair<Key, T> data; //? value type 
+			T data; //? value type 
 			BstNode *right;
 			BstNode *left;
 			BstNode *rootPtr; //? store the address of the root
@@ -214,13 +214,13 @@ namespace ft
 		BstNode(): data(){};
 		~BstNode(){};
 		
-		BstNode(const pair<const Key, T> p){
+		BstNode(const T p){
 			pairAlloc.construct(&data, p);
 		}
 
-		BstNode(const Key K, const T &val, BstNode *rt, BstNode *lt, BstNode *p){
-			this->data._first = K;
-			this->data._second = val;
+		BstNode(const T &pair, BstNode *rt, BstNode *lt, BstNode *p){
+			// this->data._first = T._;
+			// this->data._second = val;
 			this->right = nullptr;
 			this->left = nullptr;
 			this->rootPtr = nullptr;

@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/14 13:21:31 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/14 19:57:00 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@
 #include <memory>
 
 
-
-
 namespace ft
 {
-	template <typename Key, typename T, typename Tree, typename Compare >
+	template <typename T, typename Compare >
 	class map_iterator : public ft::iterator<std::bidirectional_iterator_tag, T> // ? compare
 	{
 		public:
@@ -33,23 +31,19 @@ namespace ft
 			typedef typename ft::iterator<std::bidirectional_iterator_tag, T>::difference_type		difference_type;
 			typedef	typename ft::iterator<std::bidirectional_iterator_tag, T>::reference			reference;
 			typedef typename ft::iterator<std::bidirectional_iterator_tag, T>::pointer				pointer;
-			typedef typename ft::avl_tree<Key,T, Compare>::node_type								node;
-		
+			typedef typename ft::avl_tree<T, Compare>												tree;
+			typedef typename ft::BstNode<T>     													node_type;
+
 		//! ---- Contructors ------!//
 		
-		map_iterator(): root(), lastNode(), tree() {};
-		
-		map_iterator(const compare &com = compare()){
-			root = lastNode = nullptr;
-			comp = com;
-		}
+		map_iterator(): root(), lastNode(), _tree() {};
 
-		map_iterator( const Tree & rhs, const node &rootPtr): root(), lastNode(), tree(){
-			this->tree = rhs.tree;
+		map_iterator( const tree &rhs, node_type *rootPtr): root(), lastNode(), _tree(){
+			this->_tree = rhs;
 			root = rootPtr;
         }
 
-		map_iterator(const map_iterator &mi): root(), lastNode(), tree(){
+		map_iterator(const map_iterator &mi): root(), lastNode(), _tree(){
 			*this = mi;
 		}
 
@@ -57,7 +51,7 @@ namespace ft
 		{
 			if (*this == mi)
 				return (*this);
-			std::swap (*this, mi);
+			// std::swap (*this, mi);
 			return (*this);
 		}
 
@@ -82,12 +76,15 @@ namespace ft
 		 return a reference to the value pointed to by nodePtr
 		*/
 
-		reference operator*() const{ 
-			return (this->root->value); 
+		reference operator*() const{
+			return (root->data);
 		}
-
+		
 		pointer operator->() const{
-			return (&this->root->value);
+			// return (&operator*());
+			// std::cout << "-> ptr Begin: " << root->data._first << std::endl; // ! abort
+			std::cout << "->####### ptr Begin: " << root->data._first << std::endl; // ! abort
+			return (&this->root->data);
 		}
 
 		/*
@@ -95,10 +92,7 @@ namespace ft
 		 move forward to next larger value
 		*/
 
-		map_iterator& operator++ (){
-			if (root == nullptr)
-				root = tree->root;
-		}
+		map_iterator& operator++ ();
 		
 		map_iterator operator++ (int);
 	
@@ -109,12 +103,10 @@ namespace ft
 		
 		
 
-		private:
-			node		*root;
-			node		*lastNode;
-			Tree		tree;
-			compare		comp;
-
+		public: //!change it to private
+			node_type		*root;
+			node_type		*lastNode;
+			tree			_tree;
 	};
 }
 
