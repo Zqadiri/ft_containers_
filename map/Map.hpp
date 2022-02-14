@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/13 18:11:18 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/14 13:21:44 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ namespace ft
 		typedef typename 	allocator_type::pointer         																	pointer;
 		typedef typename 	allocator_type::const_pointer   																	const_pointer;
 		typedef typename 	allocator_type::size_type       																	size_type;
-		typedef 			ft::map_iterator<key_type, mapped_type, avl_tree<key_type, mapped_type>, Compare> 				iterator;
+		typedef 			ft::map_iterator<key_type, mapped_type, avl_tree<key_type, mapped_type>, key_compare> 				iterator;
 		// typedef 			ft::map_iterator<const pair<const key_type,mapped_type>, avl_tree<key_type, mapped_type>, Compare>	const_iterator;
 		// typedef				reverse_iterator<iterator> 					reverse_iterator;
 		// typedef				ft::reverse_iterator<const_iterator> 		const_reverse_iterator;
@@ -91,7 +91,7 @@ namespace ft
 		iterator begin(){
 			typename ft::avl_tree<key_type, mapped_type, key_compare>::node_type	*temp;
 			temp = _tree.beginTree(_tree.rootPtr);
-			iterator it(_tree, _tree.rootPtr);
+			iterator it(_tree, temp);
 			return (it);	
 		}
 

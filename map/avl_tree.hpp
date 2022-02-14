@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/13 18:10:30 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/14 13:20:25 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ namespace ft
 			// free the allocated space
 		};
 
+		node_type*		beginTree(node_type *root)
+		{
+			node_type *current = root;
+			// std::cout << "begin : " <<"{" << current->data._first << "}" << std::endl;
+			while (current->left != nullptr)
+				current = current->left;
+			return current;
+		}
+		
 		bool		isEmpty()
 		{
 			if (rootPtr == nullptr)
@@ -187,15 +196,6 @@ namespace ft
 				}
 			} //! search if tha key exists or not
 			return root;
-		}
-
-		node_type*		beginTree(node_type *root)
-		{
-			node_type *current = root;
-			// std::cout << "begin : " <<"{" << current->data._first << "}" << std::endl;
-			while (current->left != nullptr)
-				current = current->left;
-			return current;
 		}
 
 		node_type*		minValue(node_type *root)
