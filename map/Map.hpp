@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/14 19:56:07 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/15 10:46:34 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ namespace ft
 			const allocator_type& alloc = allocator_type()): _tree(){
 			_comp = comp;
 			_alloc = alloc;
+			rootPtr = nullptr;
 		}		
 
 		template <class InputIterator>
 		map (InputIterator first, InputIterator last,
 			const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()): _tree(){
-		}
+			const allocator_type& alloc = allocator_type());
 
 		map (const map& x){
 			*this = x;
@@ -90,11 +90,10 @@ namespace ft
 			return (_tree.treeSize);			
 		}
 
-		iterator begin()
-		{
+		iterator begin(){
 			node_type *temp = _tree.beginTree(rootPtr);
 			iterator it(_tree, temp);
-			std::cout << "pptr Begin: " << it.root->data._first << std::endl;
+			std::cout << "in Begin: " << it.root->data._first << std::endl;
 			return (it);	
 		}
 
@@ -109,6 +108,7 @@ namespace ft
 
 		pair<iterator,bool> insert (const value_type& val){
 			rootPtr = _tree.insert(rootPtr, val);
+			std::cout << "in Insert: " << rootPtr->data._first << std::endl;
 			return (ft::make_pair(iterator(_tree, rootPtr), true));		
 		}
 	

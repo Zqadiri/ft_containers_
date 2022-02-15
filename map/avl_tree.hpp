@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/14 19:38:50 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/15 10:45:00 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ namespace ft
 
 		avl_tree(){
 			rootPtr = nodeAlloc.allocate(1);
+			// rootPtr()
 			rootPtr->right = rootPtr->left = nullptr;
 			treeSize = 0;
 		};
@@ -57,15 +58,15 @@ namespace ft
 			// free the allocated space
 		};
 
-		node_type*		beginTree(node_type *root)
+		node_type*		beginTree( node_type *root)
 		{
-			std::cout << treeSize << std::endl;
+			// std::cout << treeSize << std::endl;
 			// if (this->treeSize == 1)
 			// 	return(root);
 			node_type *current = root;
 			while (current->left != nullptr)
 				current = current->left;
-			// std::cout << "begin : " <<"{{" << current->data._first << "}" << std::endl;
+			std::cout << "In beginTree : " << root->data._first << std::endl;
 			return current;
 		}
 		
@@ -192,7 +193,7 @@ namespace ft
 			newNode->right = newNode->left = nullptr;
 			nodeAlloc.construct(newNode, ft::make_pair(val._first, val._second));
 			treeSize++;
-			std::cout << "[treeSize] " << treeSize << std::endl;
+			// std::cout << "[treeSize] " << treeSize << std::endl;
 			return newNode;
 		}
 		
@@ -204,12 +205,13 @@ namespace ft
 			key_type value = val._second;
 			if (treeSize == 0){
 				rootPtr = root = newNode(val);
-				std::cout << "ptr: " << rootPtr->data._first << std::endl;
+				std::cout << "rootPtr: " << rootPtr->data._first << std::endl;
 				std::cout << "Value inserted successfully" << std::endl;
-				return (root);
+				return (rootPtr);
 			}
 			if (!searchForKey(key, root))
 			{
+				puts("heree!!");
 				if (key < root->data._first)
 				{
 					root->left = insert(root->left,val);
@@ -222,7 +224,7 @@ namespace ft
 				}
 			} //! search if tha key exists or not
 			rootPtr = root;
-			return root;
+			return rootPtr;
 		}
 
 		// node_type*		minValue(node_type *root)

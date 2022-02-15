@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/14 19:57:00 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/15 10:49:37 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ namespace ft
 		map_iterator( const tree &rhs, node_type *rootPtr): root(), lastNode(), _tree(){
 			this->_tree = rhs;
 			root = rootPtr;
+			std::cout << "In the constructor : " << root->data._first << std::endl;
         }
 
 		map_iterator(const map_iterator &mi): root(), lastNode(), _tree(){
@@ -51,7 +52,8 @@ namespace ft
 		{
 			if (*this == mi)
 				return (*this);
-			// std::swap (*this, mi);
+			this->_tree = mi._tree;
+			this->root = mi.root;
 			return (*this);
 		}
 
@@ -82,8 +84,7 @@ namespace ft
 		
 		pointer operator->() const{
 			// return (&operator*());
-			// std::cout << "-> ptr Begin: " << root->data._first << std::endl; // ! abort
-			std::cout << "->####### ptr Begin: " << root->data._first << std::endl; // ! abort
+			std::cout << "In the operator-> : " << root->data._first << std::endl; // ! abort
 			return (&this->root->data);
 		}
 

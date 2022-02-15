@@ -160,12 +160,10 @@ int main()
 	ft::map<key_t, int>::iterator it;
 	ft::map<key_t, int> mp;
 
-	// std::cout << std::endl;
-	// av.rootPtr = av.insert(av.rootPtr , ft::pair<key_t, int>(10, 100));
 	mp.insert(ft::pair<key_t, int>(10, 100));
     it = mp.begin();
-	// buildTree(av.rootPtr, 80, 10);
 	std::cout << "ft begin ::" << it->_first << std::endl;
+	// buildTree(av.rootPtr, 80, 10);
 	// av.rootPtr = av.insert(av.rootPtr ,51 , 70 );
 	// av.rootPtr = av.insert(av.rootPtr ,5  , 40 );
 	// av.rootPtr = av.insert(av.rootPtr ,59 , 194);
