@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/15 12:03:08 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/15 12:15:43 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ namespace ft
 			const allocator_type& alloc = allocator_type()): _tree(){
 			_comp = comp;
 			_alloc = alloc;
-			// rootPtr = nullptr;
 		}		
 
 		template <class InputIterator>
@@ -93,7 +92,7 @@ namespace ft
 		iterator begin(){
 			node_type *temp = _tree.beginTree(_tree.rootPtr);
 			iterator it(_tree, temp);
-			std::cout << "in Begin: " << it.root->data._first << std::endl;
+			// std::cout << "in Begin: " << it.root->data._first << std::endl;
 			return (it);	
 		}
 
@@ -116,7 +115,7 @@ namespace ft
 		pair<iterator,bool> insert (const value_type& val){
 			_tree.rootPtr = _tree.insert(_tree.rootPtr, val);
 			iterator it(_tree, _tree.rootPtr);
-			std::cout << "in Insert: " << _tree.rootPtr->data._first << std::endl;
+			// std::cout << "in Insert: " << _tree.rootPtr->data._first << std::endl;
 			return (ft::make_pair(it, true));		
 		}
 	

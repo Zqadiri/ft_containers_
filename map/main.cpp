@@ -162,23 +162,14 @@ int main()
 
 	mp.insert(ft::pair<key_t, int>(10, 100));
 	mp.insert(ft::pair<key_t, int>(11, 101));
-	// mp.insert(ft::pair<key_t, int>(12, 102));
-	// mp.insert(ft::pair<key_t, int>(15, 105));
-	// mp.insert(ft::pair<key_t, int>(16, 106));
-	// mp.insert(ft::pair<key_t, int>(17, 107));
+	mp.insert(ft::pair<key_t, int>(12, 102));
+	mp.insert(ft::pair<key_t, int>(15, 105));
+	mp.insert(ft::pair<key_t, int>(16, 106));
+	mp.insert(ft::pair<key_t, int>(17, 107));
     // it = mp.begin();
     // it_end = mp.end();
     // for ( ; it != mp.end(); ++it)
     	// std::cout << it->_first << " => " << it->_second << '\n';
-	// av.rootPtr = av.insert(av.rootPtr ,51 , 70 );
-	// av.rootPtr = av.insert(av.rootPtr ,5  , 40 );
-	// av.rootPtr = av.insert(av.rootPtr ,59 , 194);
-	// av.rootPtr = av.insert(av.rootPtr ,48 , 195);
-	// av.rootPtr = av.insert(av.rootPtr ,71 , 90 );
-	// it.insert(ft::pair<key_t, int>(80, 90));
-	// ft::map<key_t, int>::iterator ft_it = it.begin();
-	// std::cout << std::endl;
-
 	{
 		std::cout << "----- std -----" << std::endl;
 		std::map<key_t, int> map;

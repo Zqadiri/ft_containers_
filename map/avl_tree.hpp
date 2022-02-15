@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/15 12:04:12 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/15 12:15:29 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ namespace ft
 				int rightHeight = Height(root->right);
 				int max_height = std::max(leftHeight, rightHeight);
 				height = max_height + 1;
-				printf (" | %d {%d,%d}, (%d,%d)", height, root->data._first, root->data._second,
-				leftHeight, rightHeight);
+				// printf (" | %d {%d,%d}, (%d,%d)", height, root->data._first, root->data._second,
+				// leftHeight, rightHeight);
 			}
 			return height;
 		}
@@ -186,31 +186,29 @@ namespace ft
 		
 		node_type*		insert(node_type *root, const value_type &val)
 		{
-			std::cout << "val: " << val._first << std::endl;
+			// std::cout << "val: " << val._first << std::endl;
 			key_type key = val._first;
 			key_type value = val._second;
-			if (treeSize == 0){
+			if (treeSize == 0 || root == nullptr){
 				root = newNode(val);
-				// std::cout << "rootPtr: " << rootPtr->data._first << std::endl;
 				std::cout << "Value inserted successfully" << std::endl;
 				return (root);
 			}
 			if (!searchForKey(key, root))
 			{
-				buildTree(root, 80, 60);
 				if (key < root->data._first)
 				{
-					puts("<");
 					root->left = insert(root->left,val);
 					root = balanceTree(root);
 				}
 				else if (key > root->data._first) //! switch to compare Compare(key, root->data._first)
 				{
-					puts(">");
 					root->right = insert(root->right, val);
 					root = balanceTree(root);
 				}
 			} //! search if tha key exists or not
+				buildTree(root, 80, 10);
+			
 			return (root);
 		}
 
@@ -219,7 +217,7 @@ namespace ft
 			node_type *current = root;
 			while (current->right != nullptr)
 				current = current->right;
-			std::cout << "minValue : " << current->data._first << std::endl;
+			// std::cout << "minValue : " << current->data._first << std::endl;
 			return current;
 		}
 
