@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/15 12:15:43 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/15 12:34:37 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,13 @@ namespace ft
 			return (ft::make_pair(it, true));		
 		}
 	
-		iterator insert (iterator position, const value_type& val);
+		iterator insert (iterator position, const value_type& val){
+			(void)position;
+			_tree.rootPtr = _tree.insert(_tree.rootPtr, val);
+			iterator it(_tree, _tree.rootPtr);
+			// std::cout << "in Insert: " << _tree.rootPtr->data._first << std::endl;
+			return (ft::make_pair(it, true));
+		}
 
 		template <class InputIterator>
   		void insert (InputIterator first, InputIterator last);

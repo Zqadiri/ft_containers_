@@ -166,10 +166,10 @@ int main()
 	mp.insert(ft::pair<key_t, int>(15, 105));
 	mp.insert(ft::pair<key_t, int>(16, 106));
 	mp.insert(ft::pair<key_t, int>(17, 107));
-    // it = mp.begin();
-    // it_end = mp.end();
-    // for ( ; it != mp.end(); ++it)
-    	// std::cout << it->_first << " => " << it->_second << '\n';
+    it = mp.begin();
+    it_end = mp.end();
+    for ( ; it != mp.end(); ++it)
+    	std::cout << it->_first << " => " << it->_second << '\n';
 	{
 		std::cout << "----- std -----" << std::endl;
 		std::map<key_t, int> map;
