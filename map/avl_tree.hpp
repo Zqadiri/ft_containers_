@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/15 10:45:00 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/15 12:04:12 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 #include <sys/types.h>
 #include <functional>
 #include <memory>
+#include <iomanip>
 
+using namespace std;
 namespace ft
 {
 	// The keyword typename was introduced to specify that the identifier that follows is a type. 
@@ -37,7 +39,6 @@ namespace ft
 
 		avl_tree(){
 			rootPtr = nodeAlloc.allocate(1);
-			// rootPtr()
 			rootPtr->right = rootPtr->left = nullptr;
 			treeSize = 0;
 		};
@@ -54,15 +55,9 @@ namespace ft
 			return *this;
 		}
 		
-		~avl_tree(){
-			// free the allocated space
-		};
+		~avl_tree(){};
 
-		node_type*		beginTree( node_type *root)
-		{
-			// std::cout << treeSize << std::endl;
-			// if (this->treeSize == 1)
-			// 	return(root);
+		node_type*		beginTree( node_type *root){
 			node_type *current = root;
 			while (current->left != nullptr)
 				current = current->left;
@@ -70,15 +65,9 @@ namespace ft
 			return current;
 		}
 		
-		bool		isEmpty()
-		{
+		bool		isEmpty(){
 			return (rootPtr == nullptr);
-
-			// 	return true;
-			// return false;
 		}
-
-
 
 		int		Height(node_type *root)
 		{
@@ -92,8 +81,8 @@ namespace ft
 				int rightHeight = Height(root->right);
 				int max_height = std::max(leftHeight, rightHeight);
 				height = max_height + 1;
-				// printf (" | %d {%d,%d}, (%d,%d)", height, root->data, root->data,
-				// leftHeight, rightHeight);
+				printf (" | %d {%d,%d}, (%d,%d)", height, root->data._first, root->data._second,
+				leftHeight, rightHeight);
 			}
 			return height;
 		}
@@ -187,57 +176,52 @@ namespace ft
 				return searchForKey(key, root->right);
 		}
 		
-		node_type*		newNode(const value_type &val)
-		{
+		node_type*		newNode(const value_type &val){
 			node_type *newNode = nodeAlloc.allocate(1);
 			newNode->right = newNode->left = nullptr;
 			nodeAlloc.construct(newNode, ft::make_pair(val._first, val._second));
 			treeSize++;
-			// std::cout << "[treeSize] " << treeSize << std::endl;
 			return newNode;
 		}
 		
-		//?  Perform Rotation
 		node_type*		insert(node_type *root, const value_type &val)
 		{
-			// std::cout << val._first  << std::endl;
+			std::cout << "val: " << val._first << std::endl;
 			key_type key = val._first;
 			key_type value = val._second;
 			if (treeSize == 0){
-				rootPtr = root = newNode(val);
-				std::cout << "rootPtr: " << rootPtr->data._first << std::endl;
+				root = newNode(val);
+				// std::cout << "rootPtr: " << rootPtr->data._first << std::endl;
 				std::cout << "Value inserted successfully" << std::endl;
-				return (rootPtr);
+				return (root);
 			}
 			if (!searchForKey(key, root))
 			{
-				puts("heree!!");
+				buildTree(root, 80, 60);
 				if (key < root->data._first)
 				{
+					puts("<");
 					root->left = insert(root->left,val);
 					root = balanceTree(root);
 				}
 				else if (key > root->data._first) //! switch to compare Compare(key, root->data._first)
 				{
-					root->right = insert(root->right,val);
+					puts(">");
+					root->right = insert(root->right, val);
 					root = balanceTree(root);
 				}
 			} //! search if tha key exists or not
-			rootPtr = root;
-			return rootPtr;
+			return (root);
 		}
 
-		// node_type*		minValue(node_type *root)
-		// {
-		// 	node_type *current = root;
-		// 	if (current->right != nullptr)
-		// 	{
-		// 		while (current->right != nullptr)
-		// 			current = current->right;
-		// 	}
-		// 	// std::cout << "minValue : " <<"[" << current->data._first << "]" << std::endl;
-		// 	return current;
-		// }
+		node_type*		minValue(node_type *root)
+		{
+			node_type *current = root;
+			while (current->right != nullptr)
+				current = current->right;
+			std::cout << "minValue : " << current->data._first << std::endl;
+			return current;
+		}
 
 		// node_type*		deleteNode(node_type *root,const key_type key)
 		// {
@@ -278,9 +262,74 @@ namespace ft
 		// 	return root;		
 		// }
 		
-		// private:
-			// typename _A::template rebind<_Ty>::other 
-			// using nodeAlloc = typename pairAllocator::template rebind<Node>::other;
+		//!!!!!!!!!!!! print function !!!!!!!!!//
+		
+		void buildTree(node_type* root, int scrWidth, int itemWidth)
+		// breadth-first traversal with depth limit based on screen width and output field width for one elemet
+		{
+		    bool notFinished = false;
+		    // check the root
+		    if (root)
+		    {
+		        notFinished = true;
+		    }
+		    // calculate maximum possible depth
+		    int depth = 1;
+		    int field = scrWidth;
+		    while (field > itemWidth)
+		    {
+		        depth++;
+		        field /= 2;
+		    }
+		    // check result
+		    if (depth < 1)
+		    {
+		        cout << " -= erroneous output options =-" << endl;
+		        return;
+		    }
+		    node_type** pItems = new node_type*[1];
+		    *pItems = root; // pointer to item on the first level
+		    int itemCnt = 1;
+		    int divWidth = 1;
+		    // loop for output not more than depth levels until the data is not finished
+		    // where level is current depth of tree, and root is on the first level
+		    for (int level = 1; level <= depth && notFinished; level++)
+		    {
+		        itemCnt = (level == 1) ? 1 : (itemCnt * 2);
+		        divWidth *= 2;
+		        // make list of pointers to refer items on next level
+		        node_type** list = new node_type*[itemCnt * 2];
+		        // output all utems of that level
+		        int nextCnt = 0;
+		        notFinished = false;
+		        for (int i = 0; i < itemCnt; i++, nextCnt += 2)
+		        {
+		            int curWidth = (scrWidth / divWidth) * ((i > 0) ? 2 : 1);
+		            cout << setw((curWidth>=itemWidth) ? curWidth:(itemWidth/(1+(i==0))));
+		            if (pItems[i])
+		            {
+		                cout << pItems[i]->data._first << ":" << pItems[i]->data._second;
+		                list[nextCnt] = pItems[i]->left;
+		                list[nextCnt + 1] = pItems[i]->right;
+		                if (list[nextCnt] || list[nextCnt + 1])
+		                    notFinished = true;
+		            }
+		            else
+		            {
+		                cout << "*";
+		                list[nextCnt] = NULL;
+		                list[nextCnt + 1] = NULL;
+		            }
+		        }
+		        cout << endl;
+		        // free the memory allocated for list of pointers
+		        if (pItems)
+		            delete[] pItems;
+		        pItems = list; // and shift to new one (for next level)
+		    }
+		    delete[] pItems;
+		}
+		//!!!!!! print function 
 		public:
 			typename pairAllocator::template rebind<node_type>::other nodeAlloc;
 			node_type	*rootPtr;

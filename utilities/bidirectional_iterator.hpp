@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/15 10:49:37 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/15 11:50:47 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ namespace ft
 		}
 	
 		bool operator!= (const map_iterator& rhs) const{
-			return (!(this == rhs));
+			return (this->root != rhs.root);
 		}
 	
 		/*
@@ -83,8 +83,7 @@ namespace ft
 		}
 		
 		pointer operator->() const{
-			// return (&operator*());
-			std::cout << "In the operator-> : " << root->data._first << std::endl; // ! abort
+			// std::cout << "In the operator-> : " << root->data._first << std::endl;
 			return (&this->root->data);
 		}
 

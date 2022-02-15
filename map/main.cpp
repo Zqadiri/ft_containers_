@@ -157,13 +157,19 @@ int main()
 	puts("************Left Heavy************\n");
 
 	ft::avl_tree<ft::pair<key_t,int> > av;
-	ft::map<key_t, int>::iterator it;
+	ft::map<key_t, int>::iterator it, it_end;
 	ft::map<key_t, int> mp;
 
 	mp.insert(ft::pair<key_t, int>(10, 100));
-    it = mp.begin();
-	std::cout << "ft begin ::" << it->_first << std::endl;
-	// buildTree(av.rootPtr, 80, 10);
+	mp.insert(ft::pair<key_t, int>(11, 101));
+	// mp.insert(ft::pair<key_t, int>(12, 102));
+	// mp.insert(ft::pair<key_t, int>(15, 105));
+	// mp.insert(ft::pair<key_t, int>(16, 106));
+	// mp.insert(ft::pair<key_t, int>(17, 107));
+    // it = mp.begin();
+    // it_end = mp.end();
+    // for ( ; it != mp.end(); ++it)
+    	// std::cout << it->_first << " => " << it->_second << '\n';
 	// av.rootPtr = av.insert(av.rootPtr ,51 , 70 );
 	// av.rootPtr = av.insert(av.rootPtr ,5  , 40 );
 	// av.rootPtr = av.insert(av.rootPtr ,59 , 194);

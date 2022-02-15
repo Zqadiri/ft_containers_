@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/15 10:46:34 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/15 12:03:08 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ namespace ft
 			const allocator_type& alloc = allocator_type()): _tree(){
 			_comp = comp;
 			_alloc = alloc;
-			rootPtr = nullptr;
+			// rootPtr = nullptr;
 		}		
 
 		template <class InputIterator>
@@ -91,7 +91,7 @@ namespace ft
 		}
 
 		iterator begin(){
-			node_type *temp = _tree.beginTree(rootPtr);
+			node_type *temp = _tree.beginTree(_tree.rootPtr);
 			iterator it(_tree, temp);
 			std::cout << "in Begin: " << it.root->data._first << std::endl;
 			return (it);	
@@ -99,6 +99,13 @@ namespace ft
 
 		// const_iterator begin() const;
 
+      	iterator end(){
+			  node_type *temp = _tree.minValue(_tree.rootPtr);
+			return (iterator(_tree, temp));  
+		}
+		
+		// const_iterator end() const;
+		
 		/*
 		 TODO: Insert a single element
 		 insert a single element in the avlTree
@@ -107,19 +114,19 @@ namespace ft
 		*/
 
 		pair<iterator,bool> insert (const value_type& val){
-			rootPtr = _tree.insert(rootPtr, val);
-			std::cout << "in Insert: " << rootPtr->data._first << std::endl;
-			return (ft::make_pair(iterator(_tree, rootPtr), true));		
+			_tree.rootPtr = _tree.insert(_tree.rootPtr, val);
+			iterator it(_tree, _tree.rootPtr);
+			std::cout << "in Insert: " << _tree.rootPtr->data._first << std::endl;
+			return (ft::make_pair(it, true));		
 		}
 	
-		// iterator insert (iterator position, const value_type& val);
+		iterator insert (iterator position, const value_type& val);
 
-		// template <class InputIterator>
-  		// void insert (InputIterator first, InputIterator last);
+		template <class InputIterator>
+  		void insert (InputIterator first, InputIterator last);
 
 		private:
 			typename ft::avl_tree<value_type, key_compare>	_tree;
-			node_type										*rootPtr;
 			key_compare										_comp;
 			allocator_type									_alloc;
 	};
