@@ -40,8 +40,11 @@ BstNode* Insert(BstNode* root,int data) {
 	}
 	return root;
 }
+
 //To search an element in BST, returns true if element is found
-bool Search(BstNode* root,int data) {
+
+bool Search(BstNode* root,int data)
+{
 	if(root == NULL) {
 		return false;
 	}
@@ -168,8 +171,11 @@ int main()
 	mp.insert(ft::pair<key_t, int>(17, 107));
     it = mp.begin();
     it_end = mp.end();
-    for ( ; it != mp.end(); ++it)
-    	std::cout << it->_first << " => " << it->_second << '\n';
+    // std::cout << "-> "<< it->_first << " => " << it->_second << '\n';
+    // std::cout << "-> "<< it_end->_first << " => " << it_end->_second << '\n';
+    // for ( ; it != it_end; ++it){
+    // 	std::cout << it->_first << " => " << it->_second << '\n';
+    // }
 	{
 		std::cout << "----- std -----" << std::endl;
 		std::map<key_t, int> map;

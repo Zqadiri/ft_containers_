@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/15 12:15:29 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/15 18:17:54 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ namespace ft
 			typedef					Compare					compare;
 
 		avl_tree(){
-			rootPtr = nodeAlloc.allocate(1);
-			rootPtr->right = rootPtr->left = nullptr;
+			// rootPtr = nodeAlloc.allocate(1);
+			// rootPtr->right = rootPtr->left = nullptr;
+			rootPtr = nullptr;
 			treeSize = 0;
 		};
 		
@@ -61,7 +62,7 @@ namespace ft
 			node_type *current = root;
 			while (current->left != nullptr)
 				current = current->left;
-			std::cout << "In beginTree : " << root->data._first << std::endl;
+			// std::cout << "In beginTree : " << root->data._first << std::endl;
 			return current;
 		}
 		
@@ -95,13 +96,15 @@ namespace ft
 			return b_factor;
 		}
 
-		node_type*		leftLeftRotation(node_type *root)
+		node_type*		leftLeftRotation(node_type *root) //? change 
 		{
 			std::cout << "leftLeftRotation" << std::endl;
 			node_type *new_parent = root->left;
 			node_type *tmp = new_parent->right;
 
 			new_parent->right = root;
+			new_parent->right->rootPtr = root;
+			new_parent->rootPtr = root->rootPtr;
 			root->left = tmp;
 			return new_parent;
 		}
@@ -113,6 +116,8 @@ namespace ft
 			node_type *tmp = new_parent->left;
 
 			new_parent->left = root;
+			new_parent->left->rootPtr = root;
+			new_parent->rootPtr = root->rootPtr;
 			root->right = tmp;
 			return new_parent;
 		}
@@ -140,22 +145,23 @@ namespace ft
 		node_type*		balanceTree(node_type *root)
 		{
 			int	BalanceFactor = Height(root->left) - Height(root->right);
-			std::cout << "\nBL: " << BalanceFactor << std::endl;
+			// std::cout << "\nBL: " << BalanceFactor << std::endl;
 			//? IF tree is LEFT heavy
 			if (BalanceFactor > 1)
 			{
-				std::cout << "LEFT heavy : ";
-				std::cout << "L " << difference(root->left) << std::endl << std::endl;
+				// std::cout << "LEFT heavy : ";
+				// std::cout << "L " << difference(root->left) << std::endl << std::endl;
 				if (difference(root->left) > 0)
 					root = leftLeftRotation(root); // ? ll rotation if the tree is left heavy && the ST is left heavy 
 				else
 					root = leftRightRotation(root); //? lr Rottion if the tree is left heavy && ST is right heavy				
+				
 			}
 			//? ELSE IF tree is RIGHT heavy
 			else if (BalanceFactor < -1)
 			{
-				std::cout << "Right heavy : ";
-				std::cout << "L " << difference(root->right)  << std::endl<< std::endl;
+				// std::cout << "Right heavy : ";
+				// std::cout << "L " << difference(root->right)  << std::endl<< std::endl;
 				if (difference(root->right) > 0)
 					root = rightLeftRotation(root); //? Right Left
 				else 
@@ -189,8 +195,9 @@ namespace ft
 			// std::cout << "val: " << val._first << std::endl;
 			key_type key = val._first;
 			key_type value = val._second;
-			if (treeSize == 0 || root == nullptr){
+			if (root == nullptr){
 				root = newNode(val);
+				root->rootPtr = nullptr;
 				std::cout << "Value inserted successfully" << std::endl;
 				return (root);
 			}
@@ -199,25 +206,28 @@ namespace ft
 				if (key < root->data._first)
 				{
 					root->left = insert(root->left,val);
+					root->rootPtr = root;
 					root = balanceTree(root);
 				}
 				else if (key > root->data._first) //! switch to compare Compare(key, root->data._first)
 				{
 					root->right = insert(root->right, val);
+					root->rootPtr = root;
 					root = balanceTree(root);
 				}
 			} //! search if tha key exists or not
-				buildTree(root, 80, 10);
-			
+			buildTree(root, 80, 10);
+			puts("\n\n\n");
 			return (root);
 		}
 
 		node_type*		minValue(node_type *root)
 		{
+			buildTree(root, 80, 10);
 			node_type *current = root;
 			while (current->right != nullptr)
 				current = current->right;
-			// std::cout << "minValue : " << current->data._first << std::endl;
+			std::cout << "minValue : " << current->data._first << std::endl;
 			return current;
 		}
 
@@ -306,7 +316,7 @@ namespace ft
 		            cout << setw((curWidth>=itemWidth) ? curWidth:(itemWidth/(1+(i==0))));
 		            if (pItems[i])
 		            {
-		                cout << pItems[i]->data._first << ":" << pItems[i]->data._second;
+		                cout << pItems[i]->data._first << ":" << pItems[i]->data._second << ":" <<  pItems[i]->rootPtr->data._first;
 		                list[nextCnt] = pItems[i]->left;
 		                list[nextCnt + 1] = pItems[i]->right;
 		                if (list[nextCnt] || list[nextCnt + 1])
