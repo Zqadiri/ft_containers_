@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/16 15:27:26 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/16 20:13:56 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,65 @@ namespace ft
 
 		template <class InputIterator>
   		void insert (InputIterator first, InputIterator last);
-			  
+
+		/*
+		 TODO: find an element by key
+		*/
+
+		iterator find (const key_type& k){
+			node_type *find = _tree.searchKey(k, _tree.rootPtr);
+			iterator it(_tree, find);
+			return (it);
+		}
+
+		allocator_type get_allocator() const{
+			return (_alloc);
+		}
+
+		// key_compare key_comp() const{
+		// 	return (key_compare);
+		// }
+
+		/*
+		 TODO: Return a iterator 
+		 pointing to the element have "k" like key, give an iterator to it.
+		 @Two keys are considered equivalent if key_comp returns false reflexively
+		*/
+
+		iterator lower_bound (const key_type& k)
+		{
+			iterator begin = this->begin();
+			iterator end = this->end();
+
+			while (begin != end)
+			{
+				if (_comp((*begin)._first, k) == false)
+					break;
+				begin++;
+			}
+			return (begin);
+		}
+
+		/*
+		 TODO:Returns an iterator
+		 pointing to the first element in the container 
+		 whose key is considered to go after k
+		*/
+
+		iterator upper_bound (const key_type& k)
+		{
+			iterator begin = this->begin();
+			iterator end = this->end();
+
+			while (begin != end)
+			{
+				if (_comp(k, (*begin)._first))
+					break;
+				begin++;
+			}
+			return (begin);
+		}
+
 		private:
 			typename ft::avl_tree<value_type, key_compare>	_tree;
 			key_compare										_comp;
@@ -143,11 +201,3 @@ namespace ft
 }
 
 #endif
-
-
-////////////////////TODO
-//! T = pair<Key, mapped_value>
-//? template <typename T> struct node;
-//? template <typename T, typename Compare = std::less<typename T::first_type>,
-//? typename Alloc = std::allocator <T> > class avl_tree;
-//? template <typename Category, typename T, ....> class biterator

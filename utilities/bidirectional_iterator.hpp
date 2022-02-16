@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/16 19:26:50 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/16 19:36:14 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ namespace ft
 		*/
 	
 		bool operator== (const map_iterator& rhs) const{
-			return (this->root == rhs.root && this->nodePtr == rhs.nodePtr);
+			return (root == rhs.root && nodePtr == rhs.nodePtr);
 		}
 	
 		bool operator!= (const map_iterator& rhs) const{
-			return (this->root != rhs.root || this->nodePtr != rhs.nodePtr);
+			return (_tree != rhs._tree || nodePtr != rhs.nodePtr);
 		}
 	
 		/*
@@ -79,11 +79,10 @@ namespace ft
 		*/
 
 		reference operator*() const{
-			return (root->data);
+			return (nodePtr->data);
 		}
 		
 		pointer operator->() const{
-			// std::cout << "In the operator-> : " << root->data._first << std::endl;
 			return (&this->nodePtr->data);
 		}
 
@@ -95,8 +94,6 @@ namespace ft
 		map_iterator& operator++() //! infinity loop
 		{
 			node_type *temp;
-			// if (nodePtr != nullptr)
-			// 	std::cout << "current node: "<< nodePtr->data._first << std::endl;
 			if (nodePtr == nullptr)
 			{
 				nodePtr = _tree.rootPtr;
@@ -115,25 +112,23 @@ namespace ft
 				else
 				{
 					temp = nodePtr->rootPtr;
-					// std::cout << "2. operator ++ "<< nodePtr->data._first << ":" << temp->right->data._first << std::endl; //! abort: rootPtr does not exist !!!
 					while (temp != nullptr && nodePtr == temp->right){
 						nodePtr = temp;
 						temp = temp->rootPtr;
 					}
 					nodePtr = temp;
 				}
-			root = nodePtr;
 			return *this;
 		}
 		
 		map_iterator operator++ (int){
-			map_iterator temp = *this;
+			map_iterator copy = *this;
 			operator++();
-			return temp;
+			return copy;
 		}
 	
 		// * decrement. move backward to largest value < current value
-		map_iterator  operator-- ()
+		map_iterator&  operator-- ()
 		{
 			node_type *temp;
 
@@ -164,7 +159,11 @@ namespace ft
 			return (*this);
 		}
 	
-		map_iterator  operator-- (int);
+		map_iterator  operator-- (int){
+			map_iterator copy = *this;
+			operator--();
+			return (*this);
+		}
 
 		public: //!change it to private
 			node_type		*root;

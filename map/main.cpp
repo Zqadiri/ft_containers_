@@ -203,27 +203,26 @@ int main()
 	mp.insert(ft::pair<key_t, int>(15, 105));
 	mp.insert(ft::pair<key_t, int>(16, 106));
 	mp.insert(ft::pair<key_t, int>(17, 107));
-    it = mp.begin();
-    it_end = mp.end();
-    // std::cout << "-> "<< it->_first << " => " << it->_second << '\n';
-    for ( ; it != it_end; ++it){
-    	std::cout << it->_first << " => " << it->_second << '\n';
-    }
-    std::cout << "-> "<< it_end->_first << " => " << it_end->_second << '\n';
-
-	// {
-	// 	std::cout << "----- std -----" << std::endl;
-	// 	std::map<key_t, int> map;
-	// 	map.insert(std::pair<key_t,int>(50 ,100));
-	// 	map.insert(std::pair<key_t,int>(51 ,70 ));
-	// 	map.insert(std::pair<key_t,int>(5  ,40 ));
-	// 	map.insert(std::pair<key_t,int>(59 ,194));
-	// 	map.insert(std::pair<key_t,int>(48 ,195));
-	// 	map.insert(std::pair<key_t,int>(71 ,90 ));
-	// 	std::map<key_t, int>::iterator it = map.begin();
-	// 	std::cout << "std begin ::" << it->first << std::endl;
-	// 	for ( ; it!=map.end(); ++it)
-    // 		std::cout << it->first << " => " << it->second << '\n';
-	// }
+    it = mp.upper_bound(11);
+    // it_end = mp.end();
+    std::cout << "-> "<< it->_first << " => " << it->_second << '\n';
+    // for ( ; it != it_end; ++it){
+    // 	std::cout << it->_first << " => " << it->_second << '\n';
+    // }
+    // std::cout << "-> "<< it_end->_first << " => " << it_end->_second << '\n';
+	{
+		std::cout << "\n----- std -----" << std::endl;
+		std::map<key_t, int> map;
+		map.insert(std::pair<key_t,int>(10, 100));
+		map.insert(std::pair<key_t,int>(11, 101));
+		map.insert(std::pair<key_t,int>(12, 102));
+		map.insert(std::pair<key_t,int>(15, 105));
+		map.insert(std::pair<key_t,int>(16, 106));
+		map.insert(std::pair<key_t,int>(17, 107));
+		std::map<key_t, int>::iterator it = map.upper_bound(16);
+		std::cout << " bound ::" << it->first << std::endl;
+		for ( ; it!=map.end(); ++it)
+    		std::cout << it->first << " => " << it->second << '\n';
+	}
 }
 

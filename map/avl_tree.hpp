@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/16 18:00:11 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/16 19:43:37 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ namespace ft
 			this->pairAlloc = tree.pairAlloc;
 			this->rootPtr = tree.rootPtr;
 			return *this;
+		}
+
+		bool operator!=(const avl_tree &rhs)const {
+			return (rootPtr != rhs.rootPtr);
 		}
 		
 		~avl_tree(){};
@@ -172,6 +176,18 @@ namespace ft
 				return searchForKey(key, root->left);
 			else
 				return searchForKey(key, root->right);
+		}
+
+		node_type*		searchKey(const key_type key, node_type* root)
+		{
+			if (root == nullptr) // * rearch the end of the tree
+				return root;
+			else if (root->data._first == key)
+				return root;
+			else if (key <= root->data._first)
+				return searchKey(key, root->left);
+			else
+				return searchKey(key, root->right);
 		}
 		
 		node_type*		newNode(const value_type &val){
