@@ -205,12 +205,12 @@ void print_parent( ft::avl_tree<ft::pair<int, int> >::node_type* root)
 }
 
 int main(void){
-    ft::pair<int, int> p(10, 10);
-    ft::pair<int, int> q(11, 11);
-    ft::pair<int, int> e(12, 12);
-    ft::pair<int, int> t(15, 15);
-    ft::pair<int, int> y(16, 16);
-    ft::pair<int, int> u(17, 17);
+    ft::pair<int, int> p(10, 100);
+    ft::pair<int, int> q(11, 101);
+    ft::pair<int, int> e(12, 102);
+    ft::pair<int, int> t(15, 105);
+    ft::pair<int, int> y(16, 106);
+    ft::pair<int, int> u(17, 107);
 
     ft::avl_tree<ft::pair<int, int> >::node_type* root = nullptr;
 	ft::avl_tree<ft::pair<int, int> > av;
@@ -218,10 +218,11 @@ int main(void){
 	root = av.insert(root, p);
 	root = av.insert(root, q);
 	root = av.insert(root, e);
-	root = av.insert(root, t);
-
-	buildTree(root, 80, 10);
+	// root = av.insert(root, t);
+	// root = av.insert(root, y);
+	// root = av.insert(root, u);
+	// buildTree(root, 80, 10);
+    printBT("", root,  false);
     print_parent(root);
-
     return (0);
 }
