@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/15 15:30:44 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/16 19:26:50 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ namespace ft
 
 		map_iterator( const tree &rhs, node_type *rootPtr): root(), nodePtr(), _tree(){
 			this->_tree = rhs;
-			root = rootPtr;
+			root = nodePtr = rootPtr;
         }
 
 		map_iterator(const map_iterator &mi): root(), nodePtr(), _tree(){
@@ -84,7 +84,7 @@ namespace ft
 		
 		pointer operator->() const{
 			// std::cout << "In the operator-> : " << root->data._first << std::endl;
-			return (&this->root->data);
+			return (&this->nodePtr->data);
 		}
 
 		/*
@@ -92,21 +92,18 @@ namespace ft
 		 move forward to next larger value
 		*/
 
-		map_iterator& operator++()
+		map_iterator& operator++() //! infinity loop
 		{
 			node_type *temp;
-			if (nodePtr != nullptr)
-				std::cout << "current node: "<< nodePtr->data._first << std::endl;
+			// if (nodePtr != nullptr)
+			// 	std::cout << "current node: "<< nodePtr->data._first << std::endl;
 			if (nodePtr == nullptr)
 			{
 				nodePtr = _tree.rootPtr;
 				if (nodePtr == nullptr) //! empty tree
-					throw underflow_error("map : "); //! change it [ Occurs when the result is not zero, but is too small to be represented ]
+					throw underflow_error("map : "); //! change it [Occurs when the result is not zero, but is too small to be represented]
 				while (nodePtr->left != nullptr)
-				{
-        			puts("iter");	
 					nodePtr = nodePtr->left; //* move to the smallest value in the tree
-				}
 			}
 			else
 				if (nodePtr->right != nullptr)
@@ -118,14 +115,14 @@ namespace ft
 				else
 				{
 					temp = nodePtr->rootPtr;
-					std::cout << "2. operator ++ "<< nodePtr->data._first << std::endl; //! abort: rootPtr does not exist !!!
-					while (temp != nullptr && nodePtr == temp->right)
-					{
+					// std::cout << "2. operator ++ "<< nodePtr->data._first << ":" << temp->right->data._first << std::endl; //! abort: rootPtr does not exist !!!
+					while (temp != nullptr && nodePtr == temp->right){
 						nodePtr = temp;
 						temp = temp->rootPtr;
 					}
 					nodePtr = temp;
 				}
+			root = nodePtr;
 			return *this;
 		}
 		
@@ -136,11 +133,38 @@ namespace ft
 		}
 	
 		// * decrement. move backward to largest value < current value
-		map_iterator  operator-- ();
+		map_iterator  operator-- ()
+		{
+			node_type *temp;
+
+			if (nodePtr == nullptr)
+			{
+				nodePtr = _tree.rootPtr;
+				if (nodePtr == nullptr)
+					throw underflow_error("map : ");
+				while (nodePtr->right != nullptr)
+					nodePtr = nodePtr->right;
+			}
+			else if (nodePtr->left != nullptr)
+			{
+				nodePtr = nodePtr->left;
+				while (nodePtr->right != nullptr)
+					nodePtr = nodePtr->right;
+			}
+			else
+			{
+				temp = nodePtr->rootPtr;
+				while (temp != nullptr && nodePtr == temp->left)
+				{
+					nodePtr = temp;
+					temp = temp->rootPtr;
+				}
+				nodePtr = temp;
+			}
+			return (*this);
+		}
 	
 		map_iterator  operator-- (int);
-		
-		
 
 		public: //!change it to private
 			node_type		*root;

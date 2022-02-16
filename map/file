@@ -1,0 +1,12 @@
+RightRightRotation
+RightRightRotation
+RightRightRotation
+                                      15:105
+                  11:101                                      16:106
+        10:100                  12:102                   *                  17:107
+parent of 10 is : 11
+parent of 12 is : 15
+parent of 11 is : 15
+parent of 17 is : 16
+parent of 16 is : 15
+node 15 is root of the tree
