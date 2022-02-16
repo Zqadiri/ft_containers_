@@ -218,11 +218,11 @@ int main(void){
 	root = av.insert(root, p);
 	root = av.insert(root, q);
 	root = av.insert(root, e);
-	// root = av.insert(root, t);
-	// root = av.insert(root, y);
-	// root = av.insert(root, u);
-	// buildTree(root, 80, 10);
-    printBT("", root,  false);
+	root = av.insert(root, t);
+	root = av.insert(root, y);
+	root = av.insert(root, u);
+	buildTree(root, 80, 10);
+    // printBT("", root,  false);
     print_parent(root);
     return (0);
 }

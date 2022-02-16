@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/16 17:09:09 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/16 18:00:11 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,55 +96,29 @@ namespace ft
 			return b_factor;
 		}
 
-		 node_type*        leftLeftRotation(node_type *root) //? change 
-        {
-            std::cout << "leftLeftRotation" << std::endl;
-            node_type *new_parent = root->left;
-            node_type *tmp = new_parent->right;
+		node_type*		leftLeftRotation(node_type *root) //? rotate the rootPtr too 
+		{
+			std::cout << "leftLeftRotation" << std::endl;
+			node_type *new_parent = root->left;
+			root->left = new_parent->right;
+			new_parent->right = root;
 
-            new_parent->right = root;
-            // new_parent->right->rootPtr = root;
-            // new_parent->rootPtr = root->rootPtr;
-            root->left = tmp;
-            return new_parent;
-        }
+			new_parent->rootPtr = root->rootPtr;
+			root->rootPtr = new_parent; 
+			return new_parent;
+		}
 
-		// node_type*		leftLeftRotation(node_type *root) //? rotate the rootPtr too 
-		// {
-		// 	std::cout << "leftLeftRotation" << std::endl;
-		// 	node_type *new_parent = root->left;
-		// 	root->left = new_parent->right;
-		// 	new_parent->right = root;
+		node_type*		rightRightRotation(node_type *root)
+		{
+			std::cout << "RightRightRotation" << std::endl;
+			node_type *new_parent = root->right;
+			root->right = new_parent->left;
+			new_parent->left = root;
 
-		// 	new_parent->rootPtr = root->rootPtr;
-		// 	root->rootPtr = new_parent; 
-		// 	return new_parent;
-		// }
-
-		// node_type*		rightRightRotation(node_type *root)
-		// {
-		// 	std::cout << "RightRightRotation" << std::endl;
-		// 	node_type *new_parent = root->right;
-		// 	root->right = new_parent->left;
-		// 	new_parent->left = root;
-
-		// 	new_parent->rootPtr = root->rootPtr;
-		// 	root->rootPtr = new_parent; 
-		// 	return new_parent;
-		// }
-		
-		node_type*        rightRightRotation(node_type *root) //? change 
-        {
-            std::cout << "rightRightRotation" << std::endl;
-            node_type *new_parent = root->right;
-            node_type *tmp = new_parent->left;
-
-            new_parent->left = root;
-            // new_parent->right->rootPtr = root;
-            // new_parent->rootPtr = root->rootPtr;
-            root->right = tmp;
-            return new_parent;
-        }
+			new_parent->rootPtr = root->rootPtr;
+			root->rootPtr = new_parent; 
+			return new_parent;
+		}
 
 		node_type*		leftRightRotation(node_type *root)
 		{
@@ -225,14 +199,14 @@ namespace ft
 					node_type *lchild = insert(root->left, val);
         			root->left  = lchild;
         			lchild->rootPtr = root;
-					// balanceTree(root);
+					root = balanceTree(root);
 				}
 				else if (key > root->data._first) //! switch to compare Compare(key, root->data._first)
 				{
 					node_type *rchild = insert(root->right, val);
         			root->right  = rchild;
         			rchild->rootPtr = root;
-					// balanceTree(root);
+					root = balanceTree(root);
 				}
 			} //! search if tha key exists or not
 			// buildTree(root, 80, 10);
