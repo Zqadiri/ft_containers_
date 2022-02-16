@@ -155,39 +155,73 @@ void buildTree(ft::BstNode<ft::pair<key_t, int> >* root, int scrWidth, int itemW
 
 // //? https://www.cs.usfca.edu/~galles/visualization/AVLtree.html
 
-int main()
+// int main()
+// {
+// 	puts("************Left Heavy************\n");
+
+// 	ft::avl_tree<ft::pair<key_t,int> > av;
+// 	ft::map<key_t, int>::iterator it, it_end;
+// 	ft::map<key_t, int> mp;
+
+// 	mp.insert(ft::pair<key_t, int>(10, 100));
+// 	mp.insert(ft::pair<key_t, int>(11, 101));
+// 	mp.insert(ft::pair<key_t, int>(12, 102));
+// 	mp.insert(ft::pair<key_t, int>(15, 105));
+// 	mp.insert(ft::pair<key_t, int>(16, 106));
+// 	mp.insert(ft::pair<key_t, int>(17, 107));
+//     it = mp.begin();
+//     it_end = mp.end();
+//     // std::cout << "-> "<< it->_first << " => " << it->_second << '\n';
+//     // std::cout << "-> "<< it_end->_first << " => " << it_end->_second << '\n';
+//     // for ( ; it != it_end; ++it){
+//     // 	std::cout << it->_first << " => " << it->_second << '\n';
+//     // }
+// 	{
+// 		std::cout << "----- std -----" << std::endl;
+// 		std::map<key_t, int> map;
+// 		map.insert(std::pair<key_t,int>(50 ,100));
+// 		map.insert(std::pair<key_t,int>(51 ,70 ));
+// 		map.insert(std::pair<key_t,int>(5  ,40 ));
+// 		map.insert(std::pair<key_t,int>(59 ,194));
+// 		map.insert(std::pair<key_t,int>(48 ,195));
+// 		map.insert(std::pair<key_t,int>(71 ,90 ));
+// 		std::map<key_t, int>::iterator it = map.begin();
+// 		std::cout << "std begin ::" << it->first << std::endl;
+// 		for ( ; it!=map.end(); ++it)
+//     		std::cout << it->first << " => " << it->second << '\n';
+// 	}
+// }
+
+void print_parent( ft::avl_tree<ft::pair<int, int> >::node_type* root)
 {
-	puts("************Left Heavy************\n");
+	if (root->left != NULL)
+		print_parent(root->left);
+	if (root->right != NULL)
+		print_parent(root->right);
+	if (root->rootPtr != NULL)
+		std::cout << "parent of " << root->data._first << " is : " << root->rootPtr->data._first << std::endl;
+	else
+		std::cout << "node " << root->data._first << " is root of the tree" << std::endl;
+}
 
-	ft::avl_tree<ft::pair<key_t,int> > av;
-	ft::map<key_t, int>::iterator it, it_end;
-	ft::map<key_t, int> mp;
+int main(void){
+    ft::pair<int, int> p(10, 10);
+    ft::pair<int, int> q(11, 11);
+    ft::pair<int, int> e(12, 12);
+    ft::pair<int, int> t(15, 15);
+    ft::pair<int, int> y(16, 16);
+    ft::pair<int, int> u(17, 17);
 
-	mp.insert(ft::pair<key_t, int>(10, 100));
-	mp.insert(ft::pair<key_t, int>(11, 101));
-	mp.insert(ft::pair<key_t, int>(12, 102));
-	mp.insert(ft::pair<key_t, int>(15, 105));
-	mp.insert(ft::pair<key_t, int>(16, 106));
-	mp.insert(ft::pair<key_t, int>(17, 107));
-    it = mp.begin();
-    it_end = mp.end();
-    // std::cout << "-> "<< it->_first << " => " << it->_second << '\n';
-    // std::cout << "-> "<< it_end->_first << " => " << it_end->_second << '\n';
-    // for ( ; it != it_end; ++it){
-    // 	std::cout << it->_first << " => " << it->_second << '\n';
-    // }
-	{
-		std::cout << "----- std -----" << std::endl;
-		std::map<key_t, int> map;
-		map.insert(std::pair<key_t,int>(50 ,100));
-		map.insert(std::pair<key_t,int>(51 ,70 ));
-		map.insert(std::pair<key_t,int>(5  ,40 ));
-		map.insert(std::pair<key_t,int>(59 ,194));
-		map.insert(std::pair<key_t,int>(48 ,195));
-		map.insert(std::pair<key_t,int>(71 ,90 ));
-		std::map<key_t, int>::iterator it = map.begin();
-		std::cout << "std begin ::" << it->first << std::endl;
-		for ( ; it!=map.end(); ++it)
-    		std::cout << it->first << " => " << it->second << '\n';
-	}
+    ft::avl_tree<ft::pair<int, int> >::node_type* root = nullptr;
+	ft::avl_tree<ft::pair<int, int> > av;
+
+	root = av.insert(root, p);
+	root = av.insert(root, q);
+	root = av.insert(root, e);
+	root = av.insert(root, t);
+
+	buildTree(root, 80, 10);
+    print_parent(root);
+
+    return (0);
 }

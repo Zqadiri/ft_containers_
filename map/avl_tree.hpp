@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/15 18:17:54 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/16 15:40:43 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ namespace ft
 			typedef					Compare					compare;
 
 		avl_tree(){
-			// rootPtr = nodeAlloc.allocate(1);
-			// rootPtr->right = rootPtr->left = nullptr;
+			rootPtr = nodeAlloc.allocate(1);
+			rootPtr->right = rootPtr->left = nullptr;
 			rootPtr = nullptr;
 			treeSize = 0;
 		};
@@ -96,29 +96,40 @@ namespace ft
 			return b_factor;
 		}
 
-		node_type*		leftLeftRotation(node_type *root) //? change 
+		// node_type*		leftLeftRotation(node_type *root) //? rotate the rootPtr too 
+		// {
+		// 	std::cout << "leftLeftRotation" << std::endl;
+		// 	node_type *new_parent = root->left;
+		// 	// node_type *tmp = new_parent->right;
+
+		// 	new_parent->right = root;
+		// 	// new_parent->right->rootPtr = root;
+		// 	// new_parent->rootPtr = root->rootPtr;
+		// 	root->left = tmp;
+		// 	return new_parent;
+		// }
+
+		node_type*		leftLeftRotation(node_type *root) //? rotate the rootPtr too 
 		{
 			std::cout << "leftLeftRotation" << std::endl;
 			node_type *new_parent = root->left;
-			node_type *tmp = new_parent->right;
-
+			root->left = new_parent->right;
 			new_parent->right = root;
-			new_parent->right->rootPtr = root;
+
 			new_parent->rootPtr = root->rootPtr;
-			root->left = tmp;
+			root->rootPtr = new_parent; 
 			return new_parent;
 		}
-		
+
 		node_type*		rightRightRotation(node_type *root)
 		{
-			std::cout << "rightRightRotation" << std::endl;
+			std::cout << "RightRightRotation" << std::endl;
 			node_type *new_parent = root->right;
-			node_type *tmp = new_parent->left;
-
+			root->right = new_parent->left;
 			new_parent->left = root;
-			new_parent->left->rootPtr = root;
+
 			new_parent->rootPtr = root->rootPtr;
-			root->right = tmp;
+			root->rootPtr = new_parent; 
 			return new_parent;
 		}
 
@@ -192,7 +203,6 @@ namespace ft
 		
 		node_type*		insert(node_type *root, const value_type &val)
 		{
-			// std::cout << "val: " << val._first << std::endl;
 			key_type key = val._first;
 			key_type value = val._second;
 			if (root == nullptr){
@@ -205,19 +215,17 @@ namespace ft
 			{
 				if (key < root->data._first)
 				{
-					root->left = insert(root->left,val);
-					root->rootPtr = root;
-					root = balanceTree(root);
+					node_type *lchild = insert(root->left, val);
+        			root->left  = lchild;
+        			lchild->rootPtr = root;
 				}
 				else if (key > root->data._first) //! switch to compare Compare(key, root->data._first)
 				{
-					root->right = insert(root->right, val);
-					root->rootPtr = root;
-					root = balanceTree(root);
+					node_type *rchild = insert(root->right, val);
+        			root->right  = rchild;
+        			rchild->rootPtr = root;
 				}
 			} //! search if tha key exists or not
-			buildTree(root, 80, 10);
-			puts("\n\n\n");
 			return (root);
 		}
 
@@ -272,26 +280,30 @@ namespace ft
 		
 		//!!!!!!!!!!!! print function !!!!!!!!!//
 		
+		void print_parent(node_type* root)
+		{
+			if (root->left != NULL)
+				print_parent(root->left);
+			if (root->right != NULL)
+				print_parent(root->right);
+			if (root->rootPtr != NULL)
+				std::cout << "parent of " << root->data._first << " is : " << root->rootPtr->data._first;
+			else
+				std::cout << "node " << root->data._first << " is root of the tree" << std::endl;
+		}
+
 		void buildTree(node_type* root, int scrWidth, int itemWidth)
-		// breadth-first traversal with depth limit based on screen width and output field width for one elemet
 		{
 		    bool notFinished = false;
-		    // check the root
 		    if (root)
-		    {
 		        notFinished = true;
-		    }
-		    // calculate maximum possible depth
 		    int depth = 1;
 		    int field = scrWidth;
-		    while (field > itemWidth)
-		    {
+		    while (field > itemWidth){
 		        depth++;
 		        field /= 2;
 		    }
-		    // check result
-		    if (depth < 1)
-		    {
+		    if (depth < 1){
 		        cout << " -= erroneous output options =-" << endl;
 		        return;
 		    }
@@ -299,8 +311,6 @@ namespace ft
 		    *pItems = root; // pointer to item on the first level
 		    int itemCnt = 1;
 		    int divWidth = 1;
-		    // loop for output not more than depth levels until the data is not finished
-		    // where level is current depth of tree, and root is on the first level
 		    for (int level = 1; level <= depth && notFinished; level++)
 		    {
 		        itemCnt = (level == 1) ? 1 : (itemCnt * 2);
@@ -310,13 +320,13 @@ namespace ft
 		        // output all utems of that level
 		        int nextCnt = 0;
 		        notFinished = false;
-		        for (int i = 0; i < itemCnt; i++, nextCnt += 2)
-		        {
+		        for (int i = 0; i < itemCnt; i++, nextCnt += 2){
 		            int curWidth = (scrWidth / divWidth) * ((i > 0) ? 2 : 1);
 		            cout << setw((curWidth>=itemWidth) ? curWidth:(itemWidth/(1+(i==0))));
 		            if (pItems[i])
 		            {
-		                cout << pItems[i]->data._first << ":" << pItems[i]->data._second << ":" <<  pItems[i]->rootPtr->data._first;
+		                cout << pItems[i]->data._first;
+						
 		                list[nextCnt] = pItems[i]->left;
 		                list[nextCnt + 1] = pItems[i]->right;
 		                if (list[nextCnt] || list[nextCnt + 1])
@@ -330,7 +340,6 @@ namespace ft
 		            }
 		        }
 		        cout << endl;
-		        // free the memory allocated for list of pointers
 		        if (pItems)
 		            delete[] pItems;
 		        pItems = list; // and shift to new one (for next level)

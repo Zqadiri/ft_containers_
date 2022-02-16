@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/15 16:47:49 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/16 15:27:26 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ namespace ft
 		// typedef				reverse_iterator<iterator> 								reverse_iterator;
 		// typedef				ft::reverse_iterator<const_iterator> 					const_reverse_iterator;
 		typedef	typename	std::ptrdiff_t											difference_type;
-
-
 		typedef typename 	ft::avl_tree<value_type, key_compare>::node_type		node_type;
 		
 			//! ----------- Constructors & Destructor ------------ !//
@@ -85,6 +83,19 @@ namespace ft
 
 		// !------- Member functions ----------!//
 
+		/*
+		 TODO: Clear the map
+		 destroy all the map element 
+		*/
+
+		void clear(){
+			iterator start = this->begin();
+			iterator end = this->end();
+			for (; start != end; start++)
+				_tree.nodeAlloc.destroy(start.nodePtr);
+			_tree.treeSize = 0;
+		}
+
 		size_type size() const{
 			return (_tree.treeSize);			
 		}
@@ -92,18 +103,14 @@ namespace ft
 		iterator begin(){
 			node_type *temp = _tree.beginTree(_tree.rootPtr);
 			iterator it(_tree, temp);
-			// std::cout << "in Begin: " << it.root->data._first << std::endl;
 			return (it);	
 		}
 
-		// const_iterator begin() const;
-
       	iterator end(){
-			  node_type *temp = _tree.minValue(_tree.rootPtr);
-			return (iterator(_tree, temp));  
+			node_type *temp = _tree.minValue(_tree.rootPtr);
+			iterator it(_tree, temp);
+			return (it);  
 		}
-		
-		// const_iterator end() const;
 		
 		/*
 		 TODO: Insert a single element
@@ -115,7 +122,6 @@ namespace ft
 		pair<iterator,bool> insert (const value_type& val){
 			_tree.rootPtr = _tree.insert(_tree.rootPtr, val);
 			iterator it(_tree, _tree.rootPtr);
-			// std::cout << "in Insert: " << _tree.rootPtr->data._first << std::endl;
 			return (ft::make_pair(it, true));		
 		}
 	
@@ -123,19 +129,17 @@ namespace ft
 			(void)position;
 			_tree.rootPtr = _tree.insert(_tree.rootPtr, val);
 			iterator it(_tree, _tree.rootPtr);
-			// std::cout << "in Insert: " << _tree.rootPtr->data._first << std::endl;
 			return (ft::make_pair(it, true));
 		}
 
 		template <class InputIterator>
   		void insert (InputIterator first, InputIterator last);
-
+			  
 		private:
 			typename ft::avl_tree<value_type, key_compare>	_tree;
 			key_compare										_comp;
 			allocator_type									_alloc;
 	};
-			  
 }
 
 #endif
