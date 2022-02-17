@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/17 19:34:59 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/17 20:02:29 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,22 @@ namespace ft
 			return (it);		
 		}
 
+		reverse_iterator rbegin(){
+			return reverse_iterator(this->end());
+		}
+
+		const_reverse_iterator rbegin() const{
+			return const_reverse_iterator(this->end());
+		}
+
+		reverse_iterator rend(){
+			return reverse_iterator(this->begin());			
+		}
+
+		const_reverse_iterator rend() const{
+			return const_reverse_iterator(this->begin());
+		}
+
 	  	iterator end(){
 			node_type *temp = _tree.minValue(_tree.rootPtr);
 			iterator it(_tree, temp);
@@ -172,7 +188,6 @@ namespace ft
 			//   for ( ; first != last; first++){
 			// 	  _tree.rootPtr = _tree.insert();
 			//   }
-			  
 		}
 
 		/*
@@ -266,12 +281,47 @@ namespace ft
 			key_compare										_comp;
 			allocator_type									_alloc;
 	};
+
+	//! -------------- Relational operators ---------------- !//
+	
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator== ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ){
+		if (lhs.size() != rhs.size())
+			return false;
+		return ft::equal(lhs.begin(), lhs.end(), rhs.begin());	
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator!= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ){
+		return (!(lhs == rhs));
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator< ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ){
+		return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator<= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ){
+		return (!(rhs < lhs));
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator> ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ){
+		return (rhs < lhs);
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator>= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ){
+		return (!(lhs < rhs));
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+  	void swap (map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y){
+		x.swap(y);
+	}
 }
 
-//! reverse
-//! const_iterator
-//! insert bool
-//! equal_range , ratio operators , swap , r and c functions
-
+//! equal_range ,  swap
 
 #endif
