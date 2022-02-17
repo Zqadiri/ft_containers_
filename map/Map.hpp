@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/17 20:02:29 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/17 20:25:47 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "avl_tree.hpp"
 #include <map>
 #include <functional>
+#include <algorithm>
 #include <memory>
 
 namespace ft
@@ -83,7 +84,9 @@ namespace ft
 		map& operator=(const map& x){
 			if (*this == x)
 				return (*this);
-			std::swap(*this, x);
+			_alloc = x._alloc;
+			_comp = x._comp;
+			_tree = x._tree;
 			return (*this);
 		}
 		
@@ -107,7 +110,18 @@ namespace ft
 		}
 
 		void swap (map& x){
-			std::swap(*this, x);
+			// std::swap(*this, x); //! does not work 
+			allocator_type tmp_alloc = _alloc;
+			key_compare tmp_comp = _comp;
+			typename ft::avl_tree<value_type, key_compare> tmp_tree = _tree;
+
+			this->_tree = x._tree;
+			this->_alloc = x._alloc;
+			this->_comp = x._comp;
+			
+			x._alloc = tmp_alloc;
+			x._comp = tmp_comp;
+			x._tree = tmp_tree;
 		}
 
 		size_type max_size() const{
@@ -322,6 +336,6 @@ namespace ft
 	}
 }
 
-//! equal_range ,  swap
+//? equal_range 
 
 #endif
