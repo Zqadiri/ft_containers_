@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/17 11:16:50 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/17 12:20:56 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ namespace ft
 			node_type *current = root;
 			while (current->left != nullptr)
 				current = current->left;
-			// std::cout << "In beginTree : " << root->data._first << std::endl;
 			return current;
 		}
 		
@@ -102,7 +101,7 @@ namespace ft
 
 		node_type*		leftLeftRotation(node_type *root) //? rotate the rootPtr too 
 		{
-			std::cout << "leftLeftRotation" << std::endl;
+			// std::cout << "leftLeftRotation" << std::endl;
 			node_type *new_parent = root->left;
 			root->left = new_parent->right;
 			new_parent->right = root;
@@ -114,7 +113,7 @@ namespace ft
 
 		node_type*		rightRightRotation(node_type *root)
 		{
-			std::cout << "RightRightRotation" << std::endl;
+			// std::cout << "RightRightRotation" << std::endl;
 			node_type *new_parent = root->right;
 			root->right = new_parent->left;
 			new_parent->left = root;
@@ -126,7 +125,7 @@ namespace ft
 
 		node_type*		leftRightRotation(node_type *root)
 		{
-			std::cout << "leftRightRotation" << std::endl;
+			// std::cout << "leftRightRotation" << std::endl;
 			node_type *new_parent;
 
 			new_parent = root->left;
@@ -136,7 +135,7 @@ namespace ft
 		
 		node_type*		rightLeftRotation(node_type *root)
 		{
-			std::cout << "rightLeftRotation" << std::endl;
+			// std::cout << "rightLeftRotation" << std::endl;
 			node_type *new_parent;
 
 			new_parent = root->right;
@@ -229,11 +228,9 @@ namespace ft
 
 		node_type*		minValue(node_type *root)
 		{
-			buildTree(root, 80, 10);
 			node_type *current = root;
 			while (current->right != nullptr)
 				current = current->right;
-			std::cout << "minValue : " << current->data._first << std::endl;
 			return current;
 		}
 
@@ -242,15 +239,9 @@ namespace ft
 			if (root == nullptr)
 				return nullptr;
 			else if (key < root->data._first)
-			{
 				root->left = deleteNode(root->left, key);
-				std::cout << "Left"  << std::endl;
-			}
 			else if (key > root->data._first)
-			{
 				root->right = deleteNode(root->right, key);
-				std::cout << "Right" << std::endl;
-			}
 			else if (key == root->data._first)	//! delete the root cases (root wit no child, one child, x childs)
 			{
 				if (root->left == nullptr)
@@ -267,85 +258,16 @@ namespace ft
 				}
 				else
 				{
+					std::cout << root->data._first << std::endl;
 					node_type *ret = minValue(root->left);
-					std::swap(root->data, ret->data);
+					nodeAlloc.destroy(root);
+					nodeAlloc.construct(root, ft::make_pair(ret->data._first, ret->data._second));
 					root->left = deleteNode(root->left, ret->data._first);
 				}
 			}
-			// puts("\n\n\n\n");
-			// buildTree(root, 80, 10);
 			return root;		
 		}
-		
-		//!!!!!!!!!!!! print function !!!!!!!!!//
-		
-		void print_parent(node_type* root)
-		{
-			if (root->left != NULL)
-				print_parent(root->left);
-			if (root->right != NULL)
-				print_parent(root->right);
-			if (root->rootPtr != NULL)
-				std::cout << "parent of " << root->data._first << " is : " << root->rootPtr->data._first;
-			else
-				std::cout << "node " << root->data._first << " is root of the tree" << std::endl;
-		}
 
-		void buildTree(node_type* root, int scrWidth, int itemWidth)
-		{
-		    bool notFinished = false;
-		    if (root)
-		        notFinished = true;
-		    int depth = 1;
-		    int field = scrWidth;
-		    while (field > itemWidth){
-		        depth++;
-		        field /= 2;
-		    }
-		    if (depth < 1){
-		        cout << " -= erroneous output options =-" << endl;
-		        return;
-		    }
-		    node_type** pItems = new node_type*[1];
-		    *pItems = root; // pointer to item on the first level
-		    int itemCnt = 1;
-		    int divWidth = 1;
-		    for (int level = 1; level <= depth && notFinished; level++)
-		    {
-		        itemCnt = (level == 1) ? 1 : (itemCnt * 2);
-		        divWidth *= 2;
-		        // make list of pointers to refer items on next level
-		        node_type** list = new node_type*[itemCnt * 2];
-		        // output all utems of that level
-		        int nextCnt = 0;
-		        notFinished = false;
-		        for (int i = 0; i < itemCnt; i++, nextCnt += 2){
-		            int curWidth = (scrWidth / divWidth) * ((i > 0) ? 2 : 1);
-		            cout << setw((curWidth>=itemWidth) ? curWidth:(itemWidth/(1+(i==0))));
-		            if (pItems[i])
-		            {
-		                cout << pItems[i]->data._first;
-						
-		                list[nextCnt] = pItems[i]->left;
-		                list[nextCnt + 1] = pItems[i]->right;
-		                if (list[nextCnt] || list[nextCnt + 1])
-		                    notFinished = true;
-		            }
-		            else
-		            {
-		                cout << "*";
-		                list[nextCnt] = NULL;
-		                list[nextCnt + 1] = NULL;
-		            }
-		        }
-		        cout << endl;
-		        if (pItems)
-		            delete[] pItems;
-		        pItems = list; // and shift to new one (for next level)
-		    }
-		    delete[] pItems;
-		}
-		//!!!!!! print function 
 		public:
 			typename pairAllocator::template rebind<node_type>::other nodeAlloc;
 			node_type	*rootPtr;

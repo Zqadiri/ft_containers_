@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/17 11:05:07 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/17 12:19:18 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,11 +221,28 @@ namespace ft
 			return(0);
 		}
 
+		/*
+		 TODO: Erase elements
+		 Removes from the map either a single element 
+		 or a range of elements ([first,last))
+		*/
+
 		void erase (iterator position){
 			// std::cout << "->" << position.nodePtr->data._first << std::endl;
 			_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, position.nodePtr->data._first);
 		}
+
+		size_type erase (const key_type& k){
+			_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, k);
+		}
 		
+		void erase (iterator first, iterator last){
+			for(; first != last; first++)
+				_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, first.nodePtr->data._first);
+		}
+
+		
+
 		private:
 			typename ft::avl_tree<value_type, key_compare>	_tree;
 			key_compare										_comp;
