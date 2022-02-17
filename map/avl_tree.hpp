@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/16 19:43:37 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/17 11:16:50 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,6 @@ namespace ft
 			if (root == nullptr){
 				root = newNode(val);
 				root->rootPtr = nullptr;
-				// std::cout << "Value inserted successfully" << std::endl;
 				return (root);
 			}
 			if (!searchForKey(key, root))
@@ -225,7 +224,6 @@ namespace ft
 					root = balanceTree(root);
 				}
 			} //! search if tha key exists or not
-			// buildTree(root, 80, 10);
 			return (root);
 		}
 
@@ -239,44 +237,45 @@ namespace ft
 			return current;
 		}
 
-		// node_type*		deleteNode(node_type *root,const key_type key)
-		// {
-		// 	if (root == nullptr)
-		// 		return nullptr;
-		// 	else if (key < root->data._first)
-		// 	{
-		// 		root->left = deleteNode(root->left, key);
-				// std::cout << "Left"  << std::endl;
-		// 	}
-		// 	else if (key > root->data._first)
-		// 	{
-		// 		root->right = deleteNode(root->right, key);
-				// std::cout << "Right" << std::endl;
-		// 	}
-		// 	else if (key == root->data._first)	//! delete the root cases (root wit no child, one child, x childs)
-		// 	{
-		// 		if (root->left == nullptr)
-		// 		{
-		// 			node_type *new_parent = root->right;
-		// 			nodeAlloc.destroy(root);
-		// 			return new_parent;
-		// 		}
-		// 		else if (root->right == nullptr)
-		// 		{
-		// 			node_type *new_parent = root->left;
-		// 			nodeAlloc.destroy(root);
-		// 			return new_parent;
-		// 		}
-		// 		else
-		// 		{
-		// 			node_type *ret = minValue(root->left);
-					// std::cout << "ret : "<< ret->data._first << std::endl;
-		// 			root->data = ret->data;
-		// 			root->left = deleteNode(root->left, ret->data._first);
-		// 		}
-		// 	}
-		// 	return root;		
-		// }
+		node_type*		deleteNode(node_type *root,const key_type key)
+		{
+			if (root == nullptr)
+				return nullptr;
+			else if (key < root->data._first)
+			{
+				root->left = deleteNode(root->left, key);
+				std::cout << "Left"  << std::endl;
+			}
+			else if (key > root->data._first)
+			{
+				root->right = deleteNode(root->right, key);
+				std::cout << "Right" << std::endl;
+			}
+			else if (key == root->data._first)	//! delete the root cases (root wit no child, one child, x childs)
+			{
+				if (root->left == nullptr)
+				{
+					node_type *new_parent = root->right;
+					nodeAlloc.destroy(root);
+					return new_parent;
+				}
+				else if (root->right == nullptr)
+				{
+					node_type *new_parent = root->left;
+					nodeAlloc.destroy(root);
+					return new_parent;
+				}
+				else
+				{
+					node_type *ret = minValue(root->left);
+					std::swap(root->data, ret->data);
+					root->left = deleteNode(root->left, ret->data._first);
+				}
+			}
+			// puts("\n\n\n\n");
+			// buildTree(root, 80, 10);
+			return root;		
+		}
 		
 		//!!!!!!!!!!!! print function !!!!!!!!!//
 		

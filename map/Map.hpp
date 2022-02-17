@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/16 20:13:56 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/17 11:05:07 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,17 @@ namespace ft
 			*this = x;
 		}
 
+		//! ----------- Operators --------------!//
+
 		map& operator=(const map& x){
 			if (*this == x)
 				return (*this);
 			std::swap(*this, x);
 			return (*this);
+		}
+		
+		mapped_type& operator[] (const key_type& k){
+			return ((*((this->insert(ft::make_pair(k,mapped_type()))).first)).second);	
 		}
 
 		// !------- Member functions ----------!//
@@ -95,6 +101,22 @@ namespace ft
 				_tree.nodeAlloc.destroy(start.nodePtr);
 			_tree.treeSize = 0;
 		}
+
+		void swap (map& x){
+			std::swap(*this, x);
+		}
+
+		size_type max_size() const{
+			allocator_type alloc;
+			return (alloc.max_size());
+		}
+
+		bool empty() const{
+			return (_tree.treeSize == 0);
+		}
+
+		value_compare value_comp() const
+			{ return (value_compare(key_compare())); }
 
 		size_type size() const{
 			return (_tree.treeSize);			
@@ -149,9 +171,9 @@ namespace ft
 			return (_alloc);
 		}
 
-		// key_compare key_comp() const{
-		// 	return (key_compare);
-		// }
+		key_compare key_comp() const{
+			return (key_compare());
+		}
 
 		/*
 		 TODO: Return a iterator 
@@ -192,7 +214,18 @@ namespace ft
 			}
 			return (begin);
 		}
+		
+		size_type count (const key_type& k) const{ //? tha map cant have duplicates 
+			if (_tree.searchForKey(k, _tree.rootPtr))
+				return (1);
+			return(0);
+		}
 
+		void erase (iterator position){
+			// std::cout << "->" << position.nodePtr->data._first << std::endl;
+			_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, position.nodePtr->data._first);
+		}
+		
 		private:
 			typename ft::avl_tree<value_type, key_compare>	_tree;
 			key_compare										_comp;
