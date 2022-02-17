@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/16 19:36:14 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/17 19:29:33 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ namespace ft
 	{
 		public:
 			typedef	Compare		compare;
-			typedef	typename ft::iterator<std::bidirectional_iterator_tag, T>::value_type			value_type;
-			typedef	typename ft::iterator<std::bidirectional_iterator_tag, T>::iterator_category	iterator_category;
-			typedef typename ft::iterator<std::bidirectional_iterator_tag, T>::difference_type		difference_type;
-			typedef	typename ft::iterator<std::bidirectional_iterator_tag, T>::reference			reference;
-			typedef typename ft::iterator<std::bidirectional_iterator_tag, T>::pointer				pointer;
+			typedef	typename iterator<std::bidirectional_iterator_tag, T>::value_type			value_type;
+			typedef	typename iterator<std::bidirectional_iterator_tag, T>::iterator_category	iterator_category;
+			typedef typename iterator<std::bidirectional_iterator_tag, T>::difference_type		difference_type;
+			typedef	typename iterator<std::bidirectional_iterator_tag, T>::reference			reference;
+			typedef typename iterator<std::bidirectional_iterator_tag, T>::pointer				pointer;
 			typedef typename ft::avl_tree<T, Compare>												tree;
 			typedef typename ft::BstNode<T>     													node_type;
 
@@ -170,6 +170,133 @@ namespace ft
 			node_type		*nodePtr; //! current location in the tree 
 			tree			_tree;
 	};
+
+	//? const iterator
+
+	template <typename T, typename Compare >
+	class const_map_iterator : public ft::iterator<std::bidirectional_iterator_tag, const T> // ? compare
+	{
+		public:
+			typedef	Compare compare;
+			typedef	typename iterator<std::bidirectional_iterator_tag, const T>::value_type				value_type;	
+			typedef	typename iterator<std::bidirectional_iterator_tag, const T>::iterator_category		iterator_category;
+			typedef typename iterator<std::bidirectional_iterator_tag, const T>::difference_type		difference_type;
+			typedef	typename iterator<std::bidirectional_iterator_tag, const T>::reference				const_reference;
+			typedef typename iterator<std::bidirectional_iterator_tag, const T>::pointer				const_pointer;
+			typedef typename ft::avl_tree<const T, Compare>												tree;
+			typedef typename ft::BstNode<const T>     													node_type;
+		
+			const_map_iterator(): root(), nodePtr(), _tree() {};
+			~const_map_iterator(){}
+
+			const_map_iterator( const tree &rhs, node_type *rootPtr): root(), nodePtr(), _tree(){
+				this->_tree = rhs;
+				root = nodePtr = rootPtr;
+        	}
+			const_map_iterator(const const_map_iterator &mi): root(), nodePtr(), _tree(){
+				*this = mi;
+			}
+			const_map_iterator &operator=(const  const_map_iterator &mi)
+			{
+				if (*this == mi)
+					return (*this);
+				this->_tree = mi._tree;
+				this->root = mi.root;
+				this->nodePtr = mi.nodePtr;
+				return (*this);
+			}
+			bool operator== (const const_map_iterator& rhs) const{
+				return (root == rhs.root && nodePtr == rhs.nodePtr);
+			}
+			bool operator!= (const const_map_iterator& rhs) const{
+				return (_tree != rhs._tree || nodePtr != rhs.nodePtr);
+			}
+			const_reference operator*() const{
+				return (nodePtr->data);
+			}
+			const_pointer operator->() const{
+				return (&this->nodePtr->data);
+			}
+			const_map_iterator& operator++()
+			{
+				node_type *temp;
+				if (nodePtr == nullptr)
+				{
+					nodePtr = _tree.rootPtr;
+					if (nodePtr == nullptr) //! empty tree
+						throw underflow_error("map : "); //! change it [Occurs when the result is not zero, but is too small to be represented]
+					while (nodePtr->left != nullptr)
+						nodePtr = nodePtr->left; //* move to the smallest value in the tree
+				}
+				else
+					if (nodePtr->right != nullptr)
+					{
+						nodePtr = nodePtr->right; //* successor is the farthest left node of right subtree
+						while (nodePtr->left != nullptr)
+							nodePtr = nodePtr->left;
+					}
+					else
+					{
+						temp = nodePtr->rootPtr;
+						while (temp != nullptr && nodePtr == temp->right){
+							nodePtr = temp;
+							temp = temp->rootPtr;
+						}
+						nodePtr = temp;
+					}
+				return *this;
+			}
+
+			const_map_iterator operator++ (int){
+				const_map_iterator copy = *this;
+				operator++();
+				return copy;
+			}
+
+			// * decrement. move backward to largest value < current value
+			const_map_iterator&  operator-- ()
+			{
+				node_type *temp;
+	
+				if (nodePtr == nullptr)
+				{
+					nodePtr = _tree.rootPtr;
+					if (nodePtr == nullptr)
+						throw underflow_error("map : ");
+					while (nodePtr->right != nullptr)
+						nodePtr = nodePtr->right;
+				}
+				else if (nodePtr->left != nullptr)
+				{
+					nodePtr = nodePtr->left;
+					while (nodePtr->right != nullptr)
+						nodePtr = nodePtr->right;
+				}
+				else
+				{
+					temp = nodePtr->rootPtr;
+					while (temp != nullptr && nodePtr == temp->left)
+					{
+						nodePtr = temp;
+						temp = temp->rootPtr;
+					}
+					nodePtr = temp;
+				}
+				return (*this);
+			}
+
+			const_map_iterator  operator-- (int){
+				const_map_iterator copy = *this;
+				operator--();
+				return (*this);
+			}
+
+			public: //!change it to private
+				node_type		*root;
+				node_type		*nodePtr; //! current location in the tree 
+				tree			_tree;
+	};
+
 }
 
 #endif

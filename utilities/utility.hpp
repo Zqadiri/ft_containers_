@@ -154,14 +154,10 @@ namespace ft
 		}
 
 		pair& operator= (const pair& pr){
-			// this->_first = pr._first; 
+			this->_first = pr._first; 
 			this->_second = pr._second;
 			return (*this);
 		}
-
-		// operator pair<const T1, T2>() const{
-		// 	return pair<const T1, T2>(this->_first, this->_second);
-		// }
 	};
 
 	//?------- Non-member function overloads  ---------?//

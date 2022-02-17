@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/17 12:19:18 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/17 19:34:59 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ namespace ft
   				value_compare (Compare c) : comp(c) {}
 			public:
 				bool operator() (const value_type& x, const value_type& y) const{
-    				return comp(x.first, y.first);
+					return comp(x.first, y.first);
   				}
 		} value_compare;
 		typedef				Alloc													allocator_type;
@@ -51,9 +51,9 @@ namespace ft
 		typedef typename 	allocator_type::const_pointer   						const_pointer;
 		typedef typename 	allocator_type::size_type       						size_type;
 		typedef 			ft::map_iterator<value_type , key_compare> 				iterator;
-		// typedef 			ft::map_iterator<const value_type , key_compare> 		const_iterator;
-		// typedef				reverse_iterator<iterator> 								reverse_iterator;
-		// typedef				ft::reverse_iterator<const_iterator> 					const_reverse_iterator;
+		typedef 			ft::const_map_iterator<value_type , key_compare> 		const_iterator;
+		typedef				reverse_iterator<iterator> 								reverse_iterator;
+		typedef				ft::reverse_iterator<const_iterator> 					const_reverse_iterator;
 		typedef	typename	std::ptrdiff_t											difference_type;
 		typedef typename 	ft::avl_tree<value_type, key_compare>::node_type		node_type;
 		
@@ -68,7 +68,11 @@ namespace ft
 		template <class InputIterator>
 		map (InputIterator first, InputIterator last,
 			const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type());
+			const allocator_type& alloc = allocator_type()){
+			_comp = comp;
+			_alloc = alloc;
+			this->insert(first, last);
+		}	
 
 		map (const map& x){
 			*this = x;
@@ -128,7 +132,13 @@ namespace ft
 			return (it);	
 		}
 
-      	iterator end(){
+		const_iterator begin() const{
+			node_type *temp = _tree.beginTree(_tree.rootPtr);
+			const_iterator it(_tree, temp);
+			return (it);		
+		}
+
+	  	iterator end(){
 			node_type *temp = _tree.minValue(_tree.rootPtr);
 			iterator it(_tree, temp);
 			return (it);  
@@ -142,9 +152,12 @@ namespace ft
 		*/
 
 		pair<iterator,bool> insert (const value_type& val){
+			size_type init_size = _tree.treeSize;
 			_tree.rootPtr = _tree.insert(_tree.rootPtr, val);
 			iterator it(_tree, _tree.rootPtr);
-			return (ft::make_pair(it, true));		
+			if (init_size != _tree.treeSize)
+				return (ft::make_pair(it, true));
+			return (ft::make_pair(it, false));
 		}
 	
 		iterator insert (iterator position, const value_type& val){
@@ -155,7 +168,12 @@ namespace ft
 		}
 
 		template <class InputIterator>
-  		void insert (InputIterator first, InputIterator last);
+  		void insert (InputIterator first, InputIterator last){
+			//   for ( ; first != last; first++){
+			// 	  _tree.rootPtr = _tree.insert();
+			//   }
+			  
+		}
 
 		/*
 		 TODO: find an element by key
@@ -228,20 +246,20 @@ namespace ft
 		*/
 
 		void erase (iterator position){
-			// std::cout << "->" << position.nodePtr->data._first << std::endl;
 			_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, position.nodePtr->data._first);
 		}
 
 		size_type erase (const key_type& k){
-			_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, k);
+		if (!_tree.searchForKey(k, _tree.rootPtr))
+			return 0;
+		_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, k);
+		return 1;
 		}
-		
-		void erase (iterator first, iterator last){
+
+		void erase (iterator first, iterator last){//? store keys in vector
 			for(; first != last; first++)
 				_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, first.nodePtr->data._first);
 		}
-
-		
 
 		private:
 			typename ft::avl_tree<value_type, key_compare>	_tree;
@@ -249,5 +267,11 @@ namespace ft
 			allocator_type									_alloc;
 	};
 }
+
+//! reverse
+//! const_iterator
+//! insert bool
+//! equal_range , ratio operators , swap , r and c functions
+
 
 #endif

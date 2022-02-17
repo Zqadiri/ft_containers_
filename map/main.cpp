@@ -189,12 +189,11 @@ int main()
         root = av.deleteNode(root, 12);
     	buildTree(root, 80, 10);
         print_parent(root);
-        // return (0);
     }
 	puts("\n************************\n");
 
 	ft::avl_tree<ft::pair<key_t,int> > av;
-	ft::map<key_t, int>::iterator it, it_end;
+	ft::map<key_t, int>::const_iterator it, it_end;
 	ft::map<key_t, int> mp;
 
 	mp.insert(ft::pair<key_t, int>(10, 100));
@@ -203,13 +202,13 @@ int main()
 	mp.insert(ft::pair<key_t, int>(15, 105));
 	mp.insert(ft::pair<key_t, int>(16, 106));
 	mp.insert(ft::pair<key_t, int>(17, 107));
-    it = mp.begin();
-    it_end = mp.end();
+    // it = mp.begin();
+    // it_end = mp.end();
     mp.erase(mp.find(12));
-    for ( ; it != it_end; ++it){
-    	std::cout << it->_first << " => " << it->_second << '\n';
-    }
-    std::cout << it_end->_first << " => " << it_end->_second << '\n';
+    // for ( ; it != it_end; ++it){
+    // 	std::cout << it->_first << " => " << it->_second << '\n';
+    // }
+    // std::cout << it_end->_first << " => " << it_end->_second << '\n';
 	
     // {
 	// 	std::cout << "\n----- std -----" << std::endl;
