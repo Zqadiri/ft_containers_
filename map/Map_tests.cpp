@@ -186,7 +186,7 @@ void iterator_tests(void)
 
             std::map<int, std::string> m;
             ft::map<int, std::string> ft_m;
-            for (size_t i = 0; i < 1e6; ++i)
+            for (size_t i = 0; i < 1e3; ++i)
             {
                 m.insert(std::make_pair(i, "value"));
                 ft_m.insert(ft::make_pair(i, "value"));
@@ -239,7 +239,7 @@ void iterator_tests(void)
 
             std::map<int, std::string> m;
             ft::map<int, std::string> ft_m;
-            for (size_t i = 0; i < 1e6; ++i)
+            for (size_t i = 0; i < 1e3; ++i)
             {
                 m.insert(std::make_pair(i, "value"));
                 ft_m.insert(ft::make_pair(i, "value"));

@@ -72,21 +72,21 @@ void printBT(const std::string& prefix,  BstNode* node, bool isLeft)
     }
 }
 
-void printBT(const std::string& prefix,  ft::BstNode<ft::pair<key_t, int> >* node, bool isLeft)
+void printBT(const std::string& prefix,  ft::BstNode<ft::pair<int, std::string> >* node, bool isLeft)
 {
     if( node != nullptr )
     {
         std::cout << prefix;
         std::cout << (isLeft ? "├──" : "└──" );
         // print the value of the node
-        std::cout << node->data.second << std::endl;
+        std::cout << node->data.first << std::endl;
         // enter the next tree level - left and right branch
         printBT( prefix + (isLeft ? "│   " : "    "), node->left, true);
         printBT( prefix + (isLeft ? "│   " : "    "), node->right, false);
     }
 }
 
-void buildTree(ft::BstNode<ft::pair<key_t, int> >* root, int scrWidth, int itemWidth)
+void buildTree(ft::BstNode<ft::pair<int, std::string> >* root, int scrWidth, int itemWidth)
 // breadth-first traversal with depth limit based on screen width and output field width for one elemet
 {
     bool notFinished = false;
@@ -109,7 +109,7 @@ void buildTree(ft::BstNode<ft::pair<key_t, int> >* root, int scrWidth, int itemW
         cout << " -= erroneous output options =-" << endl;
         return;
     }
-    ft::BstNode<ft::pair<key_t, int> >** pItems = new ft::BstNode<ft::pair<key_t, int> >*[1];
+    ft::BstNode<ft::pair<int, std::string> >** pItems = new ft::BstNode<ft::pair<int, std::string> >*[1];
     *pItems = root; // pointer to item on the first level
     int itemCnt = 1;
     int divWidth = 1;
@@ -120,7 +120,7 @@ void buildTree(ft::BstNode<ft::pair<key_t, int> >* root, int scrWidth, int itemW
         itemCnt = (level == 1) ? 1 : (itemCnt * 2);
         divWidth *= 2;
         // make list of pointers to refer items on next level
-        ft::BstNode<ft::pair<key_t, int> >** list = new ft::BstNode<ft::pair<key_t, int> >*[itemCnt * 2];
+        ft::BstNode<ft::pair<int, std::string> >** list = new ft::BstNode<ft::pair<int, std::string> >*[itemCnt * 2];
         // output all utems of that level
         int nextCnt = 0;
         notFinished = false;
@@ -152,7 +152,7 @@ void buildTree(ft::BstNode<ft::pair<key_t, int> >* root, int scrWidth, int itemW
     delete[] pItems;
 }
 
-void print_parent( ft::avl_tree<ft::pair<int, int> >::node_type* root)
+void print_parent( ft::avl_tree<ft::pair<int, std::string> >::node_type* root)
 {
     if (root->left != NULL)
         print_parent(root->left);
@@ -169,60 +169,38 @@ void print_parent( ft::avl_tree<ft::pair<int, int> >::node_type* root)
 
 int main()
 {
-    // {
-    //     ft::pair<int, int> p(10, 100);
-    //     ft::pair<int, int> q(11, 101);
-    //     ft::pair<int, int> e(12, 102);
-    //     ft::pair<int, int> t(15, 105);
-    //     ft::pair<int, int> y(16, 106);
-    //     ft::pair<int, int> u(17, 107);
+    {
+        ft::avl_tree<ft::pair<int, std::string> >::node_type* root = nullptr;
+    	ft::avl_tree<ft::pair<int, std::string> > av;
+        // ft::pair<int, std::string> p(10, 100);
 
-    //     ft::avl_tree<ft::pair<int, int> >::node_type* root = nullptr;
-    // 	ft::avl_tree<ft::pair<int, int> > av;
+        for (size_t i = 0; i < 10; ++i){
+          	root = av.insert(root , ft::make_pair(i, "i"));
+    	// buildTree(root, 90, 5);
+            printBT("", root, false);
+            print_parent(root);
+            puts("\n-------------\n");
+        }
 
-    // 	root = av.insert(root, p);
-    // 	root = av.insert(root, q);
-    // 	root = av.insert(root, e);
-    // 	root = av.insert(root, t);
-    // 	root = av.insert(root, y);
-    // 	root = av.insert(root, u);
-    //     root = av.deleteNode(root, 12);
-    // 	buildTree(root, 80, 10);
-    //     print_parent(root);
-    // }
-	// puts("\n************************\n");
+    }
+	puts("\n************************\n");
 
 	ft::avl_tree<ft::pair<key_t,int> > av;
 	ft::map<int, std::string>::iterator it, it_end;
-
 	ft::map< int, std::string> mp;
-    for (size_t i = 0; i < 1e6; ++i){
-        mp.insert(ft::make_pair(i, "value"));
+    for (size_t i = 0; i < 10; ++i){
+        mp.insert(ft::make_pair(i, "i"));
     }
-        
-    // it = mp.begin();
-    // it_end = mp.end();
-    // for ( ; it != it_end; ++it){
-    // 	std::cout << it->first << " => " << it->second << '\n';
-    // }
-    // std::cout << it_end->first << " => " << it_end->second << '\n';
+    for (it=mp.end(); it!=mp.begin(); --it)
+        std::cout << it->first << " => " << it->second << '\n';
     // {
 	// 	std::cout << "\n----- std -----" << std::endl;
-	// 	std::map<key_t, int> map;
-	// 	map.insert(std::pair<key_t,int>(10, 100));
-	// 	map.insert(std::pair<key_t,int>(11, 101));
-	// 	map.insert(std::pair<key_t,int>(12, 102));
-	// 	map.insert(std::pair<key_t,int>(15, 105));
-	// 	map.insert(std::pair<key_t,int>(16, 106));
-	// 	map.insert(std::pair<key_t,int>(17, 107));
-    //     std::map<key_t, int> map2;
-	// 	map2.insert(std::pair<key_t,int>(10, 100));
-	// 	map2.insert(std::pair<key_t,int>(11, 101));
-	// 	std::map<key_t, int>::const_iterator it;
-	// 	// std::cout << " bound ::" << it->first << std::endl;
-    //     // map.erase(++it);
-    //     it = map.upper_bound(10);
-    //     // for (it=map.begin(); it!=map.end(); ++it)
+	// 	std::map< int, std::string> map;
+    //     for (size_t i = 0; i < 1e6; ++i){
+    //         map.insert(std::make_pair(i, "value"));
+    //     }
+	// 	std::map<int, std::string>::iterator it;
+    //     for (it=map.begin(); it!=map.end(); ++it)
     //         std::cout << it->first << " => " << it->second << '\n';
 	// }
 }

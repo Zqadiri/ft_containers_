@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/18 13:02:51 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/18 19:24:48 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ namespace ft
 			rootPtr = nullptr;
 			treeSize = 0;
 		};
-		
+
 		avl_tree(const avl_tree &tree){
 			*this = tree;
 		}
@@ -59,7 +59,7 @@ namespace ft
 		bool operator!=(const avl_tree &rhs)const {
 			return (rootPtr != rhs.rootPtr);
 		}
-		
+
 		~avl_tree(){};
 
 		node_type*		beginTree( node_type *root){
@@ -68,7 +68,7 @@ namespace ft
 				current = current->left;
 			return current;
 		}
-		
+
 		bool		isEmpty(){
 			return (rootPtr == nullptr);
 		}
@@ -101,7 +101,7 @@ namespace ft
 
 		node_type*		leftLeftRotation(node_type *root) //? rotate the rootPtr too 
 		{
-			// std::cout << "leftLeftRotation" << std::endl;
+			std::cout << "leftLeftRotation" << std::endl;
 			node_type *new_parent = root->left;
 			root->left = new_parent->right;
 			new_parent->right = root;
@@ -113,7 +113,7 @@ namespace ft
 
 		node_type*		rightRightRotation(node_type *root)
 		{
-			// std::cout << "RightRightRotation" << std::endl;
+			std::cout << "RightRightRotation" << std::endl;
 			node_type *new_parent = root->right;
 			root->right = new_parent->left;
 			new_parent->left = root;
@@ -125,7 +125,7 @@ namespace ft
 
 		node_type*		leftRightRotation(node_type *root)
 		{
-			// std::cout << "leftRightRotation" << std::endl;
+			std::cout << "leftRightRotation" << std::endl;
 			node_type *new_parent;
 
 			new_parent = root->left;
@@ -135,7 +135,7 @@ namespace ft
 		
 		node_type*		rightLeftRotation(node_type *root)
 		{
-			// std::cout << "rightLeftRotation" << std::endl;
+			std::cout << "rightLeftRotation" << std::endl;
 			node_type *new_parent;
 
 			new_parent = root->right;
@@ -199,7 +199,7 @@ namespace ft
 		
 		node_type*		insert(node_type *root, const value_type &val) //! loop infinie
 		{
-			std::cout << "size: "<<treeSize << std::endl;
+			// std::cout << "size: "<<treeSize << std::endl;
 			key_type key = val.first;
 			mapped_type value = val.second;
 			if (root == nullptr){
@@ -207,16 +207,16 @@ namespace ft
 				root->rootPtr = nullptr;
 				return (root);
 			}
-			if (!searchForKey(key, root))
+			if (!searchForKey(val.first, root))
 			{
-				if (key < root->data.first)
+				if (val.first < root->data.first)
 				{
 					node_type *lchild = insert(root->left, val);
         			root->left  = lchild;
         			lchild->rootPtr = root;
 					root = balanceTree(root);
 				}
-				else if (key > root->data.first) //! switch to compare Compare(key, root->data._first)
+				else if (val.first > root->data.first) //! switch to compare Compare(key, root->data._first)
 				{
 					node_type *rchild = insert(root->right, val);
         			root->right  = rchild;
@@ -271,6 +271,7 @@ namespace ft
 
 		public:
 			typename pairAllocator::template rebind<node_type>::other nodeAlloc;
+			compare		comp;
 			node_type	*rootPtr;
 			pair_alloc	pairAlloc;
 			size_t		treeSize;

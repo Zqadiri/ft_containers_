@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/18 12:17:12 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/18 13:11:53 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ namespace ft
 		}
 
 		void swap (map& x){
-			// std::swap(*this, x); //! does not work 
 			allocator_type tmp_alloc = _alloc;
 			key_compare tmp_comp = _comp;
 			typename ft::avl_tree<value_type, key_compare> tmp_tree = _tree;

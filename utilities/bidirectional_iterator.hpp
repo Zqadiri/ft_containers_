@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/18 12:55:04 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/18 19:36:55 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,23 +109,22 @@ namespace ft
 					nodePtr = nodePtr->left; //* move to the smallest value in the tree
 				}
 			}
+			else if (nodePtr->right != nullptr)
+			{
+				nodePtr = nodePtr->right; //* successor is the farthest left node of right subtree
+				while (nodePtr->left != nullptr){
+					nodePtr = nodePtr->left;
+				}
+			}
 			else
-				if (nodePtr->right != nullptr)
-				{
-					nodePtr = nodePtr->right; //* successor is the farthest left node of right subtree
-					while (nodePtr->left != nullptr){
-						nodePtr = nodePtr->left;
-					}
-				}
-				else
-				{
-					temp = nodePtr->rootPtr;
-					while (temp != nullptr && nodePtr == temp->right){
-						nodePtr = temp;
-						temp = temp->rootPtr;
-					}
+			{
+				temp = nodePtr->rootPtr;
+				while (temp != nullptr && nodePtr == temp->right){
 					nodePtr = temp;
+					temp = temp->rootPtr;
 				}
+				nodePtr = temp;
+			}
 			return *this;
 		}
 		
@@ -136,10 +135,9 @@ namespace ft
 		}
 	
 		// * decrement. move backward to largest value < current value
-		map_iterator&  operator-- ()
+		map_iterator&  operator-- () //! loop infinie
 		{
 			node_type *temp;
-
 			if (nodePtr == nullptr)
 			{
 				nodePtr = _tree.rootPtr;
