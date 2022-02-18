@@ -169,52 +169,43 @@ void print_parent( ft::avl_tree<ft::pair<int, int> >::node_type* root)
 
 int main()
 {
-    {
-        ft::pair<int, int> p(10, 100);
-        ft::pair<int, int> q(11, 101);
-        ft::pair<int, int> e(12, 102);
-        ft::pair<int, int> t(15, 105);
-        ft::pair<int, int> y(16, 106);
-        ft::pair<int, int> u(17, 107);
+    // {
+    //     ft::pair<int, int> p(10, 100);
+    //     ft::pair<int, int> q(11, 101);
+    //     ft::pair<int, int> e(12, 102);
+    //     ft::pair<int, int> t(15, 105);
+    //     ft::pair<int, int> y(16, 106);
+    //     ft::pair<int, int> u(17, 107);
 
-        ft::avl_tree<ft::pair<int, int> >::node_type* root = nullptr;
-    	ft::avl_tree<ft::pair<int, int> > av;
+    //     ft::avl_tree<ft::pair<int, int> >::node_type* root = nullptr;
+    // 	ft::avl_tree<ft::pair<int, int> > av;
 
-    	root = av.insert(root, p);
-    	root = av.insert(root, q);
-    	root = av.insert(root, e);
-    	root = av.insert(root, t);
-    	root = av.insert(root, y);
-    	root = av.insert(root, u);
-        root = av.deleteNode(root, 12);
-    	buildTree(root, 80, 10);
-        print_parent(root);
-    }
-	puts("\n************************\n");
+    // 	root = av.insert(root, p);
+    // 	root = av.insert(root, q);
+    // 	root = av.insert(root, e);
+    // 	root = av.insert(root, t);
+    // 	root = av.insert(root, y);
+    // 	root = av.insert(root, u);
+    //     root = av.deleteNode(root, 12);
+    // 	buildTree(root, 80, 10);
+    //     print_parent(root);
+    // }
+	// puts("\n************************\n");
 
 	ft::avl_tree<ft::pair<key_t,int> > av;
-	ft::map<key_t, int>::const_iterator it, it_end;
-	ft::map<key_t, int> mp;
+	ft::map<int, std::string>::iterator it, it_end;
 
-	mp.insert(ft::pair<key_t, int>(10, 100));
-	mp.insert(ft::pair<key_t, int>(11, 101));
-	mp.insert(ft::pair<key_t, int>(12, 102));
-	mp.insert(ft::pair<key_t, int>(15, 105));
-	mp.insert(ft::pair<key_t, int>(16, 106));
-	mp.insert(ft::pair<key_t, int>(17, 107));
-    ft::map<key_t, int> mp2;
-	mp2.insert(ft::pair<key_t, int>(10, 100));
-	mp2.insert(ft::pair<key_t, int>(11, 101));
-
-    mp.swap(mp2);
-    it = mp.begin();
-    it_end = mp.end();
-
-    for ( ; it != it_end; ++it){
-    	std::cout << it->first << " => " << it->second << '\n';
+	ft::map< int, std::string> mp;
+    for (size_t i = 0; i < 1e6; ++i){
+        mp.insert(ft::make_pair(i, "value"));
     }
-    // std::cout << it_end->_first << " => " << it_end->_second << '\n';
-	
+        
+    // it = mp.begin();
+    // it_end = mp.end();
+    // for ( ; it != it_end; ++it){
+    // 	std::cout << it->first << " => " << it->second << '\n';
+    // }
+    // std::cout << it_end->first << " => " << it_end->second << '\n';
     // {
 	// 	std::cout << "\n----- std -----" << std::endl;
 	// 	std::map<key_t, int> map;
@@ -227,11 +218,11 @@ int main()
     //     std::map<key_t, int> map2;
 	// 	map2.insert(std::pair<key_t,int>(10, 100));
 	// 	map2.insert(std::pair<key_t,int>(11, 101));
-	// 	std::map<key_t, int>::iterator it;
+	// 	std::map<key_t, int>::const_iterator it;
 	// 	// std::cout << " bound ::" << it->first << std::endl;
     //     // map.erase(++it);
-    //     map.swap(map2);
-    //     for (it=map.begin(); it!=map.end(); ++it)
+    //     it = map.upper_bound(10);
+    //     // for (it=map.begin(); it!=map.end(); ++it)
     //         std::cout << it->first << " => " << it->second << '\n';
 	// }
 }

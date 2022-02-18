@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/18 10:51:14 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/18 13:02:51 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,10 +197,11 @@ namespace ft
 			return newNode;
 		}
 		
-		node_type*		insert(node_type *root, const value_type &val)
+		node_type*		insert(node_type *root, const value_type &val) //! loop infinie
 		{
+			std::cout << "size: "<<treeSize << std::endl;
 			key_type key = val.first;
-			key_type value = val.second;
+			mapped_type value = val.second;
 			if (root == nullptr){
 				root = newNode(val);
 				root->rootPtr = nullptr;

@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/18 11:35:12 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/18 12:55:04 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,17 @@ namespace ft
 				nodePtr = _tree.rootPtr;
 				if (nodePtr == nullptr) //! empty tree
 					throw std::underflow_error("map : "); //! change it [Occurs when the result is not zero, but is too small to be represented]
-				while (nodePtr->left != nullptr)
+				while (nodePtr->left != nullptr){
 					nodePtr = nodePtr->left; //* move to the smallest value in the tree
+				}
 			}
 			else
 				if (nodePtr->right != nullptr)
 				{
 					nodePtr = nodePtr->right; //* successor is the farthest left node of right subtree
-					while (nodePtr->left != nullptr)
+					while (nodePtr->left != nullptr){
 						nodePtr = nodePtr->left;
+					}
 				}
 				else
 				{

@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/18 11:33:22 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/18 12:17:12 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,12 +197,12 @@ namespace ft
 			return (ft::make_pair(it, true));
 		}
 
-		template <class InputIterator>
-  		void insert (InputIterator first, InputIterator last){
-			//   for ( ; first != last; first++){
-			// 	  _tree.rootPtr = _tree.insert();
-			//   }
-		}
+		// template <class InputIterator>
+  		// void insert (InputIterator first, InputIterator last){
+		// 	  for ( ; first != last; first++){
+		// 		  _tree.rootPtr = _tree.insert();
+		// 	  }
+		// }
 
 		/*
 		 TODO: find an element by key
@@ -242,6 +242,10 @@ namespace ft
 			return (begin);
 		}
 
+		const_iterator lower_bound (const key_type& k) const{
+			return (const_iterator(lower_bound(k)));
+		}
+
 		/*
 		 TODO:Returns an iterator
 		 pointing to the first element in the container 
@@ -261,11 +265,23 @@ namespace ft
 			}
 			return (begin);
 		}
+
+		const_iterator upper_bound (const key_type& k) const{
+			return const_iterator(upper_bound(k));
+		}
 		
 		size_type count (const key_type& k) const{ //? tha map cant have duplicates 
 			if (_tree.searchForKey(k, _tree.rootPtr))
 				return (1);
 			return(0);
+		}
+
+		pair<const_iterator,const_iterator> equal_range (const key_type& k) const{
+			return (ft::make_pair(lower_bound(k), upper_bound(k)));
+		}
+
+		pair<iterator,iterator>             equal_range (const key_type& k){
+			return (ft::make_pair(lower_bound(k), upper_bound(k)));
 		}
 
 		/*
