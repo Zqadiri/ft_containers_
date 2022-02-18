@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/17 20:25:47 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/18 11:33:22 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ namespace ft
 		typedef typename 	allocator_type::const_pointer   						const_pointer;
 		typedef typename 	allocator_type::size_type       						size_type;
 		typedef 			ft::map_iterator<value_type , key_compare> 				iterator;
-		typedef 			ft::const_map_iterator<value_type , key_compare> 		const_iterator;
+		typedef 			ft::map_iterator<value_type , key_compare>				const_iterator;
 		typedef				reverse_iterator<iterator> 								reverse_iterator;
 		typedef				ft::reverse_iterator<const_iterator> 					const_reverse_iterator;
 		typedef	typename	std::ptrdiff_t											difference_type;
@@ -235,7 +235,7 @@ namespace ft
 
 			while (begin != end)
 			{
-				if (_comp((*begin)._first, k) == false)
+				if (_comp((*begin).first, k) == false)
 					break;
 				begin++;
 			}
@@ -255,7 +255,7 @@ namespace ft
 
 			while (begin != end)
 			{
-				if (_comp(k, (*begin)._first))
+				if (_comp(k, (*begin).first))
 					break;
 				begin++;
 			}
@@ -275,7 +275,7 @@ namespace ft
 		*/
 
 		void erase (iterator position){
-			_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, position.nodePtr->data._first);
+			_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, position.nodePtr->data.first);
 		}
 
 		size_type erase (const key_type& k){
@@ -287,7 +287,7 @@ namespace ft
 
 		void erase (iterator first, iterator last){//? store keys in vector
 			for(; first != last; first++)
-				_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, first.nodePtr->data._first);
+				_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, first.nodePtr->data.first);
 		}
 
 		private:

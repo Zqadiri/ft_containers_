@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/17 12:20:56 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/18 10:51:14 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,9 +169,9 @@ namespace ft
 		{
 			if (root == nullptr) // * rearch the end of the tree
 				return false;
-			else if (root->data._first == key)
+			else if (root->data.first == key)
 				return true;
-			else if (key <= root->data._first)
+			else if (key <= root->data.first)
 				return searchForKey(key, root->left);
 			else
 				return searchForKey(key, root->right);
@@ -181,9 +181,9 @@ namespace ft
 		{
 			if (root == nullptr) // * rearch the end of the tree
 				return root;
-			else if (root->data._first == key)
+			else if (root->data.first == key)
 				return root;
-			else if (key <= root->data._first)
+			else if (key <= root->data.first)
 				return searchKey(key, root->left);
 			else
 				return searchKey(key, root->right);
@@ -192,15 +192,15 @@ namespace ft
 		node_type*		newNode(const value_type &val){
 			node_type *newNode = nodeAlloc.allocate(1);
 			newNode->right = newNode->left = nullptr;
-			nodeAlloc.construct(newNode, ft::make_pair(val._first, val._second));
+			nodeAlloc.construct(newNode, ft::make_pair(val.first, val.second));
 			treeSize++;
 			return newNode;
 		}
 		
 		node_type*		insert(node_type *root, const value_type &val)
 		{
-			key_type key = val._first;
-			key_type value = val._second;
+			key_type key = val.first;
+			key_type value = val.second;
 			if (root == nullptr){
 				root = newNode(val);
 				root->rootPtr = nullptr;
@@ -208,14 +208,14 @@ namespace ft
 			}
 			if (!searchForKey(key, root))
 			{
-				if (key < root->data._first)
+				if (key < root->data.first)
 				{
 					node_type *lchild = insert(root->left, val);
         			root->left  = lchild;
         			lchild->rootPtr = root;
 					root = balanceTree(root);
 				}
-				else if (key > root->data._first) //! switch to compare Compare(key, root->data._first)
+				else if (key > root->data.first) //! switch to compare Compare(key, root->data._first)
 				{
 					node_type *rchild = insert(root->right, val);
         			root->right  = rchild;
@@ -238,11 +238,11 @@ namespace ft
 		{
 			if (root == nullptr)
 				return nullptr;
-			else if (key < root->data._first)
+			else if (key < root->data.first)
 				root->left = deleteNode(root->left, key);
-			else if (key > root->data._first)
+			else if (key > root->data.first)
 				root->right = deleteNode(root->right, key);
-			else if (key == root->data._first)	//! delete the root cases (root wit no child, one child, x childs)
+			else if (key == root->data.first)	//! delete the root cases (root wit no child, one child, x childs)
 			{
 				if (root->left == nullptr)
 				{
@@ -258,11 +258,11 @@ namespace ft
 				}
 				else
 				{
-					std::cout << root->data._first << std::endl;
+					std::cout << root->data.first << std::endl;
 					node_type *ret = minValue(root->left);
 					nodeAlloc.destroy(root);
-					nodeAlloc.construct(root, ft::make_pair(ret->data._first, ret->data._second));
-					root->left = deleteNode(root->left, ret->data._first);
+					nodeAlloc.construct(root, ft::make_pair(ret->data.first, ret->data.second));
+					root->left = deleteNode(root->left, ret->data.first);
 				}
 			}
 			return root;		

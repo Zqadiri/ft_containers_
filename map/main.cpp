@@ -79,7 +79,7 @@ void printBT(const std::string& prefix,  ft::BstNode<ft::pair<key_t, int> >* nod
         std::cout << prefix;
         std::cout << (isLeft ? "├──" : "└──" );
         // print the value of the node
-        std::cout << node->data._second << std::endl;
+        std::cout << node->data.second << std::endl;
         // enter the next tree level - left and right branch
         printBT( prefix + (isLeft ? "│   " : "    "), node->left, true);
         printBT( prefix + (isLeft ? "│   " : "    "), node->right, false);
@@ -130,7 +130,7 @@ void buildTree(ft::BstNode<ft::pair<key_t, int> >* root, int scrWidth, int itemW
             cout << setw((curWidth>=itemWidth) ? curWidth:(itemWidth/(1+(i==0))));
             if (pItems[i])
             {
-                cout << pItems[i]->data._first << ":" << pItems[i]->data._second;
+                cout << pItems[i]->data.first << ":" << pItems[i]->data.second;
                 list[nextCnt] = pItems[i]->left;
                 list[nextCnt + 1] = pItems[i]->right;
                 if (list[nextCnt] || list[nextCnt + 1])
@@ -159,9 +159,9 @@ void print_parent( ft::avl_tree<ft::pair<int, int> >::node_type* root)
     if (root->right != NULL)
         print_parent(root->right);
     if (root->rootPtr != NULL)
-        std::cout << "parent of " << root->data._first << " is : " << root->rootPtr->data._first << std::endl;
+        std::cout << "parent of " << root->data.first << " is : " << root->rootPtr->data.first << std::endl;
     else
-        std::cout << "node " << root->data._first << " is root of the tree" << std::endl;
+        std::cout << "node " << root->data.first << " is root of the tree" << std::endl;
 }
 
 
@@ -193,7 +193,7 @@ int main()
 	puts("\n************************\n");
 
 	ft::avl_tree<ft::pair<key_t,int> > av;
-	ft::map<key_t, int>::iterator it, it_end;
+	ft::map<key_t, int>::const_iterator it, it_end;
 	ft::map<key_t, int> mp;
 
 	mp.insert(ft::pair<key_t, int>(10, 100));
@@ -211,7 +211,7 @@ int main()
     it_end = mp.end();
 
     for ( ; it != it_end; ++it){
-    	std::cout << it->_first << " => " << it->_second << '\n';
+    	std::cout << it->first << " => " << it->second << '\n';
     }
     // std::cout << it_end->_first << " => " << it_end->_second << '\n';
 	

@@ -139,23 +139,23 @@ namespace ft
 
 		//*A member variable is the variable you declare in a class definiton
 		
-		T1		_first;
-		T2		_second;
+		T1		first;
+		T2		second;
 
 			//?------- Member Functions ---------?//
 
-		pair():_first(), _second(){};
+		pair():first(), second(){};
 
 		template<class U, class V>
-		pair (const pair<U,V>& pr): _first(pr._first), _second(pr._second){
+		pair (const pair<U,V>& pr):first(pr.first), second(pr.second){
 		}
 
-		pair (const first_type& first, const second_type& second): _first(first), _second(second){
+		pair (const first_type& first, const second_type& second): first(first), second(second){
 		}
 
 		pair& operator= (const pair& pr){
-			this->_first = pr._first; 
-			this->_second = pr._second;
+			this->first = pr.first; 
+			this->second = pr.second;
 			return (*this);
 		}
 	};
@@ -215,8 +215,8 @@ namespace ft
 		}
 
 		BstNode(const T &pair, BstNode *rt, BstNode *lt, BstNode *p){
-			this->data._first = pair._first;
-			this->data._second = pair._second;
+			this->data.first = pair.first;
+			this->data.second = pair.second;
 			this->right = nullptr;
 			this->left = nullptr;
 			this->rootPtr = nullptr;
@@ -229,8 +229,8 @@ namespace ft
 		BstNode &operator=(const BstNode &no){
 			if (*this == no)
 				return(*this);
-			this->data._first = no.data._first;
-			this->data._second = no.data._second;
+			this->data.first = no.data.first;
+			this->data.second = no.data.second;
 			this->right = no.right;
 			this->left = no.left;
 			this->rootPtr = no.rootPtr;
