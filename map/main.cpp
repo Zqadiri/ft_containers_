@@ -172,10 +172,10 @@ int main()
     {
         ft::avl_tree<ft::pair<int, std::string> >::node_type* root = nullptr;
     	ft::avl_tree<ft::pair<int, std::string> > av;
-        // ft::pair<int, std::string> p(10, 100);
+        int myints[] = {12, 82, 37, 64, 15};
 
-        for (size_t i = 0; i < 10; ++i){
-          	root = av.insert(root , ft::make_pair(i, "i"));
+        for (size_t i = 0; i < 5; ++i){
+          	root = av.insert(root ,ft::make_pair(myints[i], "i"));
     	// buildTree(root, 90, 5);
             printBT("", root, false);
             print_parent(root);
@@ -186,22 +186,27 @@ int main()
 	puts("\n************************\n");
 
 	ft::avl_tree<ft::pair<key_t,int> > av;
-	ft::map<int, std::string>::iterator it, it_end;
 	ft::map< int, std::string> mp;
-    for (size_t i = 0; i < 10; ++i){
-        mp.insert(ft::make_pair(i, "i"));
+	ft::map<int, std::string>::iterator it, it_end;
+    int myints[] = {12, 82, 37, 64, 15};
+    for (size_t i = 0; i < 5; ++i){
+        mp.insert(ft::make_pair(myints[i], "i"));
     }
-    for (it=mp.end(); it!=mp.begin(); --it)
+    for (it=mp.begin(); it!=mp.end(); ++it)
         std::cout << it->first << " => " << it->second << '\n';
-    // {
-	// 	std::cout << "\n----- std -----" << std::endl;
-	// 	std::map< int, std::string> map;
-    //     for (size_t i = 0; i < 1e6; ++i){
-    //         map.insert(std::make_pair(i, "value"));
-    //     }
-	// 	std::map<int, std::string>::iterator it;
-    //     for (it=map.begin(); it!=map.end(); ++it)
-    //         std::cout << it->first << " => " << it->second << '\n';
-	// }
+    // puts("\n\n");
+    // for (it=mp.end(); it!=mp.begin(); --it)
+        // std::cout << it->first << " => " << it->second << '\n';
+    {
+		std::cout << "\n----- std -----" << std::endl;
+        int myints[] = {12, 82, 37, 64, 15};
+		std::map< int, std::string> map;
+        for (size_t i = 0; i < 5; ++i){
+            map.insert(std::make_pair(myints[i], "i"));
+        }
+		std::map<int, std::string>::iterator it;
+        for (it=map.begin(); it!=map.end(); ++it)
+            std::cout << it->first << " => " << it->second << '\n';
+	}
 }
 

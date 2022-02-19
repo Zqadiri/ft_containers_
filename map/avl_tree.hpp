@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/18 19:24:48 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/19 19:12:31 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ namespace ft
 			typedef					Compare					compare;
 
 		avl_tree(){
+			// puts("in");
 			rootPtr = nodeAlloc.allocate(1);
 			rootPtr->right = rootPtr->left = nullptr;
 			rootPtr = nullptr;
@@ -101,7 +102,7 @@ namespace ft
 
 		node_type*		leftLeftRotation(node_type *root) //? rotate the rootPtr too 
 		{
-			std::cout << "leftLeftRotation" << std::endl;
+			// std::cout << "leftLeftRotation" << std::endl;
 			node_type *new_parent = root->left;
 			root->left = new_parent->right;
 			new_parent->right = root;
@@ -113,19 +114,22 @@ namespace ft
 
 		node_type*		rightRightRotation(node_type *root)
 		{
-			std::cout << "RightRightRotation" << std::endl;
+			// std::cout << "RightRightRotation" << std::endl;
 			node_type *new_parent = root->right;
+			
 			root->right = new_parent->left;
 			new_parent->left = root;
-
+			if (root->right != nullptr)
+				root->right->rootPtr  = new_parent->left; //!
 			new_parent->rootPtr = root->rootPtr;
-			root->rootPtr = new_parent; 
+			root->rootPtr = new_parent;
+			
 			return new_parent;
 		}
 
 		node_type*		leftRightRotation(node_type *root)
 		{
-			std::cout << "leftRightRotation" << std::endl;
+			// std::cout << "leftRightRotation" << std::endl;
 			node_type *new_parent;
 
 			new_parent = root->left;
@@ -135,7 +139,7 @@ namespace ft
 		
 		node_type*		rightLeftRotation(node_type *root)
 		{
-			std::cout << "rightLeftRotation" << std::endl;
+			// std::cout << "rightLeftRotation" << std::endl;
 			node_type *new_parent;
 
 			new_parent = root->right;
@@ -259,7 +263,7 @@ namespace ft
 				}
 				else
 				{
-					std::cout << root->data.first << std::endl;
+					// std::cout << root->data.first << std::endl;
 					node_type *ret = minValue(root->left);
 					nodeAlloc.destroy(root);
 					nodeAlloc.construct(root, ft::make_pair(ret->data.first, ret->data.second));

@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/18 19:36:55 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/19 19:01:53 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ namespace ft
 
 		map_iterator( const tree &rhs, node_type *rootPtr): root(), nodePtr(), _tree(){
 			this->_tree = rhs;
-			root = nodePtr = rootPtr;
+			nodePtr = rootPtr;
+			root = _tree.rootPtr;
         }
 
 		map_iterator(const map_iterator &mi): root(), nodePtr(), _tree(){
@@ -168,7 +169,7 @@ namespace ft
 		map_iterator  operator-- (int){
 			map_iterator copy = *this;
 			operator--();
-			return (*this);
+			return (copy);
 		}
 
 		public: //!change it to private

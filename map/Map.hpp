@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/18 13:11:53 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/19 19:16:21 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ namespace ft
 			const allocator_type& alloc = allocator_type()){
 			_comp = comp;
 			_alloc = alloc;
-			this->insert(first, last);
+			// insert(first, last);
 		}	
 
 		map (const map& x){
@@ -82,8 +82,6 @@ namespace ft
 		//! ----------- Operators --------------!//
 
 		map& operator=(const map& x){
-			if (*this == x)
-				return (*this);
 			_alloc = x._alloc;
 			_comp = x._comp;
 			_tree = x._tree;
@@ -173,6 +171,13 @@ namespace ft
 			return (it);  
 		}
 		
+		const_iterator end() const{
+			node_type *temp = _tree.minValue(_tree.rootPtr);
+			const_iterator it(_tree, temp);
+			return (it);		
+		}
+		
+		
 		/*
 		 TODO: Insert a single element
 		 insert a single element in the avlTree
@@ -196,12 +201,12 @@ namespace ft
 			return (ft::make_pair(it, true));
 		}
 
-		// template <class InputIterator>
-  		// void insert (InputIterator first, InputIterator last){
-		// 	  for ( ; first != last; first++){
-		// 		  _tree.rootPtr = _tree.insert();
-		// 	  }
-		// }
+		template <class InputIterator>
+  		void insert (InputIterator first, InputIterator last){
+			  for ( ; first != last; first++){
+				  _tree.rootPtr = _tree.insert(first->val);
+			  }
+		}
 
 		/*
 		 TODO: find an element by key
@@ -301,7 +306,7 @@ namespace ft
 		}
 
 		void erase (iterator first, iterator last){//? store keys in vector
-			for(; first != last; first++)
+			for(; first != last; ++first)
 				_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, first.nodePtr->data.first);
 		}
 
