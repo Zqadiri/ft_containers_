@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/19 19:12:31 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/20 16:19:48 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ namespace ft
 		int		Height(node_type *root)
 		{
 			int height = 0;
-
 			if (root == nullptr)
 				return -1;
 			if (root != nullptr)
@@ -86,18 +85,13 @@ namespace ft
 				int rightHeight = Height(root->right);
 				int max_height = std::max(leftHeight, rightHeight);
 				height = max_height + 1;
-				// printf (" | %d {%d,%d}, (%d,%d)", height, root->data._first, root->data._second,
-				// leftHeight, rightHeight);
 			}
 			return height;
 		}
 
 		int difference(node_type *root)
 		{
-			int l_height = Height(root->left);
-			int r_height = Height(root->right);
-			int b_factor = l_height - r_height;
-			return b_factor;
+			return (Height(root->left) - Height(root->right));
 		}
 
 		node_type*		leftLeftRotation(node_type *root) //? rotate the rootPtr too 
@@ -203,9 +197,6 @@ namespace ft
 		
 		node_type*		insert(node_type *root, const value_type &val) //! loop infinie
 		{
-			// std::cout << "size: "<<treeSize << std::endl;
-			key_type key = val.first;
-			mapped_type value = val.second;
 			if (root == nullptr){
 				root = newNode(val);
 				root->rootPtr = nullptr;
@@ -218,15 +209,14 @@ namespace ft
 					node_type *lchild = insert(root->left, val);
         			root->left  = lchild;
         			lchild->rootPtr = root;
-					root = balanceTree(root);
 				}
-				else if (val.first > root->data.first) //! switch to compare Compare(key, root->data._first)
+				else if (val.first > root->data.first)//! switch to compare Compare(key, root->data._first)
 				{
 					node_type *rchild = insert(root->right, val);
         			root->right  = rchild;
         			rchild->rootPtr = root;
-					root = balanceTree(root);
 				}
+				root = balanceTree(root);
 			} //! search if tha key exists or not
 			return (root);
 		}

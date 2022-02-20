@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/19 19:16:21 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/20 15:39:53 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ namespace ft
 			//! ----------- Constructors & Destructor ------------ !//
 		
 		explicit map (const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()): _tree(){
+			const allocator_type& alloc = allocator_type()): _tree(), _comp(), _alloc(){
 			_comp = comp;
 			_alloc = alloc;
+			_tree.rootPtr = nullptr;
 		}		
 
 		template <class InputIterator>
@@ -72,7 +73,10 @@ namespace ft
 			const allocator_type& alloc = allocator_type()){
 			_comp = comp;
 			_alloc = alloc;
-			// insert(first, last);
+			_tree.rootPtr = nullptr;
+			for ( ; first != last ; first++){
+				this->insert(ft::make_pair(first->first, first->second));
+			}
 		}	
 
 		map (const map& x){
@@ -194,18 +198,20 @@ namespace ft
 			return (ft::make_pair(it, false));
 		}
 	
+
 		iterator insert (iterator position, const value_type& val){
 			(void)position;
 			_tree.rootPtr = _tree.insert(_tree.rootPtr, val);
 			iterator it(_tree, _tree.rootPtr);
-			return (ft::make_pair(it, true));
+			return (it);
 		}
 
 		template <class InputIterator>
   		void insert (InputIterator first, InputIterator last){
-			  for ( ; first != last; first++){
-				  _tree.rootPtr = _tree.insert(first->val);
-			  }
+			iterator it(_tree, _tree.rootPtr);
+			for ( ; first != last; first++){
+				this->insert(ft::make_pair(first->first, first->second));
+			}
 		}
 
 		/*

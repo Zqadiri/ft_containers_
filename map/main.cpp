@@ -174,39 +174,40 @@ int main()
     	ft::avl_tree<ft::pair<int, std::string> > av;
         int myints[] = {12, 82, 37, 64, 15};
 
-        for (size_t i = 0; i < 5; ++i){
-          	root = av.insert(root ,ft::make_pair(myints[i], "i"));
-    	// buildTree(root, 90, 5);
+        for (size_t i = 0; i < 15; ++i){
+          	root = av.insert(root ,ft::make_pair(i,  "i"));
+              std::cout << i << std::endl;
+            // puts(i);
+        }
             printBT("", root, false);
             print_parent(root);
-            puts("\n-------------\n");
-        }
 
     }
+
 	puts("\n************************\n");
 
-	ft::avl_tree<ft::pair<key_t,int> > av;
-	ft::map< int, std::string> mp;
-	ft::map<int, std::string>::iterator it, it_end;
-    int myints[] = {12, 82, 37, 64, 15};
-    for (size_t i = 0; i < 5; ++i){
-        mp.insert(ft::make_pair(myints[i], "i"));
-    }
-    for (it=mp.begin(); it!=mp.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
-    // puts("\n\n");
-    // for (it=mp.end(); it!=mp.begin(); --it)
-        // std::cout << it->first << " => " << it->second << '\n';
-    {
-		std::cout << "\n----- std -----" << std::endl;
-        int myints[] = {12, 82, 37, 64, 15};
-		std::map< int, std::string> map;
-        for (size_t i = 0; i < 5; ++i){
-            map.insert(std::make_pair(myints[i], "i"));
-        }
-		std::map<int, std::string>::iterator it;
-        for (it=map.begin(); it!=map.end(); ++it)
-            std::cout << it->first << " => " << it->second << '\n';
-	}
+	// ft::avl_tree<ft::pair<key_t,int> > av;
+	// ft::map< int, std::string> mp;
+	// ft::map<int, std::string>::iterator it, it_end;
+    // int myints[] = {12, 82, 37, 64, 15};
+    // for (size_t i = 0; i < 10; ++i){
+    //     mp.insert(ft::make_pair(myints[i], "i"));
+    // }
+    // for (it=mp.begin(); it!=mp.end(); ++it)
+    //     std::cout << it->first << " => " << it->second << '\n';
+    // // puts("\n\n");
+    // // for (it=mp.end(); it!=mp.begin(); --it)
+    //     // std::cout << it->first << " => " << it->second << '\n';
+    // {
+	// 	std::cout << "\n----- std -----" << std::endl;
+    //     int myints[] = {12, 82, 37, 64, 15};
+	// 	std::map< int, std::string> map;
+    //     for (size_t i = 0; i < 1e6; ++i){
+    //         map.insert(std::make_pair(i, "i"));
+    //     }
+	// 	std::map<int, std::string>::iterator it;
+    //     for (it=map.begin(); it!=map.end(); ++it)
+    //         std::cout << it->first << " => " << it->second << '\n';
+	// }
 }
 

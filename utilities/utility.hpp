@@ -191,6 +191,7 @@ namespace ft
 	bool operator>= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){   
 		return !(lhs<rhs);
 	}
+
 	template <typename T1, typename T2>
 	pair<T1,T2> make_pair (T1 x, T2 y){
 		return (pair<T1,T2>(x,y));		  
@@ -206,6 +207,8 @@ namespace ft
 			BstNode *right;
 			BstNode *left;
 			BstNode *rootPtr; //? store the address of the root
+			int		rightH;
+			int		leftH;
 
 		BstNode(): data(){};
 		~BstNode(){};
@@ -220,6 +223,8 @@ namespace ft
 			this->right = nullptr;
 			this->left = nullptr;
 			this->rootPtr = nullptr;
+			this->leftHeight = 0;
+			this->rightHeight = 0;
 		}
 
 		BstNode(const BstNode &no){
