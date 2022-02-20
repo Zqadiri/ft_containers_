@@ -159,7 +159,7 @@ void print_parent( ft::avl_tree<ft::pair<int, std::string> >::node_type* root)
     if (root->right != NULL)
         print_parent(root->right);
     if (root->rootPtr != NULL)
-        std::cout << "parent of " << root->data.first << " is : " << root->rootPtr->data.first << std::endl;
+        std::cout << "parent of " << root->data.first << " is : " << root->rootPtr->data.first << root->Height << std::endl;
     else
         std::cout << "node " << root->data.first << " is root of the tree" << std::endl;
 }

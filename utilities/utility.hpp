@@ -207,8 +207,7 @@ namespace ft
 			BstNode *right;
 			BstNode *left;
 			BstNode *rootPtr; //? store the address of the root
-			int		rightH;
-			int		leftH;
+			int		Height;
 
 		BstNode(): data(){};
 		~BstNode(){};
