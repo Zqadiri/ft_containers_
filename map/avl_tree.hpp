@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/20 17:04:39 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/21 21:04:52 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ namespace ft
 			// puts("in");
 			rootPtr = nodeAlloc.allocate(1);
 			rootPtr->right = rootPtr->left = nullptr;
-			rootPtr = nullptr;
+			parent = rootPtr = nullptr;
 			treeSize = 0;
-			// rootPtr->Height = 0;
+			// rootPtr->Height = 1;
 		};
 
 		avl_tree(const avl_tree &tree){
@@ -75,28 +75,14 @@ namespace ft
 			return (rootPtr == nullptr);
 		}
 
-		int calheight(node_type *p){
-			if(p->left && p->right){
-			if (p->left->Height < p->right->Height)
-				return p->right->Height + 1;
-			else return  p->left->Height + 1;
-			}
-			else if(p->left && p->right == NULL){
-			   return p->left->Height + 1;
-			}
-			else if(p->left ==NULL && p->right){
-			   return p->right->Height + 1;
-			}
-			return 0;
-		}
-
 		node_type*		leftLeftRotation(node_type *root) //? rotate the rootPtr too 
 		{
-			std::cout << "leftLeftRotation" << std::endl;
+			// std::cout << "leftLeftRotation" << std::endl;
 			node_type *new_parent = root->left;
 			root->left = new_parent->right;
 			new_parent->right = root;
-
+			if (root->left != nullptr)
+				root->left->rootPtr  = new_parent->right;
 			new_parent->rootPtr = root->rootPtr;
 			root->rootPtr = new_parent; 
 			return new_parent;
@@ -104,22 +90,21 @@ namespace ft
 
 		node_type*		rightRightRotation(node_type *root)
 		{
-			std::cout << "RightRightRotation" << std::endl;
+			// std::cout << "RightRightRotation" << std::endl;
 			node_type *new_parent = root->right;
 			
 			root->right = new_parent->left;
 			new_parent->left = root;
 			if (root->right != nullptr)
-				root->right->rootPtr  = new_parent->left; //!
+				root->right->rootPtr  = new_parent->left;
 			new_parent->rootPtr = root->rootPtr;
 			root->rootPtr = new_parent;
-			
 			return new_parent;
 		}
 
 		node_type*		leftRightRotation(node_type *root)
 		{
-			std::cout << "leftRightRotation" << std::endl;
+			// std::cout << "leftRightRotation" << std::endl;
 			node_type *new_parent;
 
 			new_parent = root->left;
@@ -129,7 +114,7 @@ namespace ft
 		
 		node_type*		rightLeftRotation(node_type *root)
 		{
-			std::cout << "rightLeftRotation" << std::endl;
+			// std::cout << "rightLeftRotation" << std::endl;
 			node_type *new_parent;
 
 			new_parent = root->right;
@@ -137,16 +122,28 @@ namespace ft
 			return rightRightRotation(root);
 		}
 
+		int				nodeHeight(node_type* root)
+		{
+			if (root == NULL)
+			  return 0;
+			return root->Height;
+		}
+
 		node_type*		balanceTree(node_type *root)
 		{
-			// int	BalanceFactor = Height(root->left) - Height(root->right);
 			//? IF tree is LEFT heavy
+			if (root->rootPtr == nullptr)
+				root->Height = 1;
+			else
+				root->Height = 1 + max(nodeHeight(root->left), nodeHeight(root->right));
+			// std::cout << root->data.first << " height is " << root->Height << " diff is ";
+			// std::cout << difference(root) << std::endl;
 			if (difference(root) > 1)
 			{
-				if (difference(root->left) > 0)
-					root = leftLeftRotation(root); // ? ll rotation if the tree is left heavy && the ST is left heavy 
-				else
+				if (difference(root->right) < 0)
 					root = leftRightRotation(root); //? lr Rottion if the tree is left heavy && ST is right heavy				
+				else
+					root = leftLeftRotation(root); // ? ll rotation if the tree is left heavy && the ST is left heavy 
 			}
 			//? ELSE IF tree is RIGHT heavy
 			else if (difference(root) < -1)
@@ -183,25 +180,12 @@ namespace ft
 				return searchKey(key, root->right);
 		}
 
-		// int difference(node_type *root)
-		// {
-		// 	return (Height(root->left) - Height(root->right));
-		// 	// return (root->leftH - root->rightH);
-		// }
-
 		int difference(node_type *root)
 		{
-			if(root->left && root->right){
-				return root->left->Height - root->right->Height; 
-			}
-			else if(root->left && root->right == NULL){
-				return root->left->Height; 
-			}
-			else if(root->left== NULL && root->right ){
-				return -root->right->Height;
-			}
+			if (root == NULL)
+		    	return 0;
+			return nodeHeight(root->left) - nodeHeight(root->right);
 		}
-
 		
 		node_type*		newNode(const value_type &val){
 			node_type *newNode = nodeAlloc.allocate(1);
@@ -211,31 +195,32 @@ namespace ft
 			newNode->Height = 0;
 			return newNode;
 		}
-		
-		node_type*		insert(node_type *root, const value_type &val) //! loop infinie
+
+		node_type*		insert(node_type *root, const value_type &val)
 		{
+			int balanceFactor;
 			if (root == nullptr){
 				root = newNode(val);
 				root->rootPtr = nullptr;
-				return (root);
+				root->Height = 0;
+				return(root);
 			}
-			if (!searchForKey(val.first, root))
+			else if (!searchForKey(val.first, root))
 			{
-				if (val.first < root->data.first)
+				if (comp(val.first, root->data.first))
 				{
 					node_type *lchild = insert(root->left, val);
 					root->left  = lchild;
 					lchild->rootPtr = root;
 				}
-				else if (val.first > root->data.first)//! switch to compare Compare(key, root->data._first)
+				else
 				{
 					node_type *rchild = insert(root->right, val);
 					root->right  = rchild;
 					rchild->rootPtr = root;
 				}
-				root->Height = calheight(root);
 				root = balanceTree(root);
-			} //! search if tha key exists or not
+			}
 			return (root);
 		}
 
@@ -271,7 +256,6 @@ namespace ft
 				}
 				else
 				{
-					// std::cout << root->data.first << std::endl;
 					node_type *ret = minValue(root->left);
 					nodeAlloc.destroy(root);
 					nodeAlloc.construct(root, ft::make_pair(ret->data.first, ret->data.second));
@@ -285,6 +269,7 @@ namespace ft
 			typename pairAllocator::template rebind<node_type>::other nodeAlloc;
 			compare		comp;
 			node_type	*rootPtr;
+			node_type	*parent;
 			pair_alloc	pairAlloc;
 			size_t		treeSize;
 	};

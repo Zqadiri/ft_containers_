@@ -159,9 +159,9 @@ void print_parent( ft::avl_tree<ft::pair<int, std::string> >::node_type* root)
     if (root->right != NULL)
         print_parent(root->right);
     if (root->rootPtr != NULL)
-        std::cout << "parent of " << root->data.first << " is : " << root->rootPtr->data.first << root->Height << std::endl;
+        std::cout << "parent of " << root->data.first << " is : " << root->rootPtr->data.first << "  "<< root->Height  << std::endl;
     else
-        std::cout << "node " << root->data.first << " is root of the tree" << std::endl;
+        std::cout << "node " << root->data.first << " is root of the tree" << ":" << root->Height << std::endl;
 }
 
 
@@ -173,15 +173,10 @@ int main()
         ft::avl_tree<ft::pair<int, std::string> >::node_type* root = nullptr;
     	ft::avl_tree<ft::pair<int, std::string> > av;
         int myints[] = {12, 82, 37, 64, 15};
-
-        for (size_t i = 0; i < 15; ++i){
+        for (size_t i = 0; i <= 5; ++i)
           	root = av.insert(root ,ft::make_pair(i,  "i"));
-              std::cout << i << std::endl;
-            // puts(i);
-        }
-            printBT("", root, false);
-            print_parent(root);
-
+        printBT("", root, false);
+        print_parent(root);
     }
 
 	puts("\n************************\n");
@@ -189,16 +184,15 @@ int main()
 	// ft::avl_tree<ft::pair<key_t,int> > av;
 	// ft::map< int, std::string> mp;
 	// ft::map<int, std::string>::iterator it, it_end;
-    // int myints[] = {12, 82, 37, 64, 15};
     // for (size_t i = 0; i < 10; ++i){
-    //     mp.insert(ft::make_pair(myints[i], "i"));
+    //     mp.insert(ft::make_pair(i, "i"));
     // }
     // for (it=mp.begin(); it!=mp.end(); ++it)
     //     std::cout << it->first << " => " << it->second << '\n';
-    // // puts("\n\n");
-    // // for (it=mp.end(); it!=mp.begin(); --it)
-    //     // std::cout << it->first << " => " << it->second << '\n';
-    // {
+    // puts("\n\n");
+    // for (it=mp.end(); it!=mp.begin(); --it)
+    //     std::cout << it->first << " => " << it->second << '\n';
+    // // {
 	// 	std::cout << "\n----- std -----" << std::endl;
     //     int myints[] = {12, 82, 37, 64, 15};
 	// 	std::map< int, std::string> map;

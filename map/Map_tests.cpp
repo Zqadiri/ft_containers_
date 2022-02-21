@@ -5,7 +5,7 @@
 // you should include your path to this files
 
 #include "../map/Map.hpp"       // your map path.
-#include "../vector/Vector.hpp" // your Vector path.
+// #include "../vector/Vector.hpp" // your Vector path.
 #include "../utilities/utility.hpp"  // path to ft::pair.
 // #include "map-test-helper.hpp"
 #include <map>
@@ -125,7 +125,6 @@ void iterator_tests(void)
 
     ft::map<int, char> my_m;
     ft::map<int, char>::iterator my_it, my_it1, tmp;
-
     for (int i = 0; i < 10; ++i)
     {
         my_m.insert(ft::make_pair(i, static_cast<char>(i + 97)));
@@ -333,7 +332,6 @@ void const_iterator_tests(void)
             m.insert(std::make_pair(13, "HELLO"));
             my_m.insert(ft::make_pair(13, "HELLO"));
         }
-
         ft::map<int, std::string>::iterator my_it = my_m.begin();
         std::map<int, std::string>::iterator it = m.begin();
         /*---------------------------------------------- */
@@ -433,47 +431,47 @@ void reverse_iterator_tests(void)
 
 void testConstructors()
 {
-    // std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " empty constructor "
-    //           << "] --------------------]\t\t\033[0m";
-    // {
-    //     /*---------------------------------- time limit test --------------------------------------------*/
-    //     {
-    //         time_t start, end, diff;
+    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " empty constructor "
+              << "] --------------------]\t\t\033[0m";
+    {
+        /*---------------------------------- time limit test --------------------------------------------*/
+        {
+            time_t start, end, diff;
 
-    //         start = get_time();
-    //         std::map<int, std::string> m;
-    //         for (int i = 0; i < 1e4; ++i)
-    //             m.insert(std::make_pair(i, "fill constructor test"));
-    //         end = get_time();
-    //         diff = end - start;
-    //         diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+            start = get_time();
+            std::map<int, std::string> m;
+            for (int i = 0; i < 1e6; ++i)
+                m.insert(std::make_pair(i, "fill constructor test"));
+            end = get_time();
+            diff = end - start;
+            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
 
-    //         ualarm(diff * 1e3, 0);
+            ualarm(diff * 1e3, 0);
 
-    //         ft::map<int, std::string> my_m;
-    //         for (int i = 0; i < 1e4; ++i)
-    //             my_m.insert(ft::make_pair(i, "fill constructor test"));
-    //         ualarm(0, 0);
-    //     }
-    //     /*----------------------------------------------------------------------------------------------*/
-    //     /*--------------- fill tow vectors with a 10 strings ------*/
-    //     ft::map<int, std::string> my_m;
-    //     std::map<int, std::string> m;
-    //     for (int i = 0; i < 10; i++)
-    //     {
-    //         m.insert(std::make_pair(i, "Hello"));
-    //         my_m.insert(ft::make_pair(i, "Hello"));
-    //     }
-    //     /*---------------------------------------------------------*/
-    //     /*--------------- declare tow strings to store the results ------*/
-    //     std::string res, my_res;
-    //     /*---------------------------------------------------------*/
-    //     for (std::map<int, std::string>::iterator it = m.begin(); it != m.end(); ++it) // fill res from std::map
-    //         res += it->second;
-    //     for (ft::map<int, std::string>::iterator it = my_m.begin(); it != my_m.end(); ++it) // fill res from std::map
-    //         my_res += it->second;
-    //     EQUAL(res == my_res);
-    // }
+            ft::map<int, std::string> my_m;
+            for (int i = 0; i < 1e6; ++i)
+                my_m.insert(ft::make_pair(i, "fill constructor test"));
+            ualarm(0, 0);
+        }
+        /*----------------------------------------------------------------------------------------------*/
+        /*--------------- fill tow vectors with a 10 strings ------*/
+        ft::map<int, std::string> my_m;
+        std::map<int, std::string> m;
+        for (int i = 0; i < 10; i++)
+        {
+            m.insert(std::make_pair(i, "Hello"));
+            my_m.insert(ft::make_pair(i, "Hello"));
+        }
+        /*---------------------------------------------------------*/
+        /*--------------- declare tow strings to store the results ------*/
+        std::string res, my_res;
+        /*---------------------------------------------------------*/
+        for (std::map<int, std::string>::iterator it = m.begin(); it != m.end(); ++it) // fill res from std::map
+            res += it->second;
+        for (ft::map<int, std::string>::iterator it = my_m.begin(); it != my_m.end(); ++it) // fill res from std::map
+            my_res += it->second;
+        EQUAL(res == my_res);
+    }
     // std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " range constructor "
     //           << "] --------------------]\t\t\033[0m";
     // {
