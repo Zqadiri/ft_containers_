@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/21 19:35:25 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/22 16:37:21 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ namespace ft
 			const allocator_type& alloc = allocator_type()): _tree(), _comp(), _alloc(){
 			_comp = comp;
 			_alloc = alloc;
-			_tree.rootPtr = nullptr;
 		}		
 
 		template <class InputIterator>
@@ -91,10 +90,23 @@ namespace ft
 			_tree = x._tree;
 			return (*this);
 		}
-		
+
+		/*
+		 TODO: Access element
+		 If k matches the key of an element the function returns a reference to its mapped value.
+		 If k does not match the key of any element the function inserts a new element .
+		 (*((this->insert(make_pair(k,mapped_type()))).first)).second
+		*/
+	
 		mapped_type& operator[] (const key_type& k){
-			return ((*((this->insert(ft::make_pair(k,mapped_type()))).first)).second);	
+			if (_tree.searchForKey(k, _tree.rootPtr)){
+				node_type *find = _tree.searchKey(k, _tree.rootPtr);
+				return find->data.second;
+			}
+			_tree.rootPtr = _tree.insert(_tree.rootPtr, ft::make_pair(k, mapped_type()));
+			return _tree.rootPtr->data.second;
 		}
+
 
 		// !------- Member functions ----------!//
 
@@ -149,7 +161,7 @@ namespace ft
 
 		const_iterator begin() const{
 			node_type *temp = _tree.beginTree(_tree.rootPtr);
-			const_iterator it(_tree, temp);
+			const_iterator it(_tree, _tree.beginTree(_tree.rootPtr));
 			return (it);		
 		}
 
@@ -172,13 +184,13 @@ namespace ft
 	  	iterator end(){
 			node_type *temp = _tree.minValue(_tree.rootPtr);
 			iterator it(_tree, temp);
-			return (it);  
+			return (++it);  
 		}
 		
 		const_iterator end() const{
 			node_type *temp = _tree.minValue(_tree.rootPtr);
 			const_iterator it(_tree, temp);
-			return (it);		
+			return (++it);		
 		}
 		
 		

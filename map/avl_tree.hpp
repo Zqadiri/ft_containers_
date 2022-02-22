@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/22 09:46:02 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/22 15:35:06 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ namespace ft
 			// puts("in");
 			rootPtr = nodeAlloc.allocate(1);
 			rootPtr->right = rootPtr->left = nullptr;
-			parent = rootPtr = nullptr;
+			rootPtr = nullptr;
 			treeSize = 0;
 			// rootPtr->Height = 1;
 		};
@@ -64,7 +64,8 @@ namespace ft
 
 		~avl_tree(){};
 
-		node_type*		beginTree( node_type *root){
+		node_type*		beginTree( node_type *root) const 
+		{
 			node_type *current = root;
 			while (current->left != nullptr)
 				current = current->left;
@@ -187,43 +188,47 @@ namespace ft
 			return newNode;
 		}
 
-		int height(node_type *N) {
-		  if (N == NULL)
-		    return 0;
-		  return N->Height;
+		int height(node_type *node) {
+			if (node == nullptr)
+			  return 0;
+			return node->Height;
 		}
 
-		int getBalanceFactor(node_type *N) {
-		  if (N == NULL)
-		    return 0;
-		  return height(N->left) - height(N->right);
+		int getBalanceFactor(node_type *node) {
+			if (node == nullptr)
+			  return 0;
+			return height(node->left) - height(node->right);
 		}
 
-		node_type*		insert(node_type *node, const value_type &val)
+		node_type* insert(node_type *node, const value_type &val)
 		{
-			if (node == NULL)
+			// std::cout << val.first << ":" << val.second << std::endl;
+			if (node == nullptr)
 			{
 				node = newNode(val);
 				node->rootPtr = nullptr;
   				return (node);
 			}
-  			if (val.first < node->data.first)
+			else if (!searchForKey(val.first, node))
 			{
-				node_type *lchild = insert(node->left, val);
-				node->left  = lchild;
-				lchild->rootPtr = node;
-			}
-  			else if (val.first > node->data.first)
-			{
-				node_type *rchild = insert(node->right, val);
-				node->right  = rchild;
-				rchild->rootPtr = node;
+  				if (val.first < node->data.first) //! change to compare
+				{
+					node_type *lchild = insert(node->left, val);
+					node->left = lchild;
+					lchild->rootPtr = node;
+				}
+  				else if (val.first > node->data.first)
+				{
+					node_type *rchild = insert(node->right, val);
+					node->right  = rchild;
+					rchild->rootPtr = node;
+				}
 			}
 			node = balanceTree(node, val);
   			return node;
 		}
 
-		node_type*		minValue(node_type *root)
+		node_type*		minValue(node_type *root) const 
 		{
 			node_type *current = root;
 			while (current->right != nullptr)
@@ -268,7 +273,6 @@ namespace ft
 			typename pairAllocator::template rebind<node_type>::other nodeAlloc;
 			compare		comp;
 			node_type	*rootPtr;
-			node_type	*parent;
 			pair_alloc	pairAlloc;
 			size_t		treeSize;
 	};
