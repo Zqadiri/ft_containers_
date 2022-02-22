@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/22 16:37:21 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/22 19:13:29 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ namespace ft
 				node_type *find = _tree.searchKey(k, _tree.rootPtr);
 				return find->data.second;
 			}
-			_tree.rootPtr = _tree.insert(_tree.rootPtr, ft::make_pair(k, mapped_type()));
-			return _tree.rootPtr->data.second;
+			pair<iterator,bool> ret = this->insert(ft::make_pair(k, mapped_type()));
+			return ret.first->second;
 		}
 
 
@@ -254,7 +254,7 @@ namespace ft
 		{
 			iterator begin = this->begin();
 			iterator end = this->end();
-
+			int i = 0;
 			while (begin != end)
 			{
 				if (_comp((*begin).first, k) == false)
@@ -263,6 +263,13 @@ namespace ft
 			}
 			return (begin);
 		}
+
+		// iterator lower_bound (const key_type& k){
+		// 		nood_t *temp = _my_tree.lower_bound(_my_tree.node->get_the_smallest_one(_my_tree.node), k);
+		// 		if (!temp)
+		// 			return (end());
+		// 		return iterator(&_my_tree, temp);
+		// }
 
 		const_iterator lower_bound (const key_type& k) const{
 			return (const_iterator(lower_bound(k)));
@@ -279,7 +286,7 @@ namespace ft
 			iterator begin = this->begin();
 			iterator end = this->end();
 
-			while (begin != end)
+			while(begin != end)
 			{
 				if (_comp(k, (*begin).first))
 					break;

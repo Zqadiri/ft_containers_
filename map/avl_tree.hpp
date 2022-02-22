@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/22 15:35:06 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/22 18:49:36 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,10 @@ namespace ft
 			typedef					Compare					compare;
 
 		avl_tree(){
-			// puts("in");
 			rootPtr = nodeAlloc.allocate(1);
 			rootPtr->right = rootPtr->left = nullptr;
 			rootPtr = nullptr;
 			treeSize = 0;
-			// rootPtr->Height = 1;
 		};
 
 		avl_tree(const avl_tree &tree){
@@ -134,9 +132,9 @@ namespace ft
   			int balanceFactor = getBalanceFactor(node);
   			if (balanceFactor > 1)
 			{
-  				if (val.first < node->left->data.first)
+  				if (comp(val.first, node->left->data.first))
   					return leftLeftCase(node);
-  				else if (val.first > node->left->data.first)
+  				else if (!comp(val.first, node->left->data.first))
 				{
   				  	node->left = rightRightCase(node->left);
   					return leftLeftCase(node);
@@ -144,9 +142,9 @@ namespace ft
   			}
   			if (balanceFactor < -1)
 			{
-  				if (val.first > node->right->data.first)
+  				if (!comp(val.first, node->right->data.first))
   					return rightRightCase(node);
-  				else if (val.first < node->right->data.first)
+  				else if (comp(val.first, node->right->data.first))
 				{
   					node->right = leftLeftCase(node->right);
   					return rightRightCase(node);
@@ -161,10 +159,10 @@ namespace ft
 				return false;
 			else if (root->data.first == key)
 				return true;
-			else if (key <= root->data.first)
-				return searchForKey(key, root->left);
-			else
+			else if (!comp(key, root->data.first))
 				return searchForKey(key, root->right);
+			else
+				return searchForKey(key, root->left);
 		}
 
 		node_type*		searchKey(const key_type key, node_type* root)
@@ -173,10 +171,10 @@ namespace ft
 				return root;
 			else if (root->data.first == key)
 				return root;
-			else if (key <= root->data.first)
-				return searchKey(key, root->left);
-			else
+			else if (!comp(key, root->data.first))
 				return searchKey(key, root->right);
+			else
+				return searchKey(key, root->left);
 		}
 		
 		node_type*		newNode(const value_type &val){
@@ -211,13 +209,13 @@ namespace ft
 			}
 			else if (!searchForKey(val.first, node))
 			{
-  				if (val.first < node->data.first) //! change to compare
+  				if (comp(val.first, node->data.first)) //! change to compare
 				{
 					node_type *lchild = insert(node->left, val);
 					node->left = lchild;
 					lchild->rootPtr = node;
 				}
-  				else if (val.first > node->data.first)
+  				else if (!comp(val.first, node->data.first))
 				{
 					node_type *rchild = insert(node->right, val);
 					node->right  = rchild;
@@ -228,7 +226,7 @@ namespace ft
   			return node;
 		}
 
-		node_type*		minValue(node_type *root) const 
+		node_type*		minValue(node_type *root) const
 		{
 			node_type *current = root;
 			while (current->right != nullptr)
