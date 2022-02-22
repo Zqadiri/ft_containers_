@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/21 21:04:52 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/22 09:46:02 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,26 +75,31 @@ namespace ft
 			return (rootPtr == nullptr);
 		}
 
-		node_type*		leftLeftRotation(node_type *root) //? rotate the rootPtr too 
+		node_type*		leftLeftCase(node_type *root) //? rotate the rootPtr too 
 		{
-			// std::cout << "leftLeftRotation" << std::endl;
+			// std::cout << "leftLeftCase" << std::endl;
 			node_type *new_parent = root->left;
-			root->left = new_parent->right;
+			node_type *tmp = new_parent->right;
 			new_parent->right = root;
+			root->left = tmp;
+			root->Height = max(height(root->left), height(root->right)) + 1;
+			new_parent->Height = max(height(new_parent->left), height(new_parent->right)) + 1;
 			if (root->left != nullptr)
 				root->left->rootPtr  = new_parent->right;
 			new_parent->rootPtr = root->rootPtr;
-			root->rootPtr = new_parent; 
+			root->rootPtr = new_parent;
 			return new_parent;
 		}
 
-		node_type*		rightRightRotation(node_type *root)
+		node_type*		rightRightCase(node_type *root)
 		{
-			// std::cout << "RightRightRotation" << std::endl;
+			// std::cout << "RightRightCase" << std::endl;
 			node_type *new_parent = root->right;
-			
-			root->right = new_parent->left;
+			node_type *tmp = new_parent->left;
 			new_parent->left = root;
+			root->right = tmp;
+			root->Height = max(height(root->left), height(root->right)) + 1;
+			new_parent->Height = max(height(new_parent->left), height(new_parent->right)) + 1;
 			if (root->right != nullptr)
 				root->right->rootPtr  = new_parent->left;
 			new_parent->rootPtr = root->rootPtr;
@@ -102,58 +107,51 @@ namespace ft
 			return new_parent;
 		}
 
-		node_type*		leftRightRotation(node_type *root)
+		node_type*		leftRightCase(node_type *root)
 		{
-			// std::cout << "leftRightRotation" << std::endl;
+			// std::cout << "leftRightCase" << std::endl;
 			node_type *new_parent;
 
 			new_parent = root->left;
-			root->left = rightRightRotation(new_parent);
-			return leftLeftRotation(root);
+			root->left = rightRightCase(new_parent);
+			return leftLeftCase(root);
 		}
 		
-		node_type*		rightLeftRotation(node_type *root)
+		node_type*		rightLeftCase(node_type *root)
 		{
-			// std::cout << "rightLeftRotation" << std::endl;
+			// std::cout << "rightLeftCase" << std::endl;
 			node_type *new_parent;
 
 			new_parent = root->right;
-			root->right = leftLeftRotation(new_parent);
-			return rightRightRotation(root);
+			root->right = leftLeftCase(new_parent);
+			return rightRightCase(root);
 		}
 
-		int				nodeHeight(node_type* root)
+		node_type*		balanceTree(node_type *node, const value_type &val)
 		{
-			if (root == NULL)
-			  return 0;
-			return root->Height;
-		}
-
-		node_type*		balanceTree(node_type *root)
-		{
-			//? IF tree is LEFT heavy
-			if (root->rootPtr == nullptr)
-				root->Height = 1;
-			else
-				root->Height = 1 + max(nodeHeight(root->left), nodeHeight(root->right));
-			// std::cout << root->data.first << " height is " << root->Height << " diff is ";
-			// std::cout << difference(root) << std::endl;
-			if (difference(root) > 1)
+  			node->Height = 1 + max(height(node->left), height(node->right));
+  			int balanceFactor = getBalanceFactor(node);
+  			if (balanceFactor > 1)
 			{
-				if (difference(root->right) < 0)
-					root = leftRightRotation(root); //? lr Rottion if the tree is left heavy && ST is right heavy				
-				else
-					root = leftLeftRotation(root); // ? ll rotation if the tree is left heavy && the ST is left heavy 
-			}
-			//? ELSE IF tree is RIGHT heavy
-			else if (difference(root) < -1)
+  				if (val.first < node->left->data.first)
+  					return leftLeftCase(node);
+  				else if (val.first > node->left->data.first)
+				{
+  				  	node->left = rightRightCase(node->left);
+  					return leftLeftCase(node);
+  				}
+  			}
+  			if (balanceFactor < -1)
 			{
-				if (difference(root->right) > 0)
-					root = rightLeftRotation(root); //? Right Left
-				else 
-					root = rightRightRotation(root); //? Right Right
-			}
-			return root;
+  				if (val.first > node->right->data.first)
+  					return rightRightCase(node);
+  				else if (val.first < node->right->data.first)
+				{
+  					node->right = leftLeftCase(node->right);
+  					return rightRightCase(node);
+  				}
+  			}
+			return node;
 		}
 		
 		bool			searchForKey(const key_type key, node_type* root)
@@ -179,49 +177,50 @@ namespace ft
 			else
 				return searchKey(key, root->right);
 		}
-
-		int difference(node_type *root)
-		{
-			if (root == NULL)
-		    	return 0;
-			return nodeHeight(root->left) - nodeHeight(root->right);
-		}
 		
 		node_type*		newNode(const value_type &val){
 			node_type *newNode = nodeAlloc.allocate(1);
 			newNode->right = newNode->left = nullptr;
 			nodeAlloc.construct(newNode, ft::make_pair(val.first, val.second));
 			treeSize++;
-			newNode->Height = 0;
+			newNode->Height = 1;
 			return newNode;
 		}
 
-		node_type*		insert(node_type *root, const value_type &val)
+		int height(node_type *N) {
+		  if (N == NULL)
+		    return 0;
+		  return N->Height;
+		}
+
+		int getBalanceFactor(node_type *N) {
+		  if (N == NULL)
+		    return 0;
+		  return height(N->left) - height(N->right);
+		}
+
+		node_type*		insert(node_type *node, const value_type &val)
 		{
-			int balanceFactor;
-			if (root == nullptr){
-				root = newNode(val);
-				root->rootPtr = nullptr;
-				root->Height = 0;
-				return(root);
-			}
-			else if (!searchForKey(val.first, root))
+			if (node == NULL)
 			{
-				if (comp(val.first, root->data.first))
-				{
-					node_type *lchild = insert(root->left, val);
-					root->left  = lchild;
-					lchild->rootPtr = root;
-				}
-				else
-				{
-					node_type *rchild = insert(root->right, val);
-					root->right  = rchild;
-					rchild->rootPtr = root;
-				}
-				root = balanceTree(root);
+				node = newNode(val);
+				node->rootPtr = nullptr;
+  				return (node);
 			}
-			return (root);
+  			if (val.first < node->data.first)
+			{
+				node_type *lchild = insert(node->left, val);
+				node->left  = lchild;
+				lchild->rootPtr = node;
+			}
+  			else if (val.first > node->data.first)
+			{
+				node_type *rchild = insert(node->right, val);
+				node->right  = rchild;
+				rchild->rootPtr = node;
+			}
+			node = balanceTree(node, val);
+  			return node;
 		}
 
 		node_type*		minValue(node_type *root)
