@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/23 11:53:48 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/23 18:01:36 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,9 @@ namespace ft
 		map& operator=(const map& x){
 			_alloc = x._alloc;
 			_comp = x._comp;
-			_tree = x._tree;
+			this->clear();
+			if (x.size())
+				this->insert(x.begin(), x.end());
 			return (*this);
 		}
 
@@ -115,12 +117,15 @@ namespace ft
 		 destroy all the map element 
 		*/
 
-		void clear(){
-			iterator start = this->begin();
-			iterator end = this->end();
-			for (; start != end; start++)
-				_tree.nodeAlloc.destroy(start.nodePtr);
-			_tree.treeSize = 0;
+		void clear(){ //! deallocate
+			if (this->size() != 0)
+			{
+				iterator start = this->begin();
+				iterator end = this->end();
+				for (; end != start; end--)
+					_tree.nodeAlloc.destroy(start.nodePtr);
+				_tree.treeSize = 0;
+			}
 		}
 
 		void swap (map& x){
@@ -220,9 +225,9 @@ namespace ft
 
 		template <class InputIterator>
   		void insert (InputIterator first, InputIterator last){
-			iterator it(_tree, _tree.rootPtr);
 			for ( ; first != last; first++){
 				this->insert(ft::make_pair(first->first, first->second));
+				// std::cout << "size:" << _tree.treeSize << std::endl;
 			}
 		}
 
@@ -250,8 +255,7 @@ namespace ft
 		 @Two keys are considered equivalent if key_comp returns false reflexively
 		*/
 
-		iterator lower_bound (const key_type& k)
-		{
+		iterator lower_bound (const key_type& k){
 			node_type *temp = _tree.lowerBound(_tree.beginTree(_tree.rootPtr), k);
 			return (iterator(_tree, temp));
 		}
@@ -269,11 +273,14 @@ namespace ft
 
 		iterator upper_bound (const key_type& k)
 		{
-
+			node_type *temp = _tree.upperBound(_tree.beginTree(_tree.rootPtr), k);
+			return (iterator(_tree, temp));
 		}
 
-		const_iterator upper_bound (const key_type& k) const{
-
+		const_iterator upper_bound (const key_type& k) const
+		{
+			node_type *temp = _tree.upperBound(_tree.beginTree(_tree.rootPtr), k);
+			return (const_iterator(_tree, temp));
 		}
 		
 		size_type count (const key_type& k) const{ //? tha map cant have duplicates 
@@ -286,7 +293,7 @@ namespace ft
 			return (ft::make_pair(lower_bound(k), upper_bound(k)));
 		}
 
-		pair<iterator,iterator>             equal_range (const key_type& k){
+		pair<iterator,iterator>	equal_range (const key_type& k){
 			return (ft::make_pair(lower_bound(k), upper_bound(k)));
 		}
 

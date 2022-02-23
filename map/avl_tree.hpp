@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/23 11:41:41 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/23 17:06:11 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ namespace ft
 			return node;
 		}
 
-		node_type* lowerBound (node_type *first, key_type& key) const{
+		node_type* lowerBound (node_type *first,const key_type& key) const{
 			while (first != NULL){
 				if (comp(first->data.first, key))
 					first = this->nextNode(first);
@@ -133,6 +133,17 @@ namespace ft
 			return first;
 		}
 
+		node_type* upperBound (node_type *first,const key_type& key) const{
+			while (first != NULL){
+				// std::cout << first->data.first << std::endl;
+				if (!comp(key, first->data.first))
+					first = this->nextNode(first);
+				else					
+					break ;
+			}
+			// std::cout<< "-------" << first->data.first << "----" << std::endl;
+			return first;
+		}
 
 		node_type*		beginTree( node_type *root) const 
 		{
@@ -180,7 +191,6 @@ namespace ft
 
 		node_type*		leftRightCase(node_type *root)
 		{
-			// std::cout << "leftRightCase" << std::endl;
 			node_type *new_parent;
 
 			new_parent = root->left;
@@ -225,7 +235,7 @@ namespace ft
 			return node;
 		}
 		
-		bool			searchForKey(const key_type key, node_type* root)
+		bool			searchForKey(const key_type key, node_type* root)const
 		{
 			if (root == nullptr) // * rearch the end of the tree
 				return false;
@@ -237,7 +247,7 @@ namespace ft
 				return searchForKey(key, root->left);
 		}
 
-		node_type*		searchKey(const key_type key, node_type* root)const 
+		node_type*		searchKey(const key_type key, node_type* root) const
 		{
 			if (root == nullptr) // * rearch the end of the tree
 				return root;
@@ -253,8 +263,8 @@ namespace ft
 			node_type *newNode = nodeAlloc.allocate(1);
 			newNode->right = newNode->left = nullptr;
 			nodeAlloc.construct(newNode, ft::make_pair(val.first, val.second));
-			treeSize++;
 			newNode->Height = 1;
+			treeSize++;
 			return newNode;
 		}
 
@@ -272,7 +282,6 @@ namespace ft
 
 		node_type* insert(node_type *node, const value_type &val)
 		{
-			// std::cout << val.first << ":" << val.second << std::endl;
 			if (node == nullptr)
 			{
 				node = newNode(val);
