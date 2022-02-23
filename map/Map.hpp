@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/22 19:13:29 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/23 11:53:48 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,27 +252,13 @@ namespace ft
 
 		iterator lower_bound (const key_type& k)
 		{
-			iterator begin = this->begin();
-			iterator end = this->end();
-			int i = 0;
-			while (begin != end)
-			{
-				if (_comp((*begin).first, k) == false)
-					break;
-				begin++;
-			}
-			return (begin);
+			node_type *temp = _tree.lowerBound(_tree.beginTree(_tree.rootPtr), k);
+			return (iterator(_tree, temp));
 		}
 
-		// iterator lower_bound (const key_type& k){
-		// 		nood_t *temp = _my_tree.lower_bound(_my_tree.node->get_the_smallest_one(_my_tree.node), k);
-		// 		if (!temp)
-		// 			return (end());
-		// 		return iterator(&_my_tree, temp);
-		// }
-
 		const_iterator lower_bound (const key_type& k) const{
-			return (const_iterator(lower_bound(k)));
+			node_type *temp = _tree.lowerBound(_tree.beginTree(_tree.rootPtr), k);
+			return (const_iterator(_tree, temp));
 		}
 
 		/*
@@ -283,20 +269,11 @@ namespace ft
 
 		iterator upper_bound (const key_type& k)
 		{
-			iterator begin = this->begin();
-			iterator end = this->end();
 
-			while(begin != end)
-			{
-				if (_comp(k, (*begin).first))
-					break;
-				begin++;
-			}
-			return (begin);
 		}
 
 		const_iterator upper_bound (const key_type& k) const{
-			return const_iterator(upper_bound(k));
+
 		}
 		
 		size_type count (const key_type& k) const{ //? tha map cant have duplicates 

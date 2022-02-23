@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/22 18:49:36 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/23 11:41:41 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,78 @@ namespace ft
 		}
 
 		~avl_tree(){};
+
+		node_type *nextNode(node_type *node)const 
+		{
+			node_type *temp;
+			if (node == nullptr)
+			{
+				node = rootPtr;
+				if (node == nullptr) //! empty tree
+					throw std::underflow_error("map : "); //! change it [Occurs when the result is not zero, but is too small to be represented]
+				while (node->left != nullptr){
+					node = node->left; //* move to the smallest value in the tree
+				}
+			}
+			else if (node->right != nullptr)
+			{
+				node = node->right; //* successor is the farthest left node of right subtree
+				while (node->left != nullptr){
+					node = node->left;
+				}
+			}
+			else
+			{
+				temp = node->rootPtr;
+				while (temp != nullptr && node == temp->right){
+					node = temp;
+					temp = temp->rootPtr;
+				}
+				node = temp;
+			}
+			return node;
+		}
+		
+		node_type *preNode(node_type *node)const
+		{
+			node_type *temp;
+			if (node == nullptr)
+			{
+				node = rootPtr;
+				if (node == nullptr)
+					throw std::underflow_error("map : ");
+				while (node->right != nullptr)
+					node = node->right;
+			}
+			else if (node->left != nullptr)
+			{
+				node = node->left;
+				while (node->right != nullptr)
+					node = node->right;
+			}
+			else
+			{
+				temp = node->rootPtr;
+				while (temp != nullptr && node == temp->left)
+				{
+					node = temp;
+					temp = temp->rootPtr;
+				}
+				node = temp;
+			}
+			return node;
+		}
+
+		node_type* lowerBound (node_type *first, key_type& key) const{
+			while (first != NULL){
+				if (comp(first->data.first, key))
+					first = this->nextNode(first);
+				else
+					break ;
+			}
+			return first;
+		}
+
 
 		node_type*		beginTree( node_type *root) const 
 		{
@@ -165,7 +237,7 @@ namespace ft
 				return searchForKey(key, root->left);
 		}
 
-		node_type*		searchKey(const key_type key, node_type* root)
+		node_type*		searchKey(const key_type key, node_type* root)const 
 		{
 			if (root == nullptr) // * rearch the end of the tree
 				return root;

@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/19 19:01:53 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/23 11:31:06 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,34 +98,8 @@ namespace ft
 		 move forward to next larger value
 		*/
 
-		map_iterator& operator++() //! infinity loop
-		{
-			node_type *temp;
-			if (nodePtr == nullptr)
-			{
-				nodePtr = _tree.rootPtr;
-				if (nodePtr == nullptr) //! empty tree
-					throw std::underflow_error("map : "); //! change it [Occurs when the result is not zero, but is too small to be represented]
-				while (nodePtr->left != nullptr){
-					nodePtr = nodePtr->left; //* move to the smallest value in the tree
-				}
-			}
-			else if (nodePtr->right != nullptr)
-			{
-				nodePtr = nodePtr->right; //* successor is the farthest left node of right subtree
-				while (nodePtr->left != nullptr){
-					nodePtr = nodePtr->left;
-				}
-			}
-			else
-			{
-				temp = nodePtr->rootPtr;
-				while (temp != nullptr && nodePtr == temp->right){
-					nodePtr = temp;
-					temp = temp->rootPtr;
-				}
-				nodePtr = temp;
-			}
+		map_iterator& operator++(){
+			nodePtr = _tree.nextNode(nodePtr);
 			return *this;
 		}
 		
@@ -136,33 +110,8 @@ namespace ft
 		}
 	
 		// * decrement. move backward to largest value < current value
-		map_iterator&  operator-- () //! loop infinie
-		{
-			node_type *temp;
-			if (nodePtr == nullptr)
-			{
-				nodePtr = _tree.rootPtr;
-				if (nodePtr == nullptr)
-					throw std::underflow_error("map : ");
-				while (nodePtr->right != nullptr)
-					nodePtr = nodePtr->right;
-			}
-			else if (nodePtr->left != nullptr)
-			{
-				nodePtr = nodePtr->left;
-				while (nodePtr->right != nullptr)
-					nodePtr = nodePtr->right;
-			}
-			else
-			{
-				temp = nodePtr->rootPtr;
-				while (temp != nullptr && nodePtr == temp->left)
-				{
-					nodePtr = temp;
-					temp = temp->rootPtr;
-				}
-				nodePtr = temp;
-			}
+		map_iterator&  operator-- (){
+			nodePtr = _tree.preNode(nodePtr);
 			return (*this);
 		}
 	

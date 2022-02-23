@@ -58,7 +58,7 @@ bool Search(BstNode* root,int data)
 	}
 }
 
-void printBT(const std::string& prefix,  ft::avl_tree<ft::pair<std::string, std::string> >::node_type* node, bool isLeft)
+void printBT(const std::string& prefix,  ft::avl_tree<ft::pair<int, std::string> >::node_type* node, bool isLeft)
 {
 	if( node != nullptr )
 	{
@@ -73,7 +73,7 @@ void printBT(const std::string& prefix,  ft::avl_tree<ft::pair<std::string, std:
 }
 
 
-void print_parent( ft::avl_tree<ft::pair<std::string, std::string> >::node_type* root)
+void print_parent( ft::avl_tree<ft::pair<int , std::string> >::node_type* root)
 {
 	if (root->left != NULL)
 		print_parent(root->left);
@@ -91,50 +91,51 @@ void print_parent( ft::avl_tree<ft::pair<std::string, std::string> >::node_type*
 int main()
 {
 	{
-		ft::avl_tree<ft::pair<std::string, std::string > >::node_type* root = nullptr;
-		ft::avl_tree<ft::pair<std::string , std::string > > av;
-		// for (size_t i = 0; i < 0; ++i)
-		// {
-		//   	root = av.insert(root ,ft::make_pair(i,  "i"));
-		// 	std::cout << i << std::endl;
-		// }
-		root = av.insert(root ,ft::make_pair("γ",  "i"));
-		root = av.insert(root ,ft::make_pair("β",  "i"));
-		root = av.insert(root ,ft::make_pair("α",  "i"));
-
+		ft::avl_tree<ft::pair<int , std::string > >::node_type* root = nullptr;
+		ft::avl_tree<ft::pair<int , std::string > > av;
+		for (size_t i = 0; i < 10; ++i)
+		{
+		  	root = av.insert(root ,ft::make_pair(i,  "i"));
+			std::cout << i << std::endl;
+		}
+		// root = av.insert(root ,ft::make_pair("γ",  "i"));
+		// root = av.insert(root ,ft::make_pair("β",  "i"));
+		// root = av.insert(root ,ft::make_pair("α",  "i"));
+		ft::avl_tree<ft::pair<int , std::string > >::node_type *ret = av.lowerBound(av.beginTree(root), 7);
+		std:cout << "lower_bound" <<  ret->data.first << std::endl;
 		printBT("", root, false);
 		print_parent(root);
 	}
 
-	{
-		ft::map<std::string , std::string,  std::greater<std::string> > ft_m1;
-		std::map<std::string, std::string, std::greater<std::string> > m2;
-		ft::map<std::string , std::string,  std::greater<std::string> >::iterator it;
-		std::map<std::string, std::string, std::greater<std::string> >::iterator it2;
+	// {
+	// 	ft::map<std::string , std::string,  std::greater<std::string> > ft_m1;
+	// 	std::map<std::string, std::string, std::greater<std::string> > m2;
+	// 	ft::map<std::string , std::string,  std::greater<std::string> >::iterator it;
+	// 	std::map<std::string, std::string, std::greater<std::string> >::iterator it2;
 
 
-		m2["γ"] = "gamma";
-		m2["β"] = "beta";
-		m2["α"] = "alpha";
-		m2["γ"] = "gamma";
+	// 	m2["γ"] = "gamma";
+	// 	m2["β"] = "beta";
+	// 	m2["α"] = "alpha";
+	// 	m2["γ"] = "gamma";
 
-		for (it2 = m2.begin(); it2 != m2.end(); it2++)
-			std::cout << it2->first << " => " << it2->second << '\n';
+	// 	for (it2 = m2.begin(); it2 != m2.end(); it2++)
+	// 		std::cout << it2->first << " => " << it2->second << '\n';
 
-		ft_m1["γ"] = "gamma";
-		ft_m1["β"] = "beta";
-		ft_m1["α"] = "alpha";
-		ft_m1["γ"] = "gamma";
+	// 	ft_m1["γ"] = "gamma";
+	// 	ft_m1["β"] = "beta";
+	// 	ft_m1["α"] = "alpha";
+	// 	ft_m1["γ"] = "gamma";
 	
-		for (it = ft_m1.begin(); it != ft_m1.end(); ++it){
-			std::cout << it->first << " --> " << it->second << '\n';
-		}
+	// 	for (it = ft_m1.begin(); it != ft_m1.end(); ++it){
+	// 		std::cout << it->first << " --> " << it->second << '\n';
+	// 	}
 
 		// const ft::pair<std::string, std::string> &ft_ref = *(ft_m1.begin());
 		// const ft::map<std::string, std::string, std::greater<std::string> >::iterator ft_iter = std::next(ft_m1.begin());
 
 		// for (it = ft_m2.begin(); it != ft_m2.end(); ++it)
 		//	 std::cout << it->first << " => " << it->second << '\n';
-	}
+	// }
 }
 
