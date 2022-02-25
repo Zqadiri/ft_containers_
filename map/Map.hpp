@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/25 16:25:26 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/25 20:26:26 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,14 @@ namespace ft
 		map& operator=(const map& x){
 			_alloc = x._alloc;
 			_comp = x._comp;
-			if (_tree.treeSize){
+			if (x.size() == 0){
 				this->clear();
+				this->_tree.rootPtr = nullptr;
+				return *this;
 			}
-			else 
-				_tree.rootPtr = nullptr;
+			if (x._tree.treeSize < _tree.treeSize)
+				this->_tree.rootPtr = nullptr;
+			this->clear();
 			if (x._tree.treeSize)
 				this->insert(x.begin(), x.end());
 			return (*this);
@@ -165,6 +168,8 @@ namespace ft
 		}
 
 		iterator begin(){
+			if (!_tree.rootPtr)
+				return (iterator());
 			node_type *temp = _tree.beginTree(_tree.rootPtr);
 			iterator it(_tree, temp);
 			return (it);	
@@ -193,6 +198,8 @@ namespace ft
 		}
 
 	  	iterator end(){
+			if (!_tree.rootPtr)
+				return (iterator());
 			node_type *temp = _tree.minValue(_tree.rootPtr);
 			iterator it(_tree, temp);
 			return (++it);  
@@ -233,7 +240,7 @@ namespace ft
   		void insert (InputIterator first, InputIterator last){
 			for ( ; first != last; first++){
 				this->insert(ft::make_pair(first->first, first->second));
-				// std::cout << "size:" << _tree.treeSize << std::endl;
+				_tree.treeSize++;
 			}
 		}
 
@@ -320,12 +327,14 @@ namespace ft
 
 		void erase (iterator position){
 			_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, position.nodePtr->data.first);
+			_tree.treeSize--;
 		}
 
 		size_type erase (const key_type& k){
 			if (!_tree.searchForKey(k, _tree.rootPtr))
 				return 0;
 			_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, k);
+			_tree.treeSize--;
 			return 1;
 		}
 
@@ -333,8 +342,10 @@ namespace ft
 			ft::Vector<key_type> keyToRemove;
 			for(; first != last; ++first)
 				keyToRemove.push_back(first.nodePtr->data.first);
-			for (std::vector<int>::size_type i = 0; i < keyToRemove.size(); i++)
+			for (std::vector<int>::size_type i = 0; i < keyToRemove.size(); i++){
 				_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, keyToRemove.at(i));
+				_tree.treeSize--;
+			}
 		}
 
 		private:

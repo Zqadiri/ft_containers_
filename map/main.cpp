@@ -90,58 +90,36 @@ void print_parent( ft::avl_tree<ft::pair<int , std::string> >::node_type* root)
 
 int main()
 {
-	{
+	/*{
 		ft::avl_tree<ft::pair<int , std::string > >::node_type* root = nullptr;
 		ft::avl_tree<ft::pair<int , std::string > > av;
 		int arr[] = {20, 10, 100, 15, 60, 90, 65, 200, 150};
-		// for (size_t i = 0; i < 9; ++i)
-		//   	root = av.insert(root ,ft::make_pair(arr[i],  "i"));
-		for (size_t i = 0; i < 10; ++i){
+		for (size_t i = 0; i < 9; ++i)
+		  	root = av.insert(root ,ft::make_pair(arr[i],  "i"));
+		for (size_t i = 0; i < 1; ++i){
 		  	  	root = av.insert(root ,ft::make_pair(i,  "i"));
-
+				printBT("", root, false);
+				print_parent(root);
 		}
-		printBT("", root, false);
-		print_parent(root);
-		for (size_t i = 0; i < 10 ; ++i){
-			root = av.deleteNode(root , i);
+		for (size_t i = 0; i < 1 ; ++i){
+			root = av.deleteNode(root , 0);
 			printBT("", root, false);
-			print_parent(root);
 		}
-	}
+	}*/
 
-		// ft::map<int , std::string > m1;
-		// ft::map<int, std::string > m2;
-		// ft::map<int, std::string >::iterator it;
+		ft::map<int , std::string > m1;
+		ft::map<int, std::string > m2;
+		ft::map<int, std::string >::iterator it;
             
-		// for (size_t i = 0; i < 10; ++i){
-
-		//   	m1.insert(ft::make_pair<int, std::string>(i,  "i"));
-		// }
-		// m1.erase(m1.begin(), m1.end());
-
-
-		// for (it = m1.begin(); it != m1.end(); ++it)
-		// 	std::cout << it->first << " => " << it->second << '\n';
-		// {
-		// 	puts("\n\n");
-		// 	std::map<int , std::string > m1;
-		// 	std::map<int, std::string > m2;
-		// 	std::map<int, std::string >::iterator it;
-
-
-		// 	m1['a'] = "an element";
-		// 	m1['b'] = "another element";
-		// 	// m1['c'] = m1['b'];
-		// 	// m1['a'] = "test";
-
-		// 	for (it = m1.begin(); it != m1.end(); ++it)
-		// 		std::cout << it->first << " => " << it->second << '\n';
-		// }
-		// for (size_t i = 0; i < 5; ++i)
-		//   	m2.insert(ft::make_pair<int, std::string>(i,  "i"));
-		// std::cout << "rhs = " << m1.size() << " lhs = " << m2.size() << std::endl;
-		// m1 = m2;
-		// std::cout << "rhs = " << m1.size() << " lhs = " << m2.size() << std::endl;
+		for (size_t i = 0; i < 20; ++i)
+		  	m1.insert(ft::make_pair<int, std::string>(i,  "i"));
+		for (size_t i = 0; i < 10; ++i)
+		  	m2.insert(ft::make_pair<int, std::string>(i,  "i"));
+		std::cout << "rhs = " << m1.size() << " lhs = " << m2.size() << std::endl;
+		m1 = m2;
+		std::cout << "rhs = " << m1.size() << " lhs = " << m2.size() << std::endl;
+		for (it = m1.begin(); it != m1.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
 
 }
 
