@@ -1,5 +1,5 @@
-// Binary Search Tree - Implemenation in C++
 // Simple program to create a BST of integers and search an element in it 
+// Binary Search Tree - Implemenation in C++
 #include <iostream>
 #include "./avl_tree.hpp"
 #include "../utilities/utility.hpp"
@@ -90,49 +90,58 @@ void print_parent( ft::avl_tree<ft::pair<int , std::string> >::node_type* root)
 
 int main()
 {
-	// {
-	// 	ft::avl_tree<ft::pair<int , std::string > >::node_type* root = nullptr;
-	// 	ft::avl_tree<ft::pair<int , std::string > > av;
-	// 	int arr[] = {20, 10, 100, 15, 60, 90, 65, 200, 150};
-	// 	for (size_t i = 0; i < 9; ++i)
-	// 	  	root = av.insert(root ,ft::make_pair(arr[i],  "i"));
-	// 	// root = av.insert(root ,ft::make_pair("γ",  "i"));
-	// 	// root = av.insert(root ,ft::make_pair("β",  "i"));
-	// 	// root = av.insert(root ,ft::make_pair("α",  "i"));
-	// 	ft::avl_tree<ft::pair<int , std::string > >::node_type *ret = av.upperBound(av.minValue(root), 150);
-	// 	std:cout << "lower_bound " <<  ret->data.first << std::endl;
-	// 	printBT("", root, false);
-	// 	print_parent(root);
-	// }
+	{
+		ft::avl_tree<ft::pair<int , std::string > >::node_type* root = nullptr;
+		ft::avl_tree<ft::pair<int , std::string > > av;
+		int arr[] = {20, 10, 100, 15, 60, 90, 65, 200, 150};
+		// for (size_t i = 0; i < 9; ++i)
+		//   	root = av.insert(root ,ft::make_pair(arr[i],  "i"));
+		for (size_t i = 0; i < 10; ++i){
+		  	  	root = av.insert(root ,ft::make_pair(i,  "i"));
 
-		ft::map<int , std::string > m1;
-		ft::map<int, std::string > m2;
-		ft::map<int, std::string >::iterator it;
+		}
+		printBT("", root, false);
+		print_parent(root);
+		for (size_t i = 0; i < 10 ; ++i){
+			root = av.deleteNode(root , i);
+			printBT("", root, false);
+			print_parent(root);
+		}
+	}
 
-		for (size_t i = 0; i < 10; ++i)
-		  	m1.insert(ft::make_pair<int, std::string>(i,  "i"));
-		for (size_t i = 0; i < 5; ++i)
-		  	m2.insert(ft::make_pair<int, std::string>(i,  "i"));
-		std::cout << "lhs = " << m1.size() << " rhs = " << m2.size() << std::endl;
-		m1 = m2;
-		std::cout << "lhs = " << m1.size() << " rhs = " << m2.size() << std::endl;
-		for (it = m1.begin(); it != m1.end(); ++it)
-			 std::cout << it->first << " => " << it->second << '\n';
+		// ft::map<int , std::string > m1;
+		// ft::map<int, std::string > m2;
+		// ft::map<int, std::string >::iterator it;
+            
+		// for (size_t i = 0; i < 10; ++i){
 
-	// 	ft_m1["γ"] = "gamma";
-	// 	ft_m1["β"] = "beta";
-	// 	ft_m1["α"] = "alpha";
-	// 	ft_m1["γ"] = "gamma";
-	
-	// 	for (it = ft_m1.begin(); it != ft_m1.end(); ++it){
-	// 		std::cout << it->first << " --> " << it->second << '\n';
-	// 	}
+		//   	m1.insert(ft::make_pair<int, std::string>(i,  "i"));
+		// }
+		// m1.erase(m1.begin(), m1.end());
 
-		// const ft::pair<std::string, std::string> &ft_ref = *(ft_m1.begin());
-		// const ft::map<std::string, std::string, std::greater<std::string> >::iterator ft_iter = std::next(ft_m1.begin());
 
-		// for (it = ft_m2.begin(); it != ft_m2.end(); ++it)
-		//	 std::cout << it->first << " => " << it->second << '\n';
-	// }
+		// for (it = m1.begin(); it != m1.end(); ++it)
+		// 	std::cout << it->first << " => " << it->second << '\n';
+		// {
+		// 	puts("\n\n");
+		// 	std::map<int , std::string > m1;
+		// 	std::map<int, std::string > m2;
+		// 	std::map<int, std::string >::iterator it;
+
+
+		// 	m1['a'] = "an element";
+		// 	m1['b'] = "another element";
+		// 	// m1['c'] = m1['b'];
+		// 	// m1['a'] = "test";
+
+		// 	for (it = m1.begin(); it != m1.end(); ++it)
+		// 		std::cout << it->first << " => " << it->second << '\n';
+		// }
+		// for (size_t i = 0; i < 5; ++i)
+		//   	m2.insert(ft::make_pair<int, std::string>(i,  "i"));
+		// std::cout << "rhs = " << m1.size() << " lhs = " << m2.size() << std::endl;
+		// m1 = m2;
+		// std::cout << "rhs = " << m1.size() << " lhs = " << m2.size() << std::endl;
+
 }
 

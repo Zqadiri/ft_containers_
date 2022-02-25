@@ -217,6 +217,7 @@ namespace ft
 		}
 
 		BstNode(const T &pair, BstNode *rt, BstNode *lt, BstNode *p){
+
 			this->data.first = pair.first;
 			this->data.second = pair.second;
 			this->right = nullptr;

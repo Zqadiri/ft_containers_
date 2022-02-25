@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/23 18:01:36 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/25 16:25:26 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../utilities/bidirectional_iterator.hpp"
 #include "../utilities/utility.hpp"
 #include "avl_tree.hpp"
+#include "../vector/vector.hpp"
 #include <map>
 #include <functional>
 #include <algorithm>
@@ -23,10 +24,10 @@
 
 namespace ft
 {
-	template < class Key,                                      		 // map::key_type
+	template < class Key,											 // map::key_type
 		   class T,													 // map::mapped_type
-		   class Compare = std::less<Key>,                           // map::key_compare
-		   class Alloc = std::allocator<ft::pair<const Key,T> >      // map::allocator_type
+		   class Compare = std::less<Key>,							 // map::key_compare
+		   class Alloc = std::allocator<ft::pair<const Key,T> >		 // map::allocator_type
 		   > class map
 	{
 	public:
@@ -45,18 +46,18 @@ namespace ft
 					return comp(x.first, y.first);
   				}
 		} value_compare;
-		typedef				Alloc													allocator_type;
-		typedef	typename 	allocator_type::reference								reference;
-		typedef typename 	allocator_type::const_reference 						const_reference;
-		typedef typename 	allocator_type::pointer         						pointer;
-		typedef typename 	allocator_type::const_pointer   						const_pointer;
-		typedef typename 	allocator_type::size_type       						size_type;
-		typedef 			ft::map_iterator<value_type , key_compare> 				iterator;
-		typedef 			ft::map_iterator<value_type , key_compare>				const_iterator;
-		typedef				reverse_iterator<iterator> 								reverse_iterator;
-		typedef				ft::reverse_iterator<const_iterator> 					const_reverse_iterator;
-		typedef	typename	std::ptrdiff_t											difference_type;
-		typedef typename 	ft::avl_tree<value_type, key_compare>::node_type		node_type;
+		typedef				Alloc														allocator_type;
+		typedef	typename 	allocator_type::reference									reference;
+		typedef typename 	allocator_type::const_reference 							const_reference;
+		typedef typename 	allocator_type::pointer										pointer;
+		typedef typename 	allocator_type::const_pointer   							const_pointer;
+		typedef typename 	allocator_type::size_type									size_type;
+		typedef 			ft::map_iterator<value_type , key_compare>					iterator;
+		typedef 			ft::map_iterator<value_type , key_compare>					const_iterator;
+		typedef				reverse_iterator<iterator> 									reverse_iterator;
+		typedef				ft::reverse_iterator<const_iterator> 						const_reverse_iterator;
+		typedef	typename	std::ptrdiff_t												difference_type;
+		typedef typename 	ft::avl_tree<value_type, key_compare>::node_type			node_type;
 		
 			//! ----------- Constructors & Destructor ------------ !//
 		
@@ -87,8 +88,12 @@ namespace ft
 		map& operator=(const map& x){
 			_alloc = x._alloc;
 			_comp = x._comp;
-			this->clear();
-			if (x.size())
+			if (_tree.treeSize){
+				this->clear();
+			}
+			else 
+				_tree.rootPtr = nullptr;
+			if (x._tree.treeSize)
 				this->insert(x.begin(), x.end());
 			return (*this);
 		}
@@ -105,8 +110,9 @@ namespace ft
 				node_type *find = _tree.searchKey(k, _tree.rootPtr);
 				return find->data.second;
 			}
-			pair<iterator,bool> ret = this->insert(ft::make_pair(k, mapped_type()));
-			return ret.first->second;
+			this->insert(ft::make_pair(k, mapped_type()));
+			node_type *ret = _tree.searchKey(k, _tree.rootPtr);
+ 			return ret->data.second;
 		}
 
 
@@ -118,7 +124,7 @@ namespace ft
 		*/
 
 		void clear(){ //! deallocate
-			if (this->size() != 0)
+			if (!this->empty())
 			{
 				iterator start = this->begin();
 				iterator end = this->end();
@@ -289,11 +295,20 @@ namespace ft
 			return(0);
 		}
 
-		pair<const_iterator,const_iterator> equal_range (const key_type& k) const{
-			return (ft::make_pair(lower_bound(k), upper_bound(k)));
+
+		pair<iterator,iterator> equal_range (const key_type& k)
+		{
+			if (_tree.searchForKey(k, _tree.rootPtr))
+			{
+				iterator it(_tree, _tree.searchKey(k, _tree.rootPtr)), ite = this->end();
+				if (it == --ite)
+					return ft::make_pair(it, iterator());
+				return ft::make_pair(it, ++it);
+			}
+			return ft::make_pair(upper_bound(k), upper_bound(k));
 		}
 
-		pair<iterator,iterator>	equal_range (const key_type& k){
+		pair<const_iterator,const_iterator> equal_range (const key_type& k) const{
 			return (ft::make_pair(lower_bound(k), upper_bound(k)));
 		}
 
@@ -308,15 +323,18 @@ namespace ft
 		}
 
 		size_type erase (const key_type& k){
-		if (!_tree.searchForKey(k, _tree.rootPtr))
-			return 0;
-		_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, k);
-		return 1;
+			if (!_tree.searchForKey(k, _tree.rootPtr))
+				return 0;
+			_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, k);
+			return 1;
 		}
 
-		void erase (iterator first, iterator last){//? store keys in vector
+		void erase (iterator first, iterator last){
+			ft::Vector<key_type> keyToRemove;
 			for(; first != last; ++first)
-				_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, first.nodePtr->data.first);
+				keyToRemove.push_back(first.nodePtr->data.first);
+			for (std::vector<int>::size_type i = 0; i < keyToRemove.size(); i++)
+				_tree.rootPtr = _tree.deleteNode(_tree.rootPtr, keyToRemove.at(i));
 		}
 
 		private:

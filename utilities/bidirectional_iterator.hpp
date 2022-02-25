@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/23 11:31:06 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/24 15:06:03 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 namespace ft
 {
-	template <typename T, typename Compare >
+	template <typename T, typename Compare = std::less<typename T::first_type> >
 	class map_iterator : public ft::iterator<std::bidirectional_iterator_tag, T> // ? compare
 	{
 		typedef 			map_iterator< const T, Compare >	const_iterator;
@@ -50,7 +50,7 @@ namespace ft
 			*this = mi;
 		}
 
-		operator const_iterator(){
+		operator const_iterator()const {
 			return const_iterator(this->current_tree, this->_node);
 		}
 

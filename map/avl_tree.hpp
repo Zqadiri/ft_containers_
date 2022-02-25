@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/23 17:06:11 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/25 17:17:00 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,13 +135,11 @@ namespace ft
 
 		node_type* upperBound (node_type *first,const key_type& key) const{
 			while (first != NULL){
-				// std::cout << first->data.first << std::endl;
 				if (!comp(key, first->data.first))
 					first = this->nextNode(first);
 				else					
 					break ;
 			}
-			// std::cout<< "-------" << first->data.first << "----" << std::endl;
 			return first;
 		}
 
@@ -159,7 +157,6 @@ namespace ft
 
 		node_type*		leftLeftCase(node_type *root) //? rotate the rootPtr too 
 		{
-			// std::cout << "leftLeftCase" << std::endl;
 			node_type *new_parent = root->left;
 			node_type *tmp = new_parent->right;
 			new_parent->right = root;
@@ -170,12 +167,12 @@ namespace ft
 				root->left->rootPtr  = new_parent->right;
 			new_parent->rootPtr = root->rootPtr;
 			root->rootPtr = new_parent;
+			std::cout << "leftLeftCase" << std::endl;
 			return new_parent;
 		}
 
 		node_type*		rightRightCase(node_type *root)
 		{
-			// std::cout << "RightRightCase" << std::endl;
 			node_type *new_parent = root->right;
 			node_type *tmp = new_parent->left;
 			new_parent->left = root;
@@ -186,37 +183,19 @@ namespace ft
 				root->right->rootPtr  = new_parent->left;
 			new_parent->rootPtr = root->rootPtr;
 			root->rootPtr = new_parent;
+			std::cout << "RightRightCase" << std::endl;
 			return new_parent;
 		}
 
-		node_type*		leftRightCase(node_type *root)
-		{
-			node_type *new_parent;
-
-			new_parent = root->left;
-			root->left = rightRightCase(new_parent);
-			return leftLeftCase(root);
-		}
-		
-		node_type*		rightLeftCase(node_type *root)
-		{
-			// std::cout << "rightLeftCase" << std::endl;
-			node_type *new_parent;
-
-			new_parent = root->right;
-			root->right = leftLeftCase(new_parent);
-			return rightRightCase(root);
-		}
-
-		node_type*		balanceTree(node_type *node, const value_type &val)
+		node_type*		balanceTree(node_type *node, const key_type &key)
 		{
   			node->Height = 1 + max(height(node->left), height(node->right));
   			int balanceFactor = getBalanceFactor(node);
   			if (balanceFactor > 1)
 			{
-  				if (comp(val.first, node->left->data.first))
+  				if (comp(key, node->left->data.first))
   					return leftLeftCase(node);
-  				else if (!comp(val.first, node->left->data.first))
+  				else if (!comp(key, node->left->data.first))
 				{
   				  	node->left = rightRightCase(node->left);
   					return leftLeftCase(node);
@@ -224,10 +203,11 @@ namespace ft
   			}
   			if (balanceFactor < -1)
 			{
-  				if (!comp(val.first, node->right->data.first))
+  				if (!comp(key, node->right->data.first))
   					return rightRightCase(node);
-  				else if (comp(val.first, node->right->data.first))
+  				else if (comp(key, node->right->data.first))
 				{
+					std::cout << " right balance : "  << node->right->data.first << std::endl;
   					node->right = leftLeftCase(node->right);
   					return rightRightCase(node);
   				}
@@ -282,8 +262,7 @@ namespace ft
 
 		node_type* insert(node_type *node, const value_type &val)
 		{
-			if (node == nullptr)
-			{
+			if (node == nullptr){
 				node = newNode(val);
 				node->rootPtr = nullptr;
   				return (node);
@@ -303,7 +282,7 @@ namespace ft
 					rchild->rootPtr = node;
 				}
 			}
-			node = balanceTree(node, val);
+			node = balanceTree(node, val.first);
   			return node;
 		}
 
@@ -317,35 +296,40 @@ namespace ft
 
 		node_type*		deleteNode(node_type *root,const key_type key)
 		{
+			std::cout << "KeyToRemove : " << key << std::endl; 
 			if (root == nullptr)
 				return nullptr;
-			else if (key < root->data.first)
-				root->left = deleteNode(root->left, key);
-			else if (key > root->data.first)
+			else if (!comp(key,root->data.first) && (key != root->data.first))
 				root->right = deleteNode(root->right, key);
-			else if (key == root->data.first)	//! delete the root cases (root wit no child, one child, x childs)
+			else if (comp(key,root->data.first))
+				root->left = deleteNode(root->left, key);
+			else if (key == root->data.first)
 			{
 				if (root->left == nullptr)
 				{
 					node_type *new_parent = root->right;
 					nodeAlloc.destroy(root);
+					if (new_parent != nullptr)
+						new_parent->rootPtr = root->rootPtr;
 					return new_parent;
 				}
-				else if (root->right == nullptr)
+				else if (root->right == nullptr )
 				{
 					node_type *new_parent = root->left;
 					nodeAlloc.destroy(root);
+					// if (new_parent != nullptr)
+					// 	new_parent->rootPtr = root->rootPtr;
 					return new_parent;
 				}
-				else
-				{
+				else{
 					node_type *ret = minValue(root->left);
 					nodeAlloc.destroy(root);
 					nodeAlloc.construct(root, ft::make_pair(ret->data.first, ret->data.second));
 					root->left = deleteNode(root->left, ret->data.first);
 				}
 			}
-			return root;		
+			root = balanceTree(root, key);
+			return root;
 		}
 
 		public:
