@@ -87,19 +87,27 @@ bool testmapConstructors()
     std::map<char, int> copy(first);
     ft::map<char, int> m_copy(m_first);
 
+    // std::cout << "1" <<  copy.size() << " : " << m_copy.size() <<  "   " << first.size() << " : " << m_first.size() << std::endl;
+
     cond = first.size() == m_first.size() && comparemaps(first.begin(), first.end(), m_first.begin(), m_first.end());
 
     std::map<char, int> second(first.begin(), first.end());
     ft::map<char, int> m_second(m_first.begin(), m_first.end());
 
+    // std::cout << "2" << copy.size() << " : " << m_copy.size() <<  "   " << cond << std::endl;
+
     cond = cond && second.size() == m_second.size() && comparemaps(second.begin(), second.end(), m_second.begin(), m_second.end());
     std::map<char, int> third(second);
     ft::map<char, int> m_third(m_second);
+
+    // std::cout << " 3" << copy.size() << " : " << m_copy.size() <<  "   " << cond << std::endl;
 
     cond = cond && third.size() == m_third.size() && comparemaps(third.begin(), third.end(), m_third.begin(), m_third.end());
 
     std::map<char, int, classcomp> fourth;  // class as Compare
     ft::map<char, int, classcomp> m_fourth; // class as Compare
+
+    // std::cout << "4" << copy.size() << " : " << m_copy.size() <<  "   " << cond << std::endl;
 
     cond = fourth.size() == m_fourth.size() && cond && comparemaps(fourth.begin(), fourth.end(), m_fourth.begin(), m_fourth.end());
 
@@ -107,11 +115,14 @@ bool testmapConstructors()
     std::map<char, int, bool (*)(char, char)> fifth(fn_pt);  // function pointer as Compare
     ft::map<char, int, bool (*)(char, char)> m_fifth(fn_pt); // function pointer as Compare
 
+    // std::cout << "5"<< copy.size() << " : " << m_copy.size() <<  "   " << cond << std::endl;
+
     cond = fifth.size() == m_fifth.size() && cond && comparemaps(fifth.begin(), fifth.end(), m_fifth.begin(), m_fifth.end());
 
     first = std::map<char, int>();
     m_first = ft::map<char, int>();
 
+    // std::cout << "6" << copy.size() << " : " << m_copy.size() <<  "   " << cond << std::endl;
     cond = copy.size() == m_copy.size() && cond && comparemaps(copy.begin(), copy.end(), m_copy.begin(), m_copy.end());
     return cond;
 }
@@ -2222,33 +2233,31 @@ int main()
 
     std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
     TEST_CASE(testConstructors)
-    std::cout << std::endl; //* almost done
+    std::cout << std::endl; //* good
 
-    // std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
-    // TEST_CASE(testModifiers)
-    // std::cout << std::endl; //* good
+    std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
+    TEST_CASE(testModifiers)
+    std::cout << std::endl; //* good
 
-    // std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
-    // TEST_CASE(testCapacityMethods)
-    // std::cout << std::endl; //* good
+    std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
+    TEST_CASE(testCapacityMethods)
+    std::cout << std::endl; //* good
 
-    // std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
-    // TEST_CASE(testOperations)
-    // std::cout << std::endl; //* good
+    std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
+    TEST_CASE(testOperations)
+    std::cout << std::endl; //* good
 
-    // std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
-    // TEST_CASE(testAllocatorMethodes)
-    // std::cout << std::endl; //* good
+    std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
+    TEST_CASE(testAllocatorMethodes)
+    std::cout << std::endl; //* good
 
+    std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
+    TEST_CASE(testElementAccess);
+    std::cout << std::endl; //* good
 
-    // std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
-    // TEST_CASE(testElementAccess);
-    // std::cout << std::endl; //* good
-
-
-    // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
-    // TEST_CASE(testObservers)
-    // std::cout << std::endl; //*good
+    std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
+    TEST_CASE(testObservers)
+    std::cout << std::endl; //*good
 
     //! not tested yet
 

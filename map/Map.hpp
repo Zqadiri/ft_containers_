@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/25 20:26:26 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/25 20:42:37 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,9 @@ namespace ft
 		template <class InputIterator>
 		map (InputIterator first, InputIterator last,
 			const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()){
+			const allocator_type& alloc = allocator_type()): _tree(){
 			_comp = comp;
 			_alloc = alloc;
-			_tree.rootPtr = nullptr;
 			for ( ; first != last ; first++){
 				this->insert(ft::make_pair(first->first, first->second));
 			}
@@ -238,10 +237,8 @@ namespace ft
 
 		template <class InputIterator>
   		void insert (InputIterator first, InputIterator last){
-			for ( ; first != last; first++){
+			for ( ; first != last; first++)
 				this->insert(ft::make_pair(first->first, first->second));
-				_tree.treeSize++;
-			}
 		}
 
 		/*
