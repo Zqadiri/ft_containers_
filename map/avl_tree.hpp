@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/25 20:25:15 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/02/26 12:03:07 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,7 +307,7 @@ namespace ft
 			}
 			else if (!searchForKey(val.first, node))
 			{
-  				if (comp(val.first, node->data.first)) //! change to compare
+  				if (comp(val.first, node->data.first))
 				{
 					node_type *lchild = insert(node->left, val);
 					node->left = lchild;
