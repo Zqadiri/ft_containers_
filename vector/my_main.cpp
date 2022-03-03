@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:56:06 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/04 21:42:37 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/03/02 17:33:13 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,67 +119,67 @@ int main()
             // ft::Vector<std::string>     ft_v(20, "string");
 
 
-        	std::vector<std::string>    v1(20, "less");
-        	std::vector<int>    v2;
-        	std::vector<int>    v3;
-        	/*------------------ std::vectors ---------------------*/
-        	ft::Vector<std::string>     ft_v1(20, "less");
-        	ft::Vector<int>     ft_v2;
-        	ft::Vector<int>     ft_v3;
+        // 	std::vector<std::string>    v1(20, "less");
+        // 	std::vector<int>    v2;
+        // 	std::vector<int>    v3;
+        // 	/*------------------ std::vectors ---------------------*/
+        // 	ft::Vector<std::string>     ft_v1(20, "less");
+        // 	ft::Vector<int>     ft_v2;
+        // 	ft::Vector<int>     ft_v3;
 			 
-			std::cout << "\nsize std " << v3.size();
-			std::cout << "\ncap std " << v3.capacity();
-            std::cout << "\nsize ft  " << ft_v3.size();
-            std::cout << "\ncap ft  " << ft_v3.capacity() << std::endl;
+		// 	std::cout << "\nsize std " << v3.size();
+		// 	std::cout << "\ncap std " << v3.capacity();
+        //     std::cout << "\nsize ft  " << ft_v3.size();
+        //     std::cout << "\ncap ft  " << ft_v3.capacity() << std::endl;
 			
-			v2.assign(26, 1);
-			ft_v2.assign(26, 1);
-			try
-			{
-				v2.insert(v2.end() - 8, 44);
-				ft_v2.insert(ft_v2.end() - 8, 44);
-			}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-			catch (std::exception &e){
-				std::cout << "error\n";
-			}
+		// 	v2.assign(26, 1);
+		// 	ft_v2.assign(26, 1);
+		// 	try
+		// 	{
+		// 		v2.insert(v2.end() - 8, 44);
+		// 		ft_v2.insert(ft_v2.end() - 8, 44);
+		// 	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+		// 	catch (std::exception &e){
+		// 		std::cout << "error\n";
+		// 	}
 
-			// std::cout << *(&(*it)) << std::endl;
+		// 	// std::cout << *(&(*it)) << std::endl;
 			
-			std::cout << "\nsize std " <<v2.size();
-			std::cout << "\ncap std " <<v2.capacity();
-            std::cout << "\nsize ft  " <<ft_v2.size();
-            std::cout << "\ncap ft  " <<ft_v2.capacity() << std::endl;
+		// 	std::cout << "\nsize std " <<v2.size();
+		// 	std::cout << "\ncap std " <<v2.capacity();
+        //     std::cout << "\nsize ft  " <<ft_v2.size();
+        //     std::cout << "\ncap ft  " <<ft_v2.capacity() << std::endl;
 			
-			for (ft::Vector<std::string>::size_type i = 0; i < v2.size(); i++)
-				std::cout << " " << v2.at(i);
-			std::cout << "\n =====================\n";
-			for (ft::Vector<std::string>::size_type i = 0; i < ft_v2.size(); i++)
-				std::cout << " " << ft_v2.at(i);
-			std::cout << std::endl;
+		// 	for (ft::Vector<std::string>::size_type i = 0; i < v2.size(); i++)
+		// 		std::cout << " " << v2.at(i);
+		// 	std::cout << "\n =====================\n";
+		// 	for (ft::Vector<std::string>::size_type i = 0; i < ft_v2.size(); i++)
+		// 		std::cout << " " << ft_v2.at(i);
+		// 	std::cout << std::endl;
 			
-           {
-			std::cout << "*****\n";
-			std::cout << typeid(std::vector<int>::iterator::iterator_category).name() << std::endl;
-			std::cout << typeid(std::vector<int>::iterator::value_type).name() << std::endl;
-			std::cout << typeid(std::vector<int>::iterator::difference_type).name() << std::endl;
-			std::cout << typeid(std::vector<int>::iterator::iterator_type).name() << std::endl;
-			std::cout << typeid(std::vector<int>::iterator::pointer).name() << std::endl;
-			std::cout << typeid(std::vector<int>::iterator::reference).name() << std::endl;
-			// std::cout << typeid(std::vector<int>::reverse_iterator::iterator_category).name() << std::endl;
-			// std::cout << typeid(std::vector<int>::reverse_iterator::value_type).name() << std::endl;
-			// std::cout << typeid(std::vector<int>::reverse_iterator::difference_type).name() << std::endl;
-			// std::cout << typeid(std::vector<int>::reverse_iterator::pointer).name() << std::endl;
-			// std::cout << typeid(std::vector<int>::reverse_iterator::reference).name() << std::endl;
+        //    {
+		// 	std::cout << "*****\n";
+		// 	std::cout << typeid(std::vector<int>::iterator::iterator_category).name() << std::endl;
+		// 	std::cout << typeid(std::vector<int>::iterator::value_type).name() << std::endl;
+		// 	std::cout << typeid(std::vector<int>::iterator::difference_type).name() << std::endl;
+		// 	std::cout << typeid(std::vector<int>::iterator::iterator_type).name() << std::endl;
+		// 	std::cout << typeid(std::vector<int>::iterator::pointer).name() << std::endl;
+		// 	std::cout << typeid(std::vector<int>::iterator::reference).name() << std::endl;
+		// 	// std::cout << typeid(std::vector<int>::reverse_iterator::iterator_category).name() << std::endl;
+		// 	// std::cout << typeid(std::vector<int>::reverse_iterator::value_type).name() << std::endl;
+		// 	// std::cout << typeid(std::vector<int>::reverse_iterator::difference_type).name() << std::endl;
+		// 	// std::cout << typeid(std::vector<int>::reverse_iterator::pointer).name() << std::endl;
+		// 	// std::cout << typeid(std::vector<int>::reverse_iterator::reference).name() << std::endl;
 			
-		   }
-			{
-			std::cout << "\n*****\n";
-			std::cout << typeid(ft::Vector<int>::iterator::iterator_category).name() << std::endl;
-			std::cout << typeid(ft::Vector<int>::iterator::value_type).name() << std::endl;
-			std::cout << typeid(ft::Vector<int>::iterator::difference_type).name() << std::endl;
-			std::cout << typeid(ft::Vector<int>::iterator::iterator_type).name() << std::endl;
-			std::cout << typeid(ft::Vector<int>::iterator::pointer).name() << std::endl;
-			std::cout << typeid(ft::Vector<int>::iterator::reference).name() << std::endl;
+		//    }
+		// 	{
+		// 	std::cout << "\n*****\n";
+		// 	std::cout << typeid(ft::Vector<int>::iterator::iterator_category).name() << std::endl;
+		// 	std::cout << typeid(ft::Vector<int>::iterator::value_type).name() << std::endl;
+		// 	std::cout << typeid(ft::Vector<int>::iterator::difference_type).name() << std::endl;
+		// 	std::cout << typeid(ft::Vector<int>::iterator::iterator_type).name() << std::endl;
+		// 	std::cout << typeid(ft::Vector<int>::iterator::pointer).name() << std::endl;
+		// 	std::cout << typeid(ft::Vector<int>::iterator::reference).name() << std::endl;
 			// std::cout << typeid(ft::Vector<int>::reverse_iterator::iterator_category).name() << std::endl;
 			// std::cout << typeid(ft::Vector<int>::reverse_iterator::value_type).name() << std::endl;
 			// std::cout << typeid(ft::Vector<int>::reverse_iterator::difference_type).name() << std::endl;
@@ -604,23 +604,25 @@ int main()
 			
 		// }
     	// return 0;
-	}
-	std::cout << "***************\n";
-	{
-		std::vector<int> v;
-		v.assign(10, 5);
-		v.insert(v.end()-10, 99);
-		for (size_t i = 0; i < v.size(); i++)
-			std::cout << v[i] << " ";
-		std::cout << std::endl;
-	}
-	std::cout << "***************\n";
-	{
-		ft::Vector<int> v;
-		v.assign(10, 5);
-		v.insert(v.end()-10, 99);
-		for (size_t i = 0; i < v.size(); i++)
-			std::cout << v[i] << " ";
-		std::cout << std::endl;
-	}
+	// }
+	// std::cout << "***************\n";
+	// {
+	// 	std::vector<int> v;
+	// 	v.assign(10, 5);
+	// 	v.insert(v.end()-10, 99);
+	// 	for (size_t i = 0; i < v.size(); i++)
+	// 		std::cout << v[i] << " ";
+	// 	std::cout << std::endl;
+	// }
+	// std::cout << "***************\n";
+	// {
+	// 	ft::Vector<int> v;
+	// 	v.assign(10, 5);
+	// 	v.insert(v.end()-10, 99);
+	// 	for (size_t i = 0; i < v.size(); i++)
+	// 		std::cout << v[i] << " ";
+	// 	std::cout << std::endl;
+	// }
+	ft::Vector<int> s(5, 10);
+	s.insert(s.begin() + 2, 10);
 }

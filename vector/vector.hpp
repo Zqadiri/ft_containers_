@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Vector.hpp                                         :+:      :+:    :+:   */
+/*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:13:42 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/05 14:52:03 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/03/03 14:42:56 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ namespace ft
 				const allocator_type& alloc = allocator_type())
 			:_start(nullptr), _size(0), _capacity(0), _end(nullptr),  _alloc(alloc)
 			{
+				for (size_t i = 0; i < 1e6; i++)
+				{
+				}
+				
 				if (n > this->max_size())
 					throw std::length_error("vector");
 				_start = _alloc.allocate(n);
@@ -237,7 +241,7 @@ namespace ft
 
 			iterator insert (iterator position, const value_type& val)
 			{
-				size_type pos = &(*position) - _start;
+				size_type pos = position - iterator(_start);
 				size_type pos_index = _end - &(*position);	
 				if (_size == 0)
 				{
@@ -278,7 +282,7 @@ namespace ft
 				_end += n;
 				_size += n;
 				for (size_type i = 0; i < pos_index; i++)
-					_alloc.construct(_end - i - 1, *(_end - ( n + i)));
+					_alloc.construct(_end - i - 1, *(_end - ( n + i + 1)));
 				for (size_type j = 0; j < n; j++)
 					_alloc.construct(_end - pos_index - j - 1, val);	
 			}
@@ -307,7 +311,7 @@ namespace ft
 				_end += n;
 				_size += n;
 				for (size_type i = 0; i < pos_index; i++)
-					_alloc.construct(_end - i - 1, *(_end - ( n + i)));
+					_alloc.construct(_end - i - 1, *(_end - ( n + i + 1)));
 				for (size_type j = 0; j < n; j++, first++)
 					_alloc.construct(_end - pos_index - j - 1, *(&(*first)));				
 			}

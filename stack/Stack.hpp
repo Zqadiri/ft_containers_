@@ -6,14 +6,14 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 13:28:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/12/21 14:51:25 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/03/02 17:46:44 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STACK_HPP_
 #define STACK_HPP_
 
-#include "../vector/Vector.hpp"
+#include "../vector/vector.hpp"
 #include <iostream>
 
 namespace ft
