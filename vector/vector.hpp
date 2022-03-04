@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:13:42 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/03/03 14:42:56 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/03/04 13:29:47 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,7 +242,7 @@ namespace ft
 			iterator insert (iterator position, const value_type& val)
 			{
 				size_type pos = position - iterator(_start);
-				size_type pos_index = _end - &(*position);	
+				size_type pos_index = _end - &(*position);
 				if (_size == 0)
 				{
 					reserve(1);
@@ -322,7 +322,7 @@ namespace ft
 			** Return value : an iterator point to the element position + 1
 			*/
 
-			iterator erase( iterator position)
+			iterator erase(iterator position)
 			{
 				std::copy(&(*position) + 1, _end, &(*position));
 				_size--;
@@ -336,8 +336,7 @@ namespace ft
 				size_t start_pos = _end - &(*last);
 				pointer last_pointer = &(*last) ;
 				pointer first_pointer = &(*first);
-				for (size_t i = 0; i < start_pos; i++)
-				{
+				for (size_t i = 0; i < start_pos; i++){
 					_alloc.construct((first_pointer + i), *(last_pointer + i));
 					_alloc.destroy((last_pointer + i));
 				}
