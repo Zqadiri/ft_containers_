@@ -8,118 +8,120 @@
 #include <map>
 #include "Map.hpp"
 
-using namespace std;
-// //Definition of Node for Binary search tree
-struct BstNode {
-	int data; 
-	BstNode* left;
-	BstNode* right;
-};
-
-// Function to create a new Node in heap
-BstNode* GetNewNode(int data) {
-	BstNode* newNode = new BstNode();
-	newNode->data = data;
-	newNode->left = newNode->right = NULL;
-	return newNode;
-}
-
-// To insert data in BST, returns address of root node 
-BstNode* Insert(BstNode* root,int data) {
-	if(root == NULL) { // empty tree
-		root = GetNewNode(data);
-	}
-	// if data to be inserted is lesser, insert in left subtree. 
-	else if(data <= root->data) {
-		root->left = Insert(root->left,data);
-	}
-	// else, insert in right subtree. 
-	else {
-		root->right = Insert(root->right,data);
-	}
-	return root;
-}
-
-//To search an element in BST, returns true if element is found
-
-bool Search(BstNode* root,int data)
+namespace Color
 {
-	if(root == NULL) {
-		return false;
-	}
-	else if(root->data == data) {
-		return true;
-	}
-	else if(data <= root->data) {
-		return Search(root->left,data);
-	}
-	else {
-		return Search(root->right,data);
-	}
+	enum Code {
+		FG_RED      = 31,
+		FG_GREEN    = 32,
+		FG_BLUE     = 36,
+		FG_YELLOW   = 33,
+		FG_DEFAULT  = 39,
+		BG_RED      = 41,
+		BG_GREEN    = 42,
+		BG_BLUE     = 44,
+		BG_DEFAULT  = 49
+	};
+	class Modifier {
+		Code code;
+	public:
+		Modifier(Code pCode) : code(pCode) {}
+		friend std::ostream&
+		operator<<(std::ostream& os, const Modifier& mod) {
+			return os << "\033[" << mod.code << "m";
+		}
+	};
 }
 
-void printBT(const std::string& prefix,  ft::avl_tree<ft::pair<int, std::string> >::node_type* node, bool isLeft)
+time_t get_time(void)
 {
-	if( node != nullptr )
-	{
-		std::cout << prefix;
-		std::cout << (isLeft ? "├──" : "└──" );
-		// print the value of the node
-		std::cout << node->data.first << std::endl;
-		// enter the next tree level - left and right branch
-		printBT( prefix + (isLeft ? "│   " : "    "), node->left, true);
-		printBT( prefix + (isLeft ? "│   " : "    "), node->right, false);
-	}
+	struct timeval time_now;
+
+	gettimeofday(&time_now, NULL);
+	time_t msecs_time = (time_now.tv_sec * 1e3) + (time_now.tv_usec / 1e3);
+	return(msecs_time);
 }
 
-
-void print_parent( ft::avl_tree<ft::pair<int , std::string> >::node_type* root)
+void	print_time(time_t start, time_t end)
 {
-	if (root->left != NULL)
-		print_parent(root->left);
-	if (root->right != NULL)
-		print_parent(root->right);
-	if (root->rootPtr != NULL)
-		std::cout << "parent of " << root->data.first << " is : " << root->rootPtr->data.first << "  "<< root->Height  << std::endl;
-	else
-		std::cout << "node " << root->data.first << " is root of the tree" << ":" << root->Height << std::endl;
+	Color::Modifier yellow(Color::FG_YELLOW); // right answer
+	Color::Modifier def(Color::FG_DEFAULT);
+	char esc_char = 27;
+	time_t res = end - start;
+	std::cout << std::setw(5) << "\t"<< yellow << res << "msecs " << def ;
 }
-
-
-// //? https://www.cs.usfca.edu/~galles/visualization/AVLtree.html
 
 int main()
 {
-	/*{
-		ft::avl_tree<ft::pair<int , std::string > >::node_type* root = nullptr;
-		ft::avl_tree<ft::pair<int , std::string > > av;
-		int arr[] = {20, 10, 100, 15, 60, 90, 65, 200, 150};
-		for (size_t i = 0; i < 9; ++i)
-		  	root = av.insert(root ,ft::make_pair(arr[i],  "i"));
-		for (size_t i = 0; i < 1; ++i){
-		  	  	root = av.insert(root ,ft::make_pair(i,  "i"));
-				printBT("", root, false);
-				print_parent(root);
-		}
-		for (size_t i = 0; i < 1 ; ++i){
-			root = av.deleteNode(root , 0);
-			printBT("", root, false);
-		}
-	}*/
+	Color::Modifier green(Color::FG_GREEN);
+	Color::Modifier blue(Color::FG_BLUE);
+	Color::Modifier yellow(Color::FG_YELLOW); // right answer
+	Color::Modifier red(Color::FG_RED); // false answer
+	Color::Modifier def(Color::FG_DEFAULT);
+	{
+		try
+		{
+			std::cout << blue << "-----------------------------------------------------------" << def << std::endl;
+			std::cout << blue << "------------------------ Map Tests ------------------------" << def << std::endl;
+			std::cout << std::left << std::setw(15) << std::left <<"\nFill Constructor ";			
+			{
+				time_t start, end, diff;
+				bool	tle;
+				std::vector<int> v(1e7, 10);
+				ft::Vector<int> ft_v(1e7, 10);
+				start = get_time();
+				std::map<int, int> m(v.begin(), v.end());
+				end = get_time();
+				print_time(start, end);
+				diff = (end - start) + 1;
+				start = get_time();
+				ft::map<int, int> ft_m(ft_v.begin(), ft_v.end());
+				end = get_time();
+				print_time(start, end);
+				size_t s, ft_s;
+				s = m.size();
+				ft_s = ft_m.size();
+				ft::map<int, int>::iterator it = ft_m.begin();
+				ft::map<int, int>::iterator end_it = ft_m.end();
 
-		ft::map<int , std::string > m1;
-		ft::map<int, std::string > m2;
-		ft::map<int, std::string >::iterator it;
-            
-		for (size_t i = 0; i < 20; ++i)
-		  	m1.insert(ft::make_pair<int, std::string>(i,  "i"));
-		for (size_t i = 0; i < 10; ++i)
-		  	m2.insert(ft::make_pair<int, std::string>(i,  "i"));
-		std::cout << "rhs = " << m1.size() << " lhs = " << m2.size() << std::endl;
-		m1 = m2;
-		std::cout << "rhs = " << m1.size() << " lhs = " << m2.size() << std::endl;
-		for (it = m1.begin(); it != m1.end(); ++it)
-			std::cout << it->first << " => " << it->second << '\n';
-
+				ft::map<int, int>::iterator it = ft_m.begin();
+				ft::map<int, int>::iterator end_it = ft_m.end(); 
+				if ((end - start) > (diff * 20))
+					std::cout << "\t\t" <<blue << "TL" << def << std::endl;
+				else if ((s == ft_s) && (m.begin() == ft_m.begin()) && (m.end() == ft_m.end()))
+					std::cout <<"\t\t" << green << "OK" << def << std::endl;
+				else	
+					std::cout << "\t\t" << red << "KO" << def << std::endl;
+			}
+		} 
+		catch (std::exception &e){}
+	}
+	return EXIT_SUCCESS;
 }
 
+
+
+// void printBT(const std::string& prefix,  ft::avl_tree<ft::pair<int, std::string> >::node_type* node, bool isLeft)
+// {
+// 	if( node != nullptr )
+// 	{
+// 		std::cout << prefix;
+// 		std::cout << (isLeft ? "├──" : "└──" );
+// 		// print the value of the node
+// 		std::cout << node->data.first << std::endl;
+// 		// enter the next tree level - left and right branch
+// 		printBT( prefix + (isLeft ? "│   " : "    "), node->left, true);
+// 		printBT( prefix + (isLeft ? "│   " : "    "), node->right, false);
+// 	}
+// }
+
+// void print_parent( ft::avl_tree<ft::pair<int , std::string> >::node_type* root)
+// {
+// 	if (root->left != NULL)
+// 		print_parent(root->left);
+// 	if (root->right != NULL)
+// 		print_parent(root->right);
+// 	if (root->rootPtr != NULL)
+// 		std::cout << "parent of " << root->data.first << " is : " << root->rootPtr->data.first << "  "<< root->Height  << std::endl;
+// 	else
+// 		std::cout << "node " << root->data.first << " is root of the tree" << ":" << root->Height << std::endl;
+// }

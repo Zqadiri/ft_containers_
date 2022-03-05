@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/26 12:34:56 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/03/04 16:48:55 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ namespace ft
 			return const_reverse_iterator(this->begin());
 		}
 
-	  	iterator end(){
+		iterator end(){
 			if (!_tree.rootPtr)
 				return (iterator());
 			node_type *temp = _tree.minValue(_tree.rootPtr);
