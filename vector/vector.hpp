@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:13:42 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/03/04 13:29:47 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/03/06 15:40:02 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -394,7 +394,7 @@ namespace ft
 					_alloc.destroy(_start + i);
 				_alloc.deallocate(_start, _capacity);
 				_size = x._size;
-				_start = _alloc.allocate(_size);
+				_start = _alloc.allocate(x._capacity);
 				_end = _start + _size;
 				for (size_t i = 0; i < _size; i++)
 					_alloc.construct((_start + i), *(x._start + i));

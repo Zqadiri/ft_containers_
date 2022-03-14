@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/26 12:03:07 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/03/08 14:42:21 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,17 +303,17 @@ namespace ft
 			if (node == nullptr){
 				node = newNode(val);
 				node->rootPtr = nullptr;
-  				return (node);
+				return (node);
 			}
 			else if (!searchForKey(val.first, node))
 			{
-  				if (comp(val.first, node->data.first))
+				if (comp(val.first, node->data.first))
 				{
 					node_type *lchild = insert(node->left, val);
 					node->left = lchild;
 					lchild->rootPtr = node;
 				}
-  				else if (!comp(val.first, node->data.first))
+				else if (!comp(val.first, node->data.first))
 				{
 					node_type *rchild = insert(node->right, val);
 					node->right  = rchild;
@@ -321,7 +321,7 @@ namespace ft
 				}
 			}
 			node = balanceTree(node, val.first);
-  			return node;
+			return node;
 		}
 
 		node_type*		minValue(node_type *root) const

@@ -146,7 +146,7 @@ namespace ft
 
 		pair():first(), second(){};
 
-		template<class U, class V>
+		template<class   class V>
 		pair (const pair<U,V>& pr):first(pr.first), second(pr.second){
 		}
 

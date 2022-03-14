@@ -1,12 +1,16 @@
-// Simple program to create a BST of integers and search an element in it 
-// Binary Search Tree - Implemenation in C++
-#include <iostream>
-#include "./avl_tree.hpp"
 #include "../utilities/utility.hpp"
-#include <string.h>
-#include <iomanip>
-#include <map>
 #include "Map.hpp"
+
+#include <vector>
+#include <iostream>
+#include <iterator>
+#include <utility>
+#include <ctime>
+#include <iomanip>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/time.h>
+#include <random>
 
 namespace Color
 {
@@ -62,35 +66,26 @@ int main()
 		{
 			std::cout << blue << "-----------------------------------------------------------" << def << std::endl;
 			std::cout << blue << "------------------------ Map Tests ------------------------" << def << std::endl;
-			std::cout << std::left << std::setw(15) << std::left <<"\nFill Constructor ";			
+			std::cout << std::left << std::setw(15) << std::left <<"\nRange Constructor ";			
 			{
 				time_t start, end, diff;
 				bool	tle;
-				std::vector<int> v(1e7, 10);
-				ft::Vector<int> ft_v(1e7, 10);
+				std::map<int, int> m;
+				ft::map<int, int> ft_m;
+				
+				for (int i = 0; i < 1e5; i++)
+				{
+					m.insert(std::make_pair(i, i));
+					ft_m.insert(ft::make_pair(i, i));
+				}
+				
 				start = get_time();
-				std::map<int, int> m(v.begin(), v.end());
-				end = get_time();
-				print_time(start, end);
-				diff = (end - start) + 1;
-				start = get_time();
-				ft::map<int, int> ft_m(ft_v.begin(), ft_v.end());
-				end = get_time();
-				print_time(start, end);
-				size_t s, ft_s;
-				s = m.size();
-				ft_s = ft_m.size();
-				ft::map<int, int>::iterator it = ft_m.begin();
-				ft::map<int, int>::iterator end_it = ft_m.end();
+				std::map<int, int> m1(m1.begin(), m1.end());
+				
+				ft::map<int, int> ft_m1(ft_m1.begin(), ft_m1.end());
 
-				ft::map<int, int>::iterator it = ft_m.begin();
-				ft::map<int, int>::iterator end_it = ft_m.end(); 
-				if ((end - start) > (diff * 20))
-					std::cout << "\t\t" <<blue << "TL" << def << std::endl;
-				else if ((s == ft_s) && (m.begin() == ft_m.begin()) && (m.end() == ft_m.end()))
-					std::cout <<"\t\t" << green << "OK" << def << std::endl;
-				else	
-					std::cout << "\t\t" << red << "KO" << def << std::endl;
+
+				
 			}
 		} 
 		catch (std::exception &e){}
