@@ -11,6 +11,8 @@
 # include <sys/time.h>
 # include "vector.hpp"
 
+// Colors
+
 namespace Color
 {
 	enum Code {
@@ -19,10 +21,6 @@ namespace Color
 		FG_BLUE     = 36,
 		FG_YELLOW   = 33,
 		FG_DEFAULT  = 39,
-		BG_RED      = 41,
-		BG_GREEN    = 42,
-		BG_BLUE     = 44,
-		BG_DEFAULT  = 49
 	};
 	class Modifier {
 		Code code;
@@ -48,7 +46,6 @@ void	print_time(time_t start, time_t end)
 {
 	Color::Modifier yellow(Color::FG_YELLOW); // right answer
 	Color::Modifier def(Color::FG_DEFAULT);
-	char esc_char = 27;
 	time_t res = end - start;
 	std::cout << std::setw(5) << "\t"<< yellow << res << "msecs " << def ;
 }
@@ -64,7 +61,6 @@ void    vector_tests(void)
 		// ! timeLimitTest
 	std::cout << std::left << std::setw(15) << std::left <<"\nFill Constructor ";
 		time_t start, end, diff;
-		bool	tle;
 		start = get_time();
 		std::vector<int> v(1e7, 10);
 		end = get_time();
@@ -101,7 +97,6 @@ void    vector_tests(void)
 	{
 		// ! timeLimitTest
 		time_t start, end, diff;
-		bool	tle;
 		std::vector<int>	input(1e6, 10);
 		start = get_time();
 		std::vector<int> v(input.begin(), input.end());
@@ -142,7 +137,6 @@ void    vector_tests(void)
 	{
 		// ! timeLimitTest
 		time_t start, end, diff;
-		bool	tle;
 		std::vector<int>	copy(1e6, 10);
 		start = get_time();
 		std::vector<int> v(copy);
@@ -356,7 +350,6 @@ void    vector_tests(void)
 
 		std::vector<std::string>::iterator it = v.erase(v.begin());
 		ft::Vector<std::string>::iterator ft_it = ft_v.erase(ft_v.begin());
-
 		std::vector<std::string>::iterator r_it = v.erase(v.begin() + 5 , v.end());
 		ft::Vector<std::string>::iterator r_ft_it = ft_v.erase(ft_v.begin() + 5, ft_v.end());
 
@@ -365,7 +358,7 @@ void    vector_tests(void)
 		c = v.capacity();
 		ft_c = ft_v.capacity();
 
-		if ((s == ft_s) && (c == ft_c) && (*it == *ft_it))
+		if ((s == ft_s) && (c == ft_c) && (*it == *ft_it) && (*r_it == *r_ft_it))
 			std::cout << "\t\t\t\t" << green << "OK" << def << std::endl;
 		else
 			std::cout << "\t\t\t\t" << red << "KO" << def << std::endl;
@@ -389,7 +382,7 @@ void    vector_tests(void)
 		c = v.capacity();
 		ft_c = ft_v.capacity();
 
-		if ((s == ft_s) && (c == ft_c) ) //! it
+		if ((s == ft_s) && (c == ft_c) && (*it == *ft_it))
 			std::cout << "\t\t\t\t" << green << "OK" << def << std::endl;
 		else
 			std::cout << "\t\t\t\t" << red << "KO" << def << std::endl;

@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:13:42 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/03/06 15:40:02 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/02 16:00:40 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ namespace ft
 			** Destroy all elements in the container and deallocate
 			** the container capacity.
 			*/ 
+
 			~Vector(){
 				this->clear();
 				_alloc.deallocate(_start, _capacity);
@@ -241,27 +242,38 @@ namespace ft
 
 			iterator insert (iterator position, const value_type& val)
 			{
-				size_type pos = position - iterator(_start);
-				size_type pos_index = _end - &(*position);
-				if (_size == 0)
-				{
-					reserve(1);
-					_alloc.construct(_start, val);
+				Vector backup(*this);
+				try{
+					size_type pos = position - iterator(_start);
+					size_type pos_index = _end - &(*position);
+					if (_size == 0)
+					{
+						reserve(1);
+						_alloc.construct(_start, val);
+						_size++;
+						return (iterator(_start + pos));
+					}
+					if (_capacity < _size + 1)
+						reserve(_capacity * 2);
+					for (size_type i = 0; i < pos_index ; i++)
+						_alloc.construct(_end - i , *(_end - (i + 1)));
+					_alloc.construct(_end - pos_index, val);
 					_size++;
+					_end++;
 					return (iterator(_start + pos));
 				}
-				if (_capacity < _size + 1)
-					reserve(_capacity * 2);
-				for (size_type i = 0; i < pos_index ; i++)
-					_alloc.construct(_end - i , *(_end - (i + 1)));
-				_alloc.construct(_end - pos_index, val);
-				_size++;
-				_end++;
-				return (iterator(_start + pos));
+				catch (std::exception &e){
+					std::cout << "error" << std::endl;
+					*this = backup;
+					return (iterator(_start));
+				}
 			}
 			
 			void insert (iterator position, size_type n, const value_type& val)
 			{
+				Vector backup(*this);
+				try
+				{
 				size_type pos_index = _end - &(*position);
 				if (_size == 0)
 				{
@@ -284,13 +296,20 @@ namespace ft
 				for (size_type i = 0; i < pos_index; i++)
 					_alloc.construct(_end - i - 1, *(_end - ( n + i + 1)));
 				for (size_type j = 0; j < n; j++)
-					_alloc.construct(_end - pos_index - j - 1, val);	
+					_alloc.construct(_end - pos_index - j - 1, val);
+				}
+				catch (std::exception &e){
+					std::cout << "error" << std::endl;
+					*this = backup;
+				}
 			}
 
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
 			{
+				Vector backup(*this);
+				try{
 				size_type pos_index = _end - &(*position);
 				size_type n = &(*last) - &(*first);
 				if (_size == 0)
@@ -313,7 +332,12 @@ namespace ft
 				for (size_type i = 0; i < pos_index; i++)
 					_alloc.construct(_end - i - 1, *(_end - ( n + i + 1)));
 				for (size_type j = 0; j < n; j++, first++)
-					_alloc.construct(_end - pos_index - j - 1, *(&(*first)));				
+					_alloc.construct(_end - pos_index - j - 1, *(&(*first)));
+				}
+				catch (std::exception &e){
+					std::cout << "error" << std::endl;
+					*this = backup;
+				}				
 			}
 
 			/*

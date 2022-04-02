@@ -146,7 +146,7 @@ namespace ft
 
 		pair():first(), second(){};
 
-		template<class   class V>
+		template<class U, class V>
 		pair (const pair<U,V>& pr):first(pr.first), second(pr.second){
 		}
 
@@ -206,7 +206,7 @@ namespace ft
 			T data; //? value type 
 			BstNode *right;
 			BstNode *left;
-			BstNode *rootPtr; //? store the address of the root
+			BstNode *rootPtr;
 			int		Height;
 
 		BstNode(): data(){};
@@ -220,9 +220,9 @@ namespace ft
 
 			this->data.first = pair.first;
 			this->data.second = pair.second;
-			this->right = nullptr;
-			this->left = nullptr;
-			this->rootPtr = nullptr;
+			this->right = rt;
+			this->left = lt;
+			this->rootPtr = p;
 			this->leftHeight = 0;
 			this->rightHeight = 0;
 		}

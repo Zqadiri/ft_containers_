@@ -2264,9 +2264,9 @@ int main()
     std::cout << std::endl; //* good
 
 
-    // std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
-    // TEST_CASE(testNonMemberSwap);
-    // std::cout << std::endl; //* good
+    std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
+    TEST_CASE(testNonMemberSwap);
+    std::cout << std::endl; //* good
     
     return 0;
 }

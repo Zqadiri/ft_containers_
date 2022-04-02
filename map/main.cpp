@@ -20,10 +20,6 @@ namespace Color
 		FG_BLUE     = 36,
 		FG_YELLOW   = 33,
 		FG_DEFAULT  = 39,
-		BG_RED      = 41,
-		BG_GREEN    = 42,
-		BG_BLUE     = 44,
-		BG_DEFAULT  = 49
 	};
 	class Modifier {
 		Code code;
@@ -49,7 +45,6 @@ void	print_time(time_t start, time_t end)
 {
 	Color::Modifier yellow(Color::FG_YELLOW); // right answer
 	Color::Modifier def(Color::FG_DEFAULT);
-	char esc_char = 27;
 	time_t res = end - start;
 	std::cout << std::setw(5) << "\t"<< yellow << res << "msecs " << def ;
 }
@@ -66,10 +61,88 @@ int main()
 		{
 			std::cout << blue << "-----------------------------------------------------------" << def << std::endl;
 			std::cout << blue << "------------------------ Map Tests ------------------------" << def << std::endl;
-			std::cout << std::left << std::setw(15) << std::left <<"\nRange Constructor ";			
+			std::cout << std::left << std::setw(15) << std::left <<"\nDefault Constructor ";			
 			{
-				time_t start, end, diff;
-				bool	tle;
+				std::map<char, int> m;
+				ft::map<char, int> ft_m;
+
+				//! try to insert elem
+  				m['a'] = 10;
+  				m['b'] = 30;
+  				m['c'] = 50;
+  				m['d'] = 70;
+
+  				ft_m['a'] = 10;
+  				ft_m['b'] = 30;
+  				ft_m['c'] = 50;
+  				ft_m['d'] = 70;
+
+				size_t size, ft_size;
+				size =  m.size();
+				ft_size =  ft_m.size();
+
+				if ((size == ft_size) && (m['b'] == ft_m['b']))
+					std::cout <<"\t\t" << green << "OK" << def << std::endl;
+				else	
+					std::cout << "\t\t" << red << "KO" << def << std::endl;
+			}
+
+			std::cout << std::left << std::setw(15) << std::left <<"Range Constructor ";			
+			{
+				//! fill a map
+				std::map<int, std::string> sm;
+				ft::map<int, std::string> my_m;
+
+				for (size_t i = 0; i < 1e4; i++)
+				{
+					sm.insert(std::make_pair(i, "range constructor test"));
+					my_m.insert(ft::make_pair(i, "range constructor my_test"));
+				}
+
+ 				std::map<int, std::string> m (sm.begin(),sm.end());
+ 				ft::map<int, std::string> ft_m (my_m.begin(),my_m.end());
+		
+				std::map<int, int>::iterator it , it_end;
+				ft::map<int, int>::iterator ft_it , ft_it_end;
+
+				size_t size, ft_size;
+				size =  m.size();
+				ft_size =  ft_m.size();
+				if ((size == ft_size) && (m.begin()->first == ft_m.begin()->first) )
+					std::cout <<"\t\t" << green << "OK" << def << std::endl;
+				else	
+					std::cout << "\t\t" << red << "KO" << def << std::endl;
+			}
+
+			std::cout << std::left << std::setw(15) << std::left <<"Copy Constructor ";			
+			{
+				//! fill a map
+				std::map<int, std::string> sm;
+				ft::map<int, std::string> my_m;
+
+				for (size_t i = 0; i < 1e4; i++)
+				{
+					sm.insert(std::make_pair(i, "v"));
+					my_m.insert(ft::make_pair(i, "v"));
+				}
+ 				std::map<int, std::string> m (sm.begin(),sm.end());
+ 				ft::map<int, std::string> ft_m (my_m.begin(),my_m.end());
+
+				std::map<int, int>::iterator it , it_end;
+				ft::map<int, int>::iterator ft_it , ft_it_end;
+
+				size_t size, ft_size;
+				size =  m.size();
+				ft_size =  ft_m.size();
+				if ((size == ft_size) && (m.begin()->first == ft_m.begin()->first) )
+					std::cout <<"\t\t" << green << "OK" << def << std::endl;
+				else	
+					std::cout << "\t\t" << red << "KO" << def << std::endl;
+			}
+
+			std::cout << std::left << std::setw(15) << std::left <<"\nInsert  Method ";			
+			{
+				time_t start;
 				std::map<int, int> m;
 				ft::map<int, int> ft_m;
 				
@@ -78,13 +151,17 @@ int main()
 					m.insert(std::make_pair(i, i));
 					ft_m.insert(ft::make_pair(i, i));
 				}
-				
 				start = get_time();
-				std::map<int, int> m1(m1.begin(), m1.end());
-				
-				ft::map<int, int> ft_m1(ft_m1.begin(), ft_m1.end());
+				std::map<int, int>::iterator it , it_end;
+				ft::map<int, int>::iterator ft_it , ft_it_end;
+			
+				it = m.begin();
+				it_end = m.end();
 
-
+				ft_it = ft_m.begin();
+				ft_it_end = ft_m.end();
+				// std::map<int, int> m1(, m1.end());
+				// ft::map<int, int> ft_m1(ft_m1.begin(), ft_m1.end());
 				
 			}
 		} 
@@ -92,31 +169,3 @@ int main()
 	}
 	return EXIT_SUCCESS;
 }
-
-
-
-// void printBT(const std::string& prefix,  ft::avl_tree<ft::pair<int, std::string> >::node_type* node, bool isLeft)
-// {
-// 	if( node != nullptr )
-// 	{
-// 		std::cout << prefix;
-// 		std::cout << (isLeft ? "├──" : "└──" );
-// 		// print the value of the node
-// 		std::cout << node->data.first << std::endl;
-// 		// enter the next tree level - left and right branch
-// 		printBT( prefix + (isLeft ? "│   " : "    "), node->left, true);
-// 		printBT( prefix + (isLeft ? "│   " : "    "), node->right, false);
-// 	}
-// }
-
-// void print_parent( ft::avl_tree<ft::pair<int , std::string> >::node_type* root)
-// {
-// 	if (root->left != NULL)
-// 		print_parent(root->left);
-// 	if (root->right != NULL)
-// 		print_parent(root->right);
-// 	if (root->rootPtr != NULL)
-// 		std::cout << "parent of " << root->data.first << " is : " << root->rootPtr->data.first << "  "<< root->Height  << std::endl;
-// 	else
-// 		std::cout << "node " << root->data.first << " is root of the tree" << ":" << root->Height << std::endl;
-// }

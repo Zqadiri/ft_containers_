@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/03/08 14:42:21 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/02 11:08:10 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ namespace ft
 			return node;
 		}
 
-		node_type		*balanceAfterRemove(node_type *node, const key_type key)
+		node_type		*balanceAfterRemove(node_type *node)
 		{
 			node->Height = 1 + max(height(node->left), height(node->right));
   			int balanceFactor = getBalanceFactor(node);
@@ -367,7 +367,7 @@ namespace ft
 					root->left = deleteNode(root->left, ret->data.first);
 				}
 			}
-			root = balanceAfterRemove(root, key);
+			root = balanceAfterRemove(root);
 			return root;
 		}
 

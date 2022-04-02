@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/03/04 16:48:55 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/02 17:44:33 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ namespace ft
 		}
 
 		/*
-		 TODO: Access element
-		 If k matches the key of an element the function returns a reference to its mapped value.
-		 If k does not match the key of any element the function inserts a new element .
-		 (*((this->insert(make_pair(k,mapped_type()))).first)).second
+			TODO: Access element
+			If k matches the key of an element the function returns a reference to its mapped value.
+			If k does not match the key of any element the function inserts a new element .
+			(*((this->insert(make_pair(k,mapped_type()))).first)).second
 		*/
 	
 		mapped_type& operator[] (const key_type& k){
@@ -169,13 +169,13 @@ namespace ft
 		iterator begin(){
 			if (!_tree.rootPtr)
 				return (iterator());
-			node_type *temp = _tree.beginTree(_tree.rootPtr);
-			iterator it(_tree, temp);
+			iterator it(_tree, _tree.beginTree(_tree.rootPtr));
 			return (it);	
 		}
 
 		const_iterator begin() const{
-			node_type *temp = _tree.beginTree(_tree.rootPtr);
+			if (!_tree.rootPtr)
+				return (iterator());
 			const_iterator it(_tree, _tree.beginTree(_tree.rootPtr));
 			return (it);		
 		}
@@ -209,7 +209,6 @@ namespace ft
 			const_iterator it(_tree, temp);
 			return (++it);		
 		}
-		
 		
 		/*
 		 TODO: Insert a single element
