@@ -61,7 +61,7 @@ int main()
 		{
 			std::cout << blue << "-----------------------------------------------------------" << def << std::endl;
 			std::cout << blue << "------------------------ Map Tests ------------------------" << def << std::endl;
-			std::cout << std::left << std::setw(15) << std::left <<"\nDefault Constructor ";			
+			std::cout << std::left << std::setw(15) << std::left <<"\nDefault Constructor 			";			
 			{
 				std::map<char, int> m;
 				ft::map<char, int> ft_m;
@@ -87,7 +87,7 @@ int main()
 					std::cout << "\t\t" << red << "KO" << def << std::endl;
 			}
 
-			std::cout << std::left << std::setw(15) << std::left <<"Range Constructor ";
+			std::cout << std::left << std::setw(15) << std::left <<"Range Constructor 			";
 			{
 				//! fill a map
 				std::map<int, std::string> sm;
@@ -114,7 +114,7 @@ int main()
 					std::cout << "\t\t" << red << "KO" << def << std::endl;
 			}
 
-			std::cout << std::left << std::setw(15) << std::left <<"Assignement  Operator= ";
+			std::cout << std::left << std::setw(15) << std::left <<"Assignement  Operator=			";
 			{
 				//! fill a map
 				std::map<int, std::string> sm;
@@ -137,7 +137,7 @@ int main()
 					std::cout << "\t\t" << red << "KO" << def << std::endl;
 			}
 
-			std::cout << std::left << std::setw(15) << std::left <<"Copy Constructor ";			
+			std::cout << std::left << std::setw(15) << std::left <<"Copy Constructor 			";			
 			{
 				//! fill a map
 				std::map<int, std::string> sm;
@@ -163,7 +163,7 @@ int main()
 					std::cout << "\t\t" << red << "KO" << def << std::endl;
 			}
 
-			std::cout << std::left << std::setw(15) << std::left <<"Clear  Method ";			
+			std::cout << std::left << std::setw(15) << std::left <<"Clear  Method 			";			
 			{
 				std::map<int, char> m;
 				ft::map<int, char> ft_m;
@@ -183,7 +183,7 @@ int main()
 					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
 			}
 
-			std::cout << std::left << std::setw(15) << std::left <<"Empty  Method ";			
+			std::cout << std::left << std::setw(15) << std::left <<"Empty  Method			";			
 			{
 				std::map<int, char> m;
 				ft::map<int, char> ft_m;
@@ -201,7 +201,7 @@ int main()
 					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
 			}
 
-			std::cout << std::left << std::setw(15) << std::left <<"Find  Method ";			
+			std::cout << std::left << std::setw(15) << std::left <<"Find  Method 			";			
 			{
 				std::map<int, char> m;
 				ft::map<int, char> ft_m;
@@ -225,7 +225,7 @@ int main()
 					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
 			}
 
-			std::cout << std::left << std::setw(15) << std::left <<"Get_allocator  Method ";
+			std::cout << std::left << std::setw(15) << std::left <<"Get_allocator  Method 		";
 			{
 				int psize , ft_psize;
 				std::map<char,int> mymap;
@@ -244,7 +244,7 @@ int main()
 					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
 			}
 
-			std::cout << std::left << std::setw(15) << std::left <<"Insert  Method ";			
+			std::cout << std::left << std::setw(15) << std::left <<"Insert  Method 			";			
 			{
 				std::map<int, int> m;
 				ft::map<int, int> ft_m;
@@ -270,7 +270,7 @@ int main()
 					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
 			}
 
-			std::cout << std::left << std::setw(15) << std::left <<"Access  Operator[] ";
+			std::cout << std::left << std::setw(15) << std::left <<"Access  Operator[] 		";
 			{
 				std::map<char, std::string> m;
 				ft::map<char, std::string> ft_m;
@@ -287,10 +287,36 @@ int main()
 				else	
 					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
 			}
-			std::cout << std::left << std::setw(15) << std::left <<"Swap  Method ";
+			std::cout << std::left << std::setw(15) << std::left <<"Upper Lower Bound Methods	";
 			{
-				
+				std::map<char,int> mymap;
+				std::map<char,int>::iterator itlow,itup;
+
+				mymap['a']=20;
+				mymap['b']=40;
+				mymap['c']=60;
+				mymap['d']=80;
+				mymap['e']=100;
+
+				itlow = mymap.lower_bound ('b');  // itlow points to b
+				itup = mymap.upper_bound ('d');
+				ft::map<char,int> ftmap;
+				ft::map<char,int>::iterator ft_itlow,ft_itup;
+
+				ftmap['a']=20;
+				ftmap['b']=40;
+				ftmap['c']=60;
+				ftmap['d']=80;
+				ftmap['e']=100;
+
+				ft_itlow = ftmap.lower_bound ('b');  // itlow points to b
+				ft_itup = ftmap.upper_bound ('d'); 
+				if (mymap.size() == ftmap.size() && (ft_itlow->second == itlow->second) && (itup->second == ft_itup->second))
+					std::cout <<"\t\t\t" << green << "OK" << def << std::endl;
+				else	
+					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
 			}
+
 		} 
 		catch (std::exception &e){
 			std::cout << "Exception Occured" << std::endl;
