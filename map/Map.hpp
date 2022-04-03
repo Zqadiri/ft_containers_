@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/04/02 17:44:33 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/03 14:51:40 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ namespace ft
 			node_type *ret = _tree.searchKey(k, _tree.rootPtr);
  			return ret->data.second;
 		}
-
 
 		// !------- Member functions ----------!//
 

@@ -87,7 +87,7 @@ int main()
 					std::cout << "\t\t" << red << "KO" << def << std::endl;
 			}
 
-			std::cout << std::left << std::setw(15) << std::left <<"Range Constructor ";			
+			std::cout << std::left << std::setw(15) << std::left <<"Range Constructor ";
 			{
 				//! fill a map
 				std::map<int, std::string> sm;
@@ -95,8 +95,8 @@ int main()
 
 				for (size_t i = 0; i < 1e4; i++)
 				{
-					sm.insert(std::make_pair(i, "range constructor test"));
-					my_m.insert(ft::make_pair(i, "range constructor my_test"));
+					sm.insert(std::make_pair(i, "range"));
+					my_m.insert(ft::make_pair(i, "ft range"));
 				}
 
  				std::map<int, std::string> m (sm.begin(),sm.end());
@@ -109,6 +109,29 @@ int main()
 				size =  m.size();
 				ft_size =  ft_m.size();
 				if ((size == ft_size) && (m.begin()->first == ft_m.begin()->first) )
+					std::cout <<"\t\t" << green << "OK" << def << std::endl;
+				else	
+					std::cout << "\t\t" << red << "KO" << def << std::endl;
+			}
+
+			std::cout << std::left << std::setw(15) << std::left <<"Assignement  Operator= ";
+			{
+				//! fill a map
+				std::map<int, std::string> sm;
+				ft::map<int, std::string> my_m;
+ 				std::map<int, std::string> m;
+ 				ft::map<int, std::string> ft_m;
+
+				for (size_t i = 0; i < 1e4; i++)
+				{
+					sm.insert(std::make_pair(i, "std"));
+					my_m.insert(ft::make_pair(i, "ft"));
+				}
+				m = sm;
+				ft_m = my_m;
+				std::map<int, int>::iterator it , it_end;
+				ft::map<int, int>::iterator ft_it , ft_it_end;
+				if ((m.size() == ft_m.size()) && (m.begin()->first == ft_m.begin()->first) )
 					std::cout <<"\t\t" << green << "OK" << def << std::endl;
 				else	
 					std::cout << "\t\t" << red << "KO" << def << std::endl;
@@ -140,9 +163,89 @@ int main()
 					std::cout << "\t\t" << red << "KO" << def << std::endl;
 			}
 
-			std::cout << std::left << std::setw(15) << std::left <<"\nInsert  Method ";			
+			std::cout << std::left << std::setw(15) << std::left <<"Clear  Method ";			
 			{
-				time_t start;
+				std::map<int, char> m;
+				ft::map<int, char> ft_m;
+
+				m.clear();
+				ft_m.clear();
+				for (size_t i = 0; i < 14; i++)
+				{
+					m.insert(std::make_pair(i, 'Z'));
+					ft_m.insert(ft::make_pair(i, 'Z'));
+				}
+				m.clear();
+				ft_m.clear();
+				if ((m.size() == ft_m.size()) && (m.empty() == ft_m.empty()))
+					std::cout <<"\t\t\t" << green << "OK" << def << std::endl;
+				else	
+					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
+			}
+
+			std::cout << std::left << std::setw(15) << std::left <<"Empty  Method ";			
+			{
+				std::map<int, char> m;
+				ft::map<int, char> ft_m;
+
+				bool ret = m.empty();
+				bool ft_ret = ft_m.empty();
+				for (size_t i = 0; i < 14; i++)
+				{
+					m.insert(std::make_pair(i, 'Z'));
+					ft_m.insert(ft::make_pair(i, 'Z'));
+				}
+				if ((ret == ft_ret) && (m.empty() == ft_m.empty()))
+					std::cout <<"\t\t\t" << green << "OK" << def << std::endl;
+				else	
+					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
+			}
+
+			std::cout << std::left << std::setw(15) << std::left <<"Find  Method ";			
+			{
+				std::map<int, char> m;
+				ft::map<int, char> ft_m;
+
+				for (size_t i = 0; i < 1e4; i++)
+				{
+					m.insert(std::make_pair(i, 'Z'));
+					ft_m.insert(ft::make_pair(i, 'Z'));
+				}
+				m[1000] = 'P';
+				ft_m[1000] = 'P';
+				std::map<int,char>::iterator it, p_it;
+				ft::map<int,char>::iterator ft_it , ft_p_it;
+				it = m.find('P'); //! ASCII 80
+				ft_it = ft_m.find('P');
+				p_it = m.find(1000);
+				ft_p_it = ft_m.find(1000);
+				if ((m.size() == ft_m.size()) && (it->second == ft_it->second))
+					std::cout <<"\t\t\t" << green << "OK" << def << std::endl;
+				else	
+					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
+			}
+
+			std::cout << std::left << std::setw(15) << std::left <<"Get_allocator  Method ";
+			{
+				int psize , ft_psize;
+				std::map<char,int> mymap;
+				ft::map<char,int> ftmap;
+				std::pair<const char,int>* p;
+				ft::pair<const char,int>* ft_p;
+
+				p=mymap.get_allocator().allocate(5);
+				ft_p= ftmap.get_allocator().allocate(5);
+
+				psize = sizeof(std::map<char,int>::value_type)*5;
+				ft_psize = sizeof(ft::map<char,int>::value_type)*5;
+				if (psize == ft_psize)
+					std::cout <<"\t\t\t" << green << "OK" << def << std::endl;
+				else	
+					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
+			}
+
+			std::cout << std::left << std::setw(15) << std::left <<"Insert  Method ";			
+			{
 				std::map<int, int> m;
 				ft::map<int, int> ft_m;
 				
@@ -151,21 +254,47 @@ int main()
 					m.insert(std::make_pair(i, i));
 					ft_m.insert(ft::make_pair(i, i));
 				}
-				start = get_time();
 				std::map<int, int>::iterator it , it_end;
 				ft::map<int, int>::iterator ft_it , ft_it_end;
 			
 				it = m.begin();
 				it_end = m.end();
-
 				ft_it = ft_m.begin();
 				ft_it_end = ft_m.end();
-				// std::map<int, int> m1(, m1.end());
-				// ft::map<int, int> ft_m1(ft_m1.begin(), ft_m1.end());
+				--it_end;
+				--ft_it_end;
+				if ((it->first == ft_it->first) && (it_end->first == ft_it_end->first) 
+				&& (m.size() == ft_m.size()))
+					std::cout <<"\t\t\t" << green << "OK" << def << std::endl;
+				else	
+					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
+			}
+
+			std::cout << std::left << std::setw(15) << std::left <<"Access  Operator[] ";
+			{
+				std::map<char, std::string> m;
+				ft::map<char, std::string> ft_m;
+
+				m['a']="an element";
+				m['b']="another element";
+				m['c']= m['b'];
+
+				ft_m['a']="an element";
+				ft_m['b']="another element";
+				ft_m['c']= ft_m['b'];
+				if ((m.size() == ft_m.size()) && (ft_m['a'] == m['a']) && (ft_m['c'] == m['c']))
+					std::cout <<"\t\t\t" << green << "OK" << def << std::endl;
+				else	
+					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
+			}
+			std::cout << std::left << std::setw(15) << std::left <<"Swap  Method ";
+			{
 				
 			}
 		} 
-		catch (std::exception &e){}
+		catch (std::exception &e){
+			std::cout << "Exception Occured" << std::endl;
+		}
 	}
 	return EXIT_SUCCESS;
 }
