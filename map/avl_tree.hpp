@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/04/03 13:55:37 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/09 01:46:46 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,16 @@ namespace ft
 			return (rootPtr != rhs.rootPtr);
 		}
 
-		~avl_tree(){};
+		~avl_tree(){				
+		}
+
+		void deleteTree(node_type* node){	
+			if (node == NULL)
+				return;
+			deleteTree(node->left);
+			deleteTree(node->right);
+			nodeAlloc.deallocate(node, 1);
+		}
 
 		node_type *nextNode(node_type *node)const 
 		{
@@ -162,7 +171,6 @@ namespace ft
 		
 		node_type*		leftLeftCase(node_type *root)
 		{
-			// std::cout << "root : "  << root->data.first << std::endl;
 			node_type *new_parent = root->left;
 			node_type *tmp = new_parent->right; 
 			new_parent->right = root;
@@ -172,7 +180,6 @@ namespace ft
 			new_parent->rootPtr = root->rootPtr;
 			root->rootPtr = new_parent;
 			updateHeight(root, new_parent);
-			// std::cout << "leftLeftCase" << std::endl;
 			return new_parent;
 		}
 
@@ -187,7 +194,6 @@ namespace ft
 			new_parent->rootPtr = root->rootPtr;
 			root->rootPtr = new_parent;
 			updateHeight(root, new_parent);
-			// std::cout << "RightRightCase" << std::endl;
 			return new_parent;
 		}
 
@@ -195,7 +201,6 @@ namespace ft
 		{
   			node->Height = 1 + max(height(node->left), height(node->right));
   			int balanceFactor = getBalanceFactor(node);
-			// std::cout << "balanceFactor : " << balanceFactor  << std::endl;
   			if (balanceFactor > 1)
 			{
   				if (comp(key, node->left->data.first))

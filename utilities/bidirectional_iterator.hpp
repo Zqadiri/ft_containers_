@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/02/24 15:06:03 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/09 01:47:42 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ namespace ft
 		
 		map_iterator(): root(), nodePtr(), _tree() {};
 
-		map_iterator( const tree &rhs, node_type *rootPtr): root(), nodePtr(), _tree(){
+		map_iterator( const tree &rhs, node_type *rootPtr): root(), nodePtr(){
 			this->_tree = rhs;
 			nodePtr = rootPtr;
 			root = _tree.rootPtr;
@@ -64,7 +64,8 @@ namespace ft
 			return (*this);
 		}
 
-		~map_iterator(){}
+		~map_iterator(){
+		}
 
 		/* 
 		 TODO: equality/inequality operators

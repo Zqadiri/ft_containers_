@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/04/03 14:51:40 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/09 01:46:31 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,15 @@ namespace ft
 
 		map (const map& x){
 			*this = x;
+		}
+
+		virtual ~map (void){
+			// this->clear();
+			// iterator start = this->begin();
+			// for (; start.nodePtr != nullptr; start++){
+			// 	_tree.nodeAlloc.deallocate(start.nodePtr, 1);
+			// }
+			_tree.deleteTree(_tree.rootPtr);
 		}
 
 		//! ----------- Operators --------------!//
