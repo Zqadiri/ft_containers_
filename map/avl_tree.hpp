@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/04/09 01:46:46 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/11 22:24:51 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ namespace ft
 			typedef					Compare					compare;
 
 		avl_tree(){
-			rootPtr = nodeAlloc.allocate(1);
-			rootPtr->right = rootPtr->left = nullptr;
+			// rootPtr = nodeAlloc.allocate(1);
+			// rootPtr->right = rootPtr->left = nullptr;
 			rootPtr = nullptr;
 			treeSize = 0;
 		};
@@ -60,7 +60,7 @@ namespace ft
 			return (rootPtr != rhs.rootPtr);
 		}
 
-		~avl_tree(){				
+		~avl_tree(){
 		}
 
 		void deleteTree(node_type* node){	
@@ -339,7 +339,6 @@ namespace ft
 
 		node_type*		deleteNode(node_type *root,const key_type key)
 		{
-			// std::cout << "KeyToRemove : " << key << std::endl; 
 			if (root == nullptr)
 				return nullptr;
 			else if (!comp(key,root->data.first) && (key != root->data.first))
@@ -351,17 +350,19 @@ namespace ft
 				if (root->left == nullptr)
 				{
 					node_type *new_parent = root->right;
-					nodeAlloc.destroy(root);
+					node_type *temp = root->rootPtr;
+					nodeAlloc.deallocate(root, 1);
 					if (new_parent != nullptr)
-						new_parent->rootPtr = root->rootPtr;
+						new_parent->rootPtr = temp;
 					return new_parent;
 				}
 				else if (root->right == nullptr )
 				{
 					node_type *new_parent = root->left;
-					nodeAlloc.destroy(root);
+					node_type *temp = root->rootPtr;
+					nodeAlloc.deallocate(root, 1);
 					if (new_parent != nullptr)
-						new_parent->rootPtr = root->rootPtr;
+						new_parent->rootPtr = temp;
 					return new_parent;
 				}
 				else{

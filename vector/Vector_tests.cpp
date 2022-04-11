@@ -3236,5 +3236,6 @@ int main(void)
 	reverse_iterator_tests();
 	reverse_iterator_with_ft_vector();
 	vector_tests();
+    system ("leaks a.out");
 	return 0;
 }

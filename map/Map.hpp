@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/04/09 01:46:31 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/11 22:57:13 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,9 @@ namespace ft
 		typedef	class value_compare : public std::binary_function<value_type, value_type, bool>
 		{
 			friend class map; //?
-			protected:
+			public:
 				Compare comp;
   				value_compare (Compare c) : comp(c) {}
-			public:
 				bool operator() (const value_type& x, const value_type& y) const{
 					return comp(x.first, y.first);
   				}
@@ -73,38 +72,43 @@ namespace ft
 			const allocator_type& alloc = allocator_type()): _tree(){
 			_comp = comp;
 			_alloc = alloc;
-			for ( ; first != last ; first++){
-				this->insert(ft::make_pair(first->first, first->second));
-			}
+			this->insert (first, last);
+			// for ( ; first != last ; first++){
+			// 	this->insert(ft::make_pair(first->first, first->second));
+			// }
 		}	
 
 		map (const map& x){
 			*this = x;
 		}
 
-		virtual ~map (void){
-			// this->clear();
-			// iterator start = this->begin();
-			// for (; start.nodePtr != nullptr; start++){
-			// 	_tree.nodeAlloc.deallocate(start.nodePtr, 1);
-			// }
-			_tree.deleteTree(_tree.rootPtr);
+		~map (void){
+			this->erase(begin(), end());
 		}
 
 		//! ----------- Operators --------------!//
 
+		// map& operator=(const map& x){
+		// 	_alloc = x._alloc;
+		// 	_comp = x._comp;
+		// 	if (x.size() == 0){
+		// 		this->clear();
+		// 		this->_tree.rootPtr = nullptr;
+		// 		return *this;
+		// 	}
+		// 	if (x._tree.treeSize < _tree.treeSize)
+		// 		this->_tree.rootPtr = nullptr;
+		// 	this->clear();
+		// 	if (x._tree.treeSize)
+		// 		this->insert(x.begin(), x.end());
+		// 	return (*this);
+		// }
+
 		map& operator=(const map& x){
 			_alloc = x._alloc;
 			_comp = x._comp;
-			if (x.size() == 0){
-				this->clear();
-				this->_tree.rootPtr = nullptr;
-				return *this;
-			}
-			if (x._tree.treeSize < _tree.treeSize)
-				this->_tree.rootPtr = nullptr;
 			this->clear();
-			if (x._tree.treeSize)
+			if (x.size())
 				this->insert(x.begin(), x.end());
 			return (*this);
 		}
@@ -134,14 +138,7 @@ namespace ft
 		*/
 
 		void clear(){ //! deallocate
-			if (!this->empty())
-			{
-				iterator start = this->begin();
-				iterator end = this->end();
-				for (; end != start; end--)
-					_tree.nodeAlloc.destroy(start.nodePtr);
-				_tree.treeSize = 0;
-			}
+			this->erase(begin(), end());
 		}
 
 		void swap (map& x){
