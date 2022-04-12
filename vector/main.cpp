@@ -419,5 +419,6 @@ int main() {
 	std::cout << blue << "-----------------------------------------------------------" << def << std::endl;
 	std::cout << blue << "---------------------- Vector Tests -----------------------" << def << std::endl;
 	vector_tests();
+	system("leaks a.out");
 	return EXIT_SUCCESS;
 }
