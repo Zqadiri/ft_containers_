@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 19:10:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/01/06 14:44:05 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/15 00:41:34 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,6 @@
 namespace ft
 {
 	//!----------------Category tags--------------!//
-	
-	// struct input_iterator_tag {};
-	// struct output_iterator_tag {};
-	// struct forward_iterator_tag {};
-	// struct bidirectional_iterator_tag {};
-	// struct random_access_iterator_tag {};
-	
 	/*
 		This is a base class template that can be used 
 		to derive iterator classes from it. 
@@ -56,21 +49,21 @@ namespace ft
 	template <class Iterator> 
 	class reverse_iterator
 	{
+			//?------------Member types--------------?//
 
-			//?------------Member types--------------?//	
 		public :
 
-			/*Iterator's type*/
+			// Iterator's type
 			typedef Iterator													iterator_type;
-			/*Preserves Iterator's category*/
+			// Preserves Iterator's category
 			typedef	typename ft::iterator_traits<Iterator>::iterator_category	iterator_category;
-			/*Preserves Iterator's value type*/
+			// Preserves Iterator's value type
 			typedef typename ft::iterator_traits<Iterator>::value_type			value_type;
-			/*Preserves Iterator's difference type*/
+			// Preserves Iterator's difference type
 			typedef	typename ft::iterator_traits<Iterator>::difference_type		difference_type;
-			/*Preserves Iterator's pointer type*/
+			// Preserves Iterator's pointer type
 			typedef typename ft::iterator_traits<Iterator>::pointer				pointer;
-			/*Preserves Iterator's reference type*/
+			// Preserves Iterator's reference type
 			typedef typename ft::iterator_traits<Iterator>::reference			reference;
 			
 			//?------------- Constructors --------------?//
@@ -83,15 +76,11 @@ namespace ft
 		** in the reverse order.
 		*/
 
-		//* Constructs a reverse iterator that points to no object.
-		 reverse_iterator() : _it(Iterator()){
-		}
-
-		//* Constructs a reverse iterator from some original iterator it. 
+		reverse_iterator() : _it(Iterator()){}
+ 
 		explicit reverse_iterator (const iterator_type  &it): _it(it){
 		}
 		
-		//* copy / type-cast constructor
 		template <typename Iter>
 		 reverse_iterator (const reverse_iterator<Iter>& rev_it){
 			*this = rev_it;
@@ -102,7 +91,6 @@ namespace ft
 		/*
 		TODO: Return base iterator
 		** base() converts a reverse iterator into the corresponding forward iterator
-		** https://stackoverflow.com/questions/16609041/c-stl-what-does-base-do
 		*/
 
 		iterator_type base() const{
@@ -135,7 +123,6 @@ namespace ft
 			return (*tmp);
 		}
 
-
 		/*
 		TODO: Addition operator
 		** Returns a reverse iterator pointing to the element located n positions away.
@@ -153,13 +140,11 @@ namespace ft
 		** Advances the reverse_iterator by one position.
 		*/
 
-		//pre-increment version
 		reverse_iterator& operator++(){
 			--(_it);
 			return (*this);
 		}
 
-		//post-increment version returns the value *this had before the call.
 		reverse_iterator operator++(int){
 			reverse_iterator temp = *this;
 			++(*this);
@@ -169,7 +154,7 @@ namespace ft
 		/*
 		TODO: Advance iterator
 		** Advances the reverse_iterator by n element positions
-		** Internally, the function decreases by n the base iterator kept by the object		
+		** Internally, the function decreases by n the base iterator kept by the object	
 		*/
 
 		reverse_iterator& operator+= (difference_type n){
@@ -190,16 +175,14 @@ namespace ft
 		
 		/*
 		TODO: Decrement operator
-		** Decreases the reverse_iterator by one position.	
+		** Decreases the reverse_iterator by one position.
 		*/
 
-		// pre-decrement version
 		reverse_iterator& operator--(){
 			++(_it);
 			return (*this);
 		}
 
-		// post-decrement version
 		reverse_iterator operator--(int) {
   			reverse_iterator temp = *this;
   			--(*this);
@@ -230,7 +213,7 @@ namespace ft
 		/*
 		TODO: Dereference iterator with offset
 		** Internally, the function accesses the proper element 
-		** of its base iterator, returning the same as: base()[-n-1].
+		** of its base iterator, returning the same as: base()[-n-1]
 		*/
 	
 		reference operator[] (difference_type n) const{

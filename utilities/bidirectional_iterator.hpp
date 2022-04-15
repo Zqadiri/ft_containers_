@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:36:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/04/09 22:35:56 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/15 00:08:01 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 namespace ft
 {
 	template <typename T, typename Compare = std::less<typename T::first_type> >
-	class map_iterator : public ft::iterator<std::bidirectional_iterator_tag, T> // ? compare
+	class map_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 	{
 		typedef 			map_iterator< const T, Compare >	const_iterator;
 		public:
@@ -41,16 +41,15 @@ namespace ft
 		map_iterator(): root(), nodePtr(), _tree() {};
 
 		map_iterator( const tree &rhs, node_type *rootPtr): root(), nodePtr(){
-			// puts(">>> here");
-			this->_tree = rhs;
+			_tree = rhs;
 			nodePtr = rootPtr;
 			root = _tree.rootPtr;
-        }
+		}
 
 		map_iterator(node_type *rootPtr): root(), nodePtr(){
 			nodePtr = rootPtr;
 			root = _tree.rootPtr;
-        }
+		}
 
 		map_iterator(const map_iterator &mi): root(), nodePtr(), _tree(){
 			*this = mi;
@@ -116,7 +115,6 @@ namespace ft
 			return copy;
 		}
 	
-		// * decrement. move backward to largest value < current value
 		map_iterator&  operator-- (){
 			nodePtr = _tree.preNode(nodePtr);
 			return (*this);
@@ -128,9 +126,9 @@ namespace ft
 			return (copy);
 		}
 
-		public: //!change it to private
+		private: //!change it to private
 			node_type		*root;
-			node_type		*nodePtr; //! current location in the tree 
+			node_type		*nodePtr;
 			tree			_tree;
 	};
 }

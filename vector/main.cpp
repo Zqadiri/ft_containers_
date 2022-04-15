@@ -371,8 +371,8 @@ void    vector_tests(void)
 		std::vector<std::string> v1(106, "a");
 		ft::Vector<std::string> ft_v1(106, "a");
 
-		std::vector<std::string>::iterator it = v.insert(v.begin(), "f");
-		ft::Vector<std::string>::iterator ft_it = ft_v.insert(ft_v.begin(), "f");
+		std::vector<std::string>::iterator it;
+		ft::Vector<std::string>::iterator ft_it;
 
 		v.insert(v.begin(), v1.begin(),v1.end());
 		ft_v.insert(ft_v.begin(),ft_v1.begin(), ft_v1.end());
@@ -382,11 +382,16 @@ void    vector_tests(void)
 		c = v.capacity();
 		ft_c = ft_v.capacity();
 
+		v.insert(v.begin(), "f");
+		ft_v.insert(ft_v.begin(), "f");
+
+		it = v.begin();
+		ft_it = ft_v.begin();
+
 		if ((s == ft_s) && (c == ft_c) && (*it == *ft_it))
 			std::cout << "\t\t\t\t" << green << "OK" << def << std::endl;
 		else
 			std::cout << "\t\t\t\t" << red << "KO" << def << std::endl;
-
 	}
 	std::cout << std::left << std::setw(35) << std::left <<"Reserve method";
 	{
@@ -404,7 +409,24 @@ void    vector_tests(void)
 			std::cout << "\t\t\t\t" << green << "OK" << def << std::endl;
 		else
 			std::cout << "\t\t\t\t" << red << "KO" << def << std::endl;
+	}
+	std::cout << std::left << std::setw(35) << std::left <<"Compare Const Iterator & Iterator ";
+	{
+		ft::Vector<int> ft_v(106, 8);
 
+		ft::Vector<int>::iterator ft_it, ft_it1;
+		ft::Vector<int>::const_iterator ft_cit, ft_cit1;
+
+		ft_it = ft_v.begin();
+		ft_cit = ft_v.begin();
+
+		ft_it1 = ft_v.begin() + 5;
+		ft_cit1 = ft_v.begin() + 5;
+
+		if ((ft_it == ft_cit) && (ft_it < ft_cit1) && (ft_it1 != ft_cit))
+			std::cout << "\t\t\t\t" << green << "OK" << def << std::endl;
+		else
+			std::cout << "\t\t\t\t" << red << "KO" << def << std::endl;
 	}
 	}
 	catch (std::exception &e){
@@ -412,6 +434,7 @@ void    vector_tests(void)
 }
 
 int main() {
+
 	Color::Modifier green(Color::FG_GREEN);
 	Color::Modifier blue(Color::FG_BLUE);
 	Color::Modifier def(Color::FG_DEFAULT);
@@ -419,6 +442,6 @@ int main() {
 	std::cout << blue << "-----------------------------------------------------------" << def << std::endl;
 	std::cout << blue << "---------------------- Vector Tests -----------------------" << def << std::endl;
 	vector_tests();
-	system("leaks a.out");
+	// system("leaks a.out");
 	return EXIT_SUCCESS;
 }

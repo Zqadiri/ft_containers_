@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:13:42 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/04/02 16:00:40 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/14 23:18:26 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,55 +37,42 @@ namespace ft
 
 	template <class T, class Allocator = std::allocator<T> >
 	class Vector
-	{	
+	{
 		public:
 
 			//!-------------------- Member types ------------------------!//
-			/*The first template parameter
-			Type representing the type of data stored in a vector.*/
+			// The first template parameter Type representing the type of data stored in a vector
 			typedef T																value_type; 
-			/*The second template parameter*/
+			// The second template parameter
 			typedef Allocator														allocator_type;
-			/*Type that provides a reference to an element stored in a vector.*/
+			// Type that provides a reference to an element stored in a vector
 			typedef	typename allocator_type::reference								reference;
-			/*Type that provides a random access iterator that can read or
-			modify an element of an inverted vector.*/
 			typedef typename allocator_type::const_reference 						const_reference; 
-			/*Type that provides a pointer to an element of a vector.*/
+			// Type that provides a pointer to an element of a vector
 			typedef typename allocator_type::pointer 								pointer;
-			/*Type that provides a pointer to an constelement of a vector.*/
 			typedef typename allocator_type::const_pointer 							const_pointer;
-			/*Type that provides a random access iterator capable
-			of reading an constelement in a vector.*/
+			// Type that provides a random access iterator capable of reading an constelement in a vector
 			typedef random_access_iterator<T>										iterator;
-			/*Type that provides a random access iterator capable of reading
-			 an constelement in a vector.*/
 			typedef random_access_iterator<const T>									const_iterator;
-			/*Type that provides a random access iterator that can read or modify 
-			an element of an inverted vector.*/
+			// Type that provides a random access iterator that can read or modify an element of an inverted vector
 			typedef	reverse_iterator<iterator> 										reverse_iterator;
-			/*Type that provides a random access iterator capable of reading an 
-			constelement of the vector.*/
 			typedef	ft::reverse_iterator<const_iterator>							const_reverse_iterator;
-			/*Type that provides the difference between the addresses of two elements in a vector.*/
+			// Type that provides the difference between the addresses of two elements in a vector [ptrdiff_t]
 			typedef typename iterator_traits<iterator>::difference_type				difference_type;
-			/*Type that counts the number of elements in a vector.*/
+			// Type that counts the number of elements in a vector
 			typedef typename allocator_type::size_type								size_type;
 
-			//! ------------------------- Constructor ------------------------ !//
+			public:
+			//! ------------------------- Constructors ------------------------ !//
 
-			explicit Vector (const allocator_type& alloc = allocator_type())
+			explicit Vector (const allocator_type& alloc = allocator_type()) 
 			: _start(nullptr), _size(0), _capacity(0), _end(nullptr),  _alloc(alloc){
-			}
+			} // Default
 
 			explicit Vector (size_type n, const value_type& val = value_type(),
 				const allocator_type& alloc = allocator_type())
 			:_start(nullptr), _size(0), _capacity(0), _end(nullptr),  _alloc(alloc)
 			{
-				for (size_t i = 0; i < 1e6; i++)
-				{
-				}
-				
 				if (n > this->max_size())
 					throw std::length_error("vector");
 				_start = _alloc.allocate(n);
@@ -96,11 +83,11 @@ namespace ft
 					_end++;
 				}
 				_capacity = _size = n;
-			}
+			} // Fill
 			
 			template <class InputIterator>
 			explicit Vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
-				 typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
 				:_start(nullptr), _size(0), _capacity(0), _end(nullptr),  _alloc(alloc)
 			{
 				difference_type diff;
@@ -114,17 +101,30 @@ namespace ft
 					diff--;
 					_end++;
 				}
-			}
+			} // Range
 
 			Vector (const Vector& x):_start(nullptr), _size(0), _capacity(0), _end(nullptr){
 				*this = x;
+			} // Copy
+
+			Vector &operator=(const Vector& x){
+				for (size_t i = 0; i < _size; i++)
+					_alloc.destroy(_start + i);
+				_alloc.deallocate(_start, _capacity);
+				_size = x._size;
+				_start = _alloc.allocate(x._capacity);
+				_end = _start + _size;
+				for (size_t i = 0; i < _size; i++)
+					_alloc.construct((_start + i), *(x._start + i));
+				_alloc = x._alloc;
+				_capacity = x._capacity;
+				return (*this);
 			}
 
 			//! ------------------------- Destructor ------------------------ !//
 
 			/*
 			TODO: Destructor
-			** Destroy the container object.
 			** Destroy all elements in the container and deallocate
 			** the container capacity.
 			*/ 
@@ -134,11 +134,12 @@ namespace ft
 				_alloc.deallocate(_start, _capacity);
 			}
 			
-			//!------------------------- Member functions -----------------------!//
+			//!------------------------- Member functions -------------------- !//
 
 			iterator begin(){
 				return(this->_start);
 			}
+
 			const_iterator begin() const{
 				return(this->_start);
 			}
@@ -146,13 +147,14 @@ namespace ft
 			iterator end(){
 				return(_end);
 			}
+
 			const_iterator end() const{
 				return (this->_end);
 			}
 
 			/*
-			** - Return reverse iterator to reverse beginning
-			** rbegin points to the element right before the one that would be pointed to by member end
+			TODO: Return reverse iterator
+			** - rbegin points to the element right before the one that would be pointed to by member end
 			** - rend Returns a reverse iterator pointing to the theoretical element 
 			** preceding the first element in the vector
 			*/
@@ -172,6 +174,10 @@ namespace ft
 			const_reverse_iterator rend() const{
 				return (const_reverse_iterator(this->begin()));		
 			}
+			
+			/*
+			TODO: Size and capacity Methods
+			*/
 
 			size_type size() const{
 				return (_size);
@@ -188,17 +194,17 @@ namespace ft
 			
 			/*
 			TODO: Access element
-			**Returns a reference to the element at position n in the vector.
+			** Returns a reference to the element at position n in the vector.
 			*/
 
 			reference at (size_type n){
-				if (n >= this->size())
+				if (n < 0 || n >= this->size())
 					throw (std::out_of_range("vector"));
 				return ((*this)[n]);
 			} 
 			
 			const_reference at (size_type n) const{
-				if (n >= this->size())
+				if (n < 0 || n >= this->size())
 					throw (std::out_of_range("vector"));
 				return ((*this)[n]);
 			}
@@ -218,10 +224,16 @@ namespace ft
 			reference front(){
 				return(*_start);
 			}
+
 			const_reference front() const{
 				return(*_start);
 			}
 			
+			/*
+			TODO: Request a change in capacity
+			** Change the vector capacity be at least enough to contain n elements.
+			*/
+
 			void reserve (size_type n)
 			{
 				if (n >= this->max_size() || n < 0)
@@ -242,38 +254,27 @@ namespace ft
 
 			iterator insert (iterator position, const value_type& val)
 			{
-				Vector backup(*this);
-				try{
-					size_type pos = position - iterator(_start);
-					size_type pos_index = _end - &(*position);
-					if (_size == 0)
-					{
-						reserve(1);
-						_alloc.construct(_start, val);
-						_size++;
-						return (iterator(_start + pos));
-					}
-					if (_capacity < _size + 1)
-						reserve(_capacity * 2);
-					for (size_type i = 0; i < pos_index ; i++)
-						_alloc.construct(_end - i , *(_end - (i + 1)));
-					_alloc.construct(_end - pos_index, val);
+				size_type pos = position - iterator(_start);
+				size_type pos_index = _end - &(*position);
+				if (_size == 0)
+				{
+					reserve(1);
+					_alloc.construct(_start, val);
 					_size++;
-					_end++;
 					return (iterator(_start + pos));
 				}
-				catch (std::exception &e){
-					std::cout << "error" << std::endl;
-					*this = backup;
-					return (iterator(_start));
-				}
+				if (_capacity < _size + 1)
+					reserve(_capacity * 2);
+				for (size_type i = 0; i < pos_index ; i++)
+					_alloc.construct(_end - i , *(_end - (i + 1)));
+				_alloc.construct(_end - pos_index, val);
+				_size++;
+				_end++;
+				return (iterator(_start + pos));
 			}
 			
 			void insert (iterator position, size_type n, const value_type& val)
 			{
-				Vector backup(*this);
-				try
-				{
 				size_type pos_index = _end - &(*position);
 				if (_size == 0)
 				{
@@ -297,19 +298,12 @@ namespace ft
 					_alloc.construct(_end - i - 1, *(_end - ( n + i + 1)));
 				for (size_type j = 0; j < n; j++)
 					_alloc.construct(_end - pos_index - j - 1, val);
-				}
-				catch (std::exception &e){
-					std::cout << "error" << std::endl;
-					*this = backup;
-				}
 			}
 
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
 			{
-				Vector backup(*this);
-				try{
 				size_type pos_index = _end - &(*position);
 				size_type n = &(*last) - &(*first);
 				if (_size == 0)
@@ -333,15 +327,10 @@ namespace ft
 					_alloc.construct(_end - i - 1, *(_end - ( n + i + 1)));
 				for (size_type j = 0; j < n; j++, first++)
 					_alloc.construct(_end - pos_index - j - 1, *(&(*first)));
-				}
-				catch (std::exception &e){
-					std::cout << "error" << std::endl;
-					*this = backup;
-				}				
 			}
 
 			/*
-			** Remove element from the vector at "position".
+			TODO: Remove element from the vector at "position".
 			** Reduce the size of 1;
 			** Return value : an iterator point to the element position + 1
 			*/
@@ -368,16 +357,6 @@ namespace ft
 				_size -= n;
 				return (iterator(first_pointer));	
 			}
-			
-			//!--- optional ---!//
-
-			pointer 			data(){
-				return _start;
-			}
-
-			const_pointer			data() const{ 
-				return _start;
-			}
 
 			/*
 			TODO:Swap content
@@ -386,8 +365,7 @@ namespace ft
 			** Done by exchanging references to their data, without actually performing any element copy or movement
 			*/
 
-			void swap (Vector& x)
-			{
+			void swap (Vector& x){
 				std::swap(this->_size, x._size);
 				std::swap(this->_start, x._start);
 				std::swap(this->_alloc, x._alloc);
@@ -396,6 +374,7 @@ namespace ft
 			}
 			
 			/*
+			TODO: Clear the vector 
 			** Clear often doesn't actually reduce the storage used by a 
 			** vector, it merely destroys all the objects contained there.
 			*/
@@ -406,25 +385,9 @@ namespace ft
 				_size = 0;
 			}
 
-			allocator_type get_allocator() const
-			{
+			allocator_type get_allocator() const{
 				allocator_type ret(_alloc);
 				return (ret);
-			}
-
-			Vector &operator=(const Vector& x)
-			{
-				for (size_t i = 0; i < _size; i++)
-					_alloc.destroy(_start + i);
-				_alloc.deallocate(_start, _capacity);
-				_size = x._size;
-				_start = _alloc.allocate(x._capacity);
-				_end = _start + _size;
-				for (size_t i = 0; i < _size; i++)
-					_alloc.construct((_start + i), *(x._start + i));
-				_alloc = x._alloc;
-				_capacity = x._capacity;
-				return (*this);
 			}
 
 			void push_back (const value_type& val)
@@ -433,7 +396,6 @@ namespace ft
 					reserve(1);
 				else if (_size == _capacity)
 					reserve(_capacity * 2);
-				// _alloc.destroy(_end);
 				_alloc.construct(_end, val);
 				_size++;
 				_end++;
@@ -551,7 +513,6 @@ namespace ft
 			size_t				_capacity;
 			pointer				_end;
 			allocator_type		_alloc;
-			
 	};
 
 	template <class T, class Alloc>
@@ -595,7 +556,6 @@ namespace ft
 	void swap (Vector<T,Alloc>& x, Vector<T,Alloc>& y){
 		x.swap(y);
 	}
-	
 }
 
 #endif

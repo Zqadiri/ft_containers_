@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:24:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/04/11 22:24:51 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/15 00:33:56 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 using namespace std;
 namespace ft
 {
-	// The keyword typename was introduced to specify that the identifier that follows is a type. 
 	template <typename T,typename Compare = std::less<typename T::first_type>,
 	typename pairAllocator = std::allocator<T> > 
 	
@@ -38,8 +37,6 @@ namespace ft
 			typedef					Compare					compare;
 
 		avl_tree(){
-			// rootPtr = nodeAlloc.allocate(1);
-			// rootPtr->right = rootPtr->left = nullptr;
 			rootPtr = nullptr;
 			treeSize = 0;
 		};
@@ -77,8 +74,8 @@ namespace ft
 			if (node == nullptr)
 			{
 				node = rootPtr;
-				if (node == nullptr) //! empty tree
-					throw std::underflow_error("map : "); //! change it [Occurs when the result is not zero, but is too small to be represented]
+				if (node == nullptr)
+					throw std::underflow_error("map : ");
 				while (node->left != nullptr){
 					node = node->left; //* move to the smallest value in the tree
 				}
@@ -152,7 +149,7 @@ namespace ft
 			return first;
 		}
 
-		node_type*		beginTree( node_type *root) const 
+		node_type*	beginTree( node_type *root) const 
 		{
 			node_type *current = root;
 			while (current->left != nullptr)
@@ -229,12 +226,12 @@ namespace ft
 			node->Height = 1 + max(height(node->left), height(node->right));
   			int balanceFactor = getBalanceFactor(node);
 			
-			// Left Left Case
+			//? Left Left Case
 			if (balanceFactor > 1 &&
 				getBalanceFactor(node->left) >= 0)
 				return leftLeftCase(node);
 		
-			// Left Right Case
+			//? Left Right Case
 			if (balanceFactor > 1 &&
 				getBalanceFactor(node->left) < 0)
 			{
@@ -242,24 +239,23 @@ namespace ft
 				return leftLeftCase(node);
 			}
 		
-			// Right Right Case
+			//? Right Right Case
 			if (balanceFactor < -1 &&
 				getBalanceFactor(node->right) <= 0)
 				return rightRightCase(node);
 		
-			// Right Left Case
+			//? Right Left Case
 			if (balanceFactor < -1 &&
-				getBalanceFactor(node->right) > 0)
-			{
+				getBalanceFactor(node->right) > 0){
 				node->right = leftLeftCase(node->right);
 				return rightRightCase(node);
 			}
 			return node;
 		}
 		
-		bool			searchForKey(const key_type key, node_type* root)const
+		bool			searchForKey(const key_type key, node_type* root) const
 		{
-			if (root == nullptr) // * rearch the end of the tree
+			if (root == nullptr)
 				return false;
 			else if (root->data.first == key)
 				return true;
@@ -271,7 +267,7 @@ namespace ft
 
 		node_type*		searchKey(const key_type key, node_type* root) const
 		{
-			if (root == nullptr) // * rearch the end of the tree
+			if (root == nullptr)
 				return root;
 			else if (root->data.first == key)
 				return root;
