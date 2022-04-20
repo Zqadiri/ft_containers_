@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:13:42 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/04/14 23:18:26 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/20 16:21:04 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -506,7 +506,7 @@ namespace ft
 					_size = n;
 				}
 			}
-		
+
 		private:
 			pointer				_start;
 			size_t				_size;

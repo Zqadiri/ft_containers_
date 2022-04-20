@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 13:28:22 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/03/02 17:46:44 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/20 16:21:08 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "../vector/vector.hpp"
 #include <iostream>
+#include <stack>
 
 namespace ft
 {
@@ -57,35 +58,57 @@ namespace ft
 			_vec.pop_back();
 		}
 
-		//! --------------- relational operators --------------- !//
+		template< class U, class con >
+		friend bool operator==( const Stack<U,con>& lhs, const Stack<U,con>& rhs );
 
-		friend bool operator== (const Stack& lhs, const Stack& rhs){
-			return(lhs._vec == rhs._vec);
-		}
+		template< class U, class con >
+		friend bool operator!=( const Stack<U,con>& lhs, const Stack<U,con>& rhs );
 
-		friend bool operator!= (const Stack& lhs, const Stack& rhs){
-			return(!(lhs._vec == rhs._vec));
-		}
+		template< class U, class con >
+		friend bool operator<( const Stack<U,con>& lhs, const Stack<U,con>& rhs );
 
-		friend bool operator< (const Stack& lhs, const Stack& rhs){
-			return(lhs._vec < rhs._vec);
-		}
-		
-		friend bool operator<= (const Stack& lhs, const Stack& rhs){
-			return(!(rhs._vec < lhs._vec));
-		}
+		template< class U, class con >
+		friend bool operator<=( const Stack<U,con>& lhs, const Stack<U,con>& rhs );
 
-		friend bool operator> (const Stack& lhs, const Stack& rhs){
-			return(rhs._vec < lhs._vec);
-		}
-		
-		friend bool operator>= (const Stack& lhs, const Stack& rhs){
-			return(!(lhs._vec < rhs._vec));
-		}
-		
-		private:
+		template< class U, class con >
+		friend bool operator>( const Stack<U,con>& lhs, const Stack<U,con>& rhs );
+
+		template< class U, class con >
+		friend bool operator>=( const Stack<U,con>& lhs, const Stack<U,con>& rhs );
+
+		protected:
 			container_type _vec;
 	};
+		//! --------------- relational operators --------------- !//
+
+	template< class T, class Container >
+	bool operator==( const Stack<T,Container>& lhs, const Stack<T,Container>& rhs ){
+		return(lhs._vec == rhs._vec);
+	}
+
+	template< class T, class Container >
+	bool operator!=( const Stack<T,Container>& lhs, const Stack<T,Container>& rhs ){
+		return(!(lhs._vec == rhs._vec));
+	}
+
+	template< class T, class Container >
+	bool operator<( const Stack<T,Container>& lhs, const Stack<T,Container>& rhs ){
+		return(lhs._vec < rhs._vec);
+	}
+	template< class T, class Container >
+	bool operator<=( const Stack<T,Container>& lhs, const Stack<T,Container>& rhs ){
+		return(!(rhs._vec < lhs._vec));
+		
+	}
+	template< class T, class Container >
+	bool operator>( const Stack<T,Container>& lhs, const Stack<T,Container>& rhs ){
+		return(rhs._vec < lhs._vec);
+	}
+
+	template< class T, class Container >
+	bool operator>=( const Stack<T,Container>& lhs, const Stack<T,Container>& rhs ){
+		return(!(lhs._vec < rhs._vec));
+	}
 }
 
 #endif
