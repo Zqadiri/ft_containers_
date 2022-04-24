@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:50:41 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/04/15 16:48:37 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/24 22:10:34 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 
 #include "../utilities/bidirectional_iterator.hpp"
 #include "../utilities/utility.hpp"
-#include "avl_tree.hpp"
+#include "../utilities/avl_tree.hpp"
 #include "../vector/vector.hpp"
 #include <map>
 #include <functional>
 #include <algorithm>
+#include <vector>
 #include <memory>
 
 namespace ft
@@ -38,9 +39,10 @@ namespace ft
 		typedef	class value_compare : public std::binary_function<value_type, value_type, bool>
 		{
 			friend class map;
-			public:
+			protected:
 				Compare comp;
   				value_compare (Compare c) : comp(c) {}
+			public:
 				bool operator() (const value_type& x, const value_type& y) const{
 					return comp(x.first, y.first);
   				}
@@ -60,14 +62,14 @@ namespace ft
 		
 			//! ----------- Constructors & Destructor ------------ !//
 		
-		explicit map (const key_compare& comp = key_compare(),
+		inline explicit map (const key_compare& comp = key_compare(),
 			const allocator_type& alloc = allocator_type()): _tree(), _comp(), _alloc(){
 			_comp = comp;
 			_alloc = alloc;
 		}		
 
 		template <class InputIterator>
-		map (InputIterator first, InputIterator last,
+		inline map (InputIterator first, InputIterator last,
 			const key_compare& comp = key_compare(),
 			const allocator_type& alloc = allocator_type()): _tree(){
 			_comp = comp;
@@ -75,7 +77,7 @@ namespace ft
 			this->insert (first, last);
 		}	
 
-		map (const map& x){
+		inline map (const map& x){
 			*this = x;
 		}
 
@@ -382,7 +384,5 @@ namespace ft
 		x.swap(y);
 	}
 }
-
-//? equal_range 
 
 #endif

@@ -329,6 +329,6 @@ int start(void)
 int main()
 {
 	start();
-	system("leaks a.out");
+	system("leaks map");
 	return 1;
 }

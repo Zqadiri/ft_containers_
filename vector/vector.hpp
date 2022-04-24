@@ -6,14 +6,13 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:13:42 by zqadiri           #+#    #+#             */
-/*   Updated: 2022/04/20 16:21:04 by zqadiri          ###   ########.fr       */
+/*   Updated: 2022/04/24 21:48:49 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP_
 # define VECTOR_HPP_
 
-# include <vector>
 # include <limits>
 # include <iterator>
 # include <string>
@@ -21,6 +20,7 @@
 # include <iostream>
 # include <algorithm>
 # include <memory>
+
 # include "../utilities/iterator.hpp"
 # include "../utilities/utility.hpp"
 # include "../utilities/iterator_traits.hpp"
@@ -40,7 +40,7 @@ namespace ft
 	{
 		public:
 
-			//!-------------------- Member types ------------------------!//
+			//! -------------------- Member types ------------------------ !//
 			// The first template parameter Type representing the type of data stored in a vector
 			typedef T																value_type; 
 			// The second template parameter
@@ -62,14 +62,13 @@ namespace ft
 			// Type that counts the number of elements in a vector
 			typedef typename allocator_type::size_type								size_type;
 
-			public:
-			//! ------------------------- Constructors ------------------------ !//
+			//! ------------------- Constructors ------------------------ !//
 
-			explicit Vector (const allocator_type& alloc = allocator_type()) 
+			inline explicit Vector (const allocator_type& alloc = allocator_type()) 
 			: _start(nullptr), _size(0), _capacity(0), _end(nullptr),  _alloc(alloc){
 			} // Default
 
-			explicit Vector (size_type n, const value_type& val = value_type(),
+			inline explicit Vector (size_type n, const value_type& val = value_type(),
 				const allocator_type& alloc = allocator_type())
 			:_start(nullptr), _size(0), _capacity(0), _end(nullptr),  _alloc(alloc)
 			{
@@ -86,12 +85,12 @@ namespace ft
 			} // Fill
 			
 			template <class InputIterator>
-			explicit Vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
+			inline explicit Vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
 				:_start(nullptr), _size(0), _capacity(0), _end(nullptr),  _alloc(alloc)
 			{
-				difference_type diff;
-				diff = last - first;
+				difference_type diff = std::distance(first, last);
+				// diff = last - first;
 				_start = _alloc.allocate(diff);
 				_capacity = _size = diff;
 				_end = _start;
@@ -127,7 +126,7 @@ namespace ft
 			TODO: Destructor
 			** Destroy all elements in the container and deallocate
 			** the container capacity.
-			*/ 
+			*/
 
 			~Vector(){
 				this->clear();
@@ -305,7 +304,7 @@ namespace ft
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
 			{
 				size_type pos_index = _end - &(*position);
-				size_type n = &(*last) - &(*first);
+				size_type n = std::distance(first, last);
 				if (_size == 0)
 				{
 					reserve (n);
@@ -326,7 +325,7 @@ namespace ft
 				for (size_type i = 0; i < pos_index; i++)
 					_alloc.construct(_end - i - 1, *(_end - ( n + i + 1)));
 				for (size_type j = 0; j < n; j++, first++)
-					_alloc.construct(_end - pos_index - j - 1, *(&(*first)));
+					_alloc.construct(_end - pos_index - j - 1, (*first));
 			}
 
 			/*
@@ -345,7 +344,7 @@ namespace ft
 			
 			iterator erase (iterator first, iterator last)
 			{
-				size_type n = &(*last) - &(*first);
+				size_type n = std::distance(first, last);
 				size_t start_pos = _end - &(*last);
 				pointer last_pointer = &(*last) ;
 				pointer first_pointer = &(*first);
@@ -411,7 +410,7 @@ namespace ft
   			void assign (InputIterator first, InputIterator last,
 			  typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
 			{				
-				size_type n = last - first;
+				size_type n = std::distance(first, last);
 				if (n > _capacity){
 					this->clear();
 					_alloc.deallocate(_start, _capacity);
