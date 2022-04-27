@@ -318,6 +318,32 @@ int start(void)
 				else	
 					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
 			}
+			std::cout << std::left << std::setw(35) << std::left <<"Compare Const Iterator & Iterator ";
+			{
+				ft::map<char,int> ft_v;
+
+				ft::map<char,int>::iterator ft_it, ft_it1;
+				ft::map<char,int>::const_iterator ft_cit, ft_cit1;
+
+				ft_v['a']=20;
+				ft_v['b']=40;
+				ft_v['c']=60;
+				ft_v['d']=80;
+				ft_v['e']=100;
+
+				ft_it = ft_v.begin();
+				ft_cit = ft_v.begin();
+
+
+				ft_it1 = ft_v.begin();
+				ft_cit1 = ft_v.begin()++;
+				ft_it1++;
+				ft_cit1++;
+				if ((ft_it == ft_cit) && (ft_it1 != ft_cit))
+					std::cout << "\t\t\t" << green << "OK" << def << std::endl;
+				else
+					std::cout << "\t\t\t" << red << "KO" << def << std::endl;
+			}
 		} 
 		catch (std::exception &e){
 			std::cout << "Exception Occured" << std::endl;

@@ -355,7 +355,7 @@ namespace ft
 				_end -= n;
 				_size -= n;
 				return (iterator(first_pointer));	
-			}
+	 		} 
 
 			/*
 			TODO:Swap content
@@ -370,7 +370,7 @@ namespace ft
 				std::swap(this->_alloc, x._alloc);
 				std::swap(this->_end, x._end);
 				std::swap(this->_capacity, x._capacity);
-			}
+			} 
 			
 			/*
 			TODO: Clear the vector 
