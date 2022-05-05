@@ -232,7 +232,13 @@ namespace ft
 		 TODO: find an element by key
 		*/
 
-		iterator find (const key_type& k){
+		iterator find (const key_type& k) {
+			node_type *find = _tree.searchKey(k, _tree.rootPtr);
+			iterator it(_tree, find);
+			return (it);
+		}
+		
+		const_iterator find (const key_type& k) const{
 			node_type *find = _tree.searchKey(k, _tree.rootPtr);
 			iterator it(_tree, find);
 			return (it);

@@ -11,7 +11,7 @@
 #include <signal.h>
 #include <sys/time.h>
 #include <random>
-
+#include <chrono>
 namespace Color
 {
 	enum Code {
@@ -356,5 +356,25 @@ int main()
 {
 	start();
 	system("leaks map");
+
+	
+	// for (int i = 0,j = 0; i< 10000000; ++i, ++j)
+	// {
+	// 	m[i] = j;
+	// }
+
+	// std::chrono::time_point<std::chrono::steady_clock> start, end;
+
+	// start = chrono::steady_clock::now();
+	
+
+	// m.erase(m.begin(), m.end());
+
+	// end = chrono::steady_clock::now();
+
+	// std::cout << "Elapsed time in milliseconds: "
+    //     << chrono::duration_cast<chrono::milliseconds>(end - start).count()
+    //     << " ms" << std::endl;
 	return 1;
+
 }

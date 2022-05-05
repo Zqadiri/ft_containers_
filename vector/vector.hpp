@@ -208,7 +208,11 @@ namespace ft
 				return ((*this)[n]);
 			}
 
-			reference operator[] (size_type n) const {
+			reference operator[] (size_type n){
+				return (*(_start + n));
+			}
+
+			const_reference operator[] (size_type n) const {
 				return (*(_start + n));
 			}
 
